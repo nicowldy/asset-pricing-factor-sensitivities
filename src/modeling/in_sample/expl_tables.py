@@ -10,16 +10,27 @@ try:
         get_params_path,
     )
     from src.modeling.in_sample.expl_utils import add_average_row
-except ModuleNotFoundError:
-    from expl_config import (
-        ASSUMPTIONS,
-        DESCRIPT_IND,
-        INCRWALD_CAPM,
-        INCRWALD_FF3,
-        get_descript_model_path,
-        get_params_path,
-    )
-    from expl_utils import add_average_row
+except (ModuleNotFoundError, ImportError):
+    try:
+        from .expl_config import (
+            ASSUMPTIONS,
+            DESCRIPT_IND,
+            INCRWALD_CAPM,
+            INCRWALD_FF3,
+            get_descript_model_path,
+            get_params_path,
+        )
+        from .expl_utils import add_average_row
+    except (ImportError, ValueError):
+        from expl_config import (  # type: ignore[import-not-found]
+            ASSUMPTIONS,
+            DESCRIPT_IND,
+            INCRWALD_CAPM,
+            INCRWALD_FF3,
+            get_descript_model_path,
+            get_params_path,
+        )
+        from expl_utils import add_average_row  # type: ignore[import-not-found]
 
 
 
@@ -47,8 +58,11 @@ def write_jointwald_results(df_capm, df_ff3, df_ff5):
     """
     try:
         from src.config import TABLES_DIR
-    except ModuleNotFoundError:
-        from expl_config import TABLES_DIR
+    except (ModuleNotFoundError, ImportError):
+        try:
+            from .expl_config import TABLES_DIR
+        except (ImportError, ValueError):
+            from expl_config import TABLES_DIR  # type: ignore[import-not-found]
 
     # Create individual files for each model
     capm_path = os.path.join(TABLES_DIR, "expl_jointwald_capm.csv")

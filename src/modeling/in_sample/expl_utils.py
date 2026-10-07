@@ -18,14 +18,23 @@ try:
         FF_IND_PROCESSED,
         get_statssum_path,
     )
-except ModuleNotFoundError:
-    from expl_config import (
-        FF_CAPM_PROCESSED,
-        FF_FF3_PROCESSED,
-        FF_FF5_PROCESSED,
-        FF_IND_PROCESSED,
-        get_statssum_path,
-    )
+except (ModuleNotFoundError, ImportError):
+    try:
+        from .expl_config import (
+            FF_CAPM_PROCESSED,
+            FF_FF3_PROCESSED,
+            FF_FF5_PROCESSED,
+            FF_IND_PROCESSED,
+            get_statssum_path,
+        )
+    except (ImportError, ValueError):
+        from expl_config import (  # type: ignore[import-not-found]
+            FF_CAPM_PROCESSED,
+            FF_FF3_PROCESSED,
+            FF_FF5_PROCESSED,
+            FF_IND_PROCESSED,
+            get_statssum_path,
+        )
 
 
 MODELS = {
@@ -190,8 +199,11 @@ def process_model_statistics(
     if save_outputs:
         try:
             from src.modeling.in_sample.expl_tables import write_model_statistics
-        except ModuleNotFoundError:
-            from expl_tables import write_model_statistics
+        except (ModuleNotFoundError, ImportError):
+            try:
+                from .expl_tables import write_model_statistics
+            except (ImportError, ValueError):
+                from expl_tables import write_model_statistics  # type: ignore[import-not-found]
 
         write_model_statistics(model_name, df)
     return df

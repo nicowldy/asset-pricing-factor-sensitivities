@@ -69,13 +69,13 @@ def test_joint_wald_test(sample_factor_and_excess_industry_data):
 
 def test_expanding_window_rmse_metric():
     """Verify RMSE and R2 calculations match standard statistical definitions."""
-    y_true = pd.Series([1.0, 2.0, 3.0, 4.0, 5.0])
-    y_pred = pd.Series([1.1, 1.9, 3.2, 3.8, 5.1])
+    y_true = np.array([1.0, 2.0, 3.0, 4.0, 5.0], dtype=float)
+    y_pred = np.array([1.1, 1.9, 3.2, 3.8, 5.1], dtype=float)
 
-    rmse = np.sqrt(((y_true - y_pred) ** 2).mean())
-    ss_res = ((y_true - y_pred) ** 2).sum()
-    ss_tot = ((y_true - y_true.mean()) ** 2).sum()
-    r2 = 1.0 - (ss_res / ss_tot)
+    rmse = float(np.sqrt(((y_true - y_pred) ** 2).mean()))
+    ss_res = float(((y_true - y_pred) ** 2).sum())
+    ss_tot = float(((y_true - y_true.mean()) ** 2).sum())
+    r2 = float(1.0 - (ss_res / ss_tot))
 
     assert 0.0 < rmse < 0.3
     assert r2 > 0.95
