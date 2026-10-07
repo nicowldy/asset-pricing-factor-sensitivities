@@ -67,6 +67,7 @@ venv.bak/
 # Editor & IDE settings
 .idea/
 .vscode/
+*.code-workspace
 *.swp
 *.swo
 *~
