@@ -58,4 +58,5 @@ extraPaths = [
     "src/modeling/in_sample",
     "src/modeling/out_of_sample",
 ]
+reportMissingTypeStubs = false
 

@@ -2,8 +2,8 @@ import io
 import os
 
 import pandas as pd
-from scipy.stats import pearsonr
-from scipy import stats
+from scipy.stats import pearsonr  # type: ignore[import-untyped]
+from scipy import stats  # type: ignore[import-untyped]
 from statsmodels.api import OLS, add_constant
 from statsmodels.stats.diagnostic import het_breuschpagan
 from statsmodels.stats.outliers_influence import variance_inflation_factor

@@ -39,7 +39,7 @@ except ModuleNotFoundError:
         from expl_config import TABLES_DIR
         from expl_tables import write_jointwald_results
 
-from scipy import stats
+from scipy import stats  # type: ignore[import-untyped]
 
 
 def perform_joint_wald_test(factor_data, industry_data, factor_names, industry):
