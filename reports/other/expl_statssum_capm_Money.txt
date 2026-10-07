@@ -6,7 +6,7 @@ Dep. Variable:           Money_Excess   R-squared:                       0.810
 Model:                            OLS   Adj. R-squared:                  0.808
 Method:                 Least Squares   F-statistic:                     464.9
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           9.63e-43
-Time:                        15:32:41   Log-Likelihood:                -260.12
+Time:                        15:42:00   Log-Likelihood:                -260.12
 No. Observations:                 120   AIC:                             524.2
 Df Residuals:                     118   BIC:                             529.8
 Df Model:                           1                                         
