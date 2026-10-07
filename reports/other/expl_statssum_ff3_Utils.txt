@@ -6,7 +6,7 @@ Dep. Variable:           Utils_Excess   R-squared:                       0.207
 Model:                            OLS   Adj. R-squared:                  0.187
 Method:                 Least Squares   F-statistic:                     17.54
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.86e-09
-Time:                        14:55:00   Log-Likelihood:                -293.45
+Time:                        15:32:41   Log-Likelihood:                -293.45
 No. Observations:                 120   AIC:                             594.9
 Df Residuals:                     116   BIC:                             606.1
 Df Model:                           3                                         

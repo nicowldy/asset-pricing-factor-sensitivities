@@ -6,7 +6,7 @@ Dep. Variable:           Enrgy_Excess   R-squared:                       0.598
 Model:                            OLS   Adj. R-squared:                  0.595
 Method:                 Least Squares   F-statistic:                     443.9
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           8.44e-42
-Time:                        14:55:00   Log-Likelihood:                -325.94
+Time:                        15:32:41   Log-Likelihood:                -325.94
 No. Observations:                 120   AIC:                             655.9
 Df Residuals:                     118   BIC:                             661.5
 Df Model:                           1                                         

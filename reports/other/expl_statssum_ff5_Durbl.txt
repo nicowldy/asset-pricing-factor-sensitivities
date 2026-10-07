@@ -6,7 +6,7 @@ Dep. Variable:           Durbl_Excess   R-squared:                       0.764
 Model:                            OLS   Adj. R-squared:                  0.754
 Method:                 Least Squares   F-statistic:                     102.7
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.52e-40
-Time:                        14:55:00   Log-Likelihood:                -303.82
+Time:                        15:32:41   Log-Likelihood:                -303.82
 No. Observations:                 120   AIC:                             619.6
 Df Residuals:                     114   BIC:                             636.4
 Df Model:                           5                                         
