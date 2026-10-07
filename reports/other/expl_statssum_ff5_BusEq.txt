@@ -6,7 +6,7 @@ Dep. Variable:           BusEq_Excess   R-squared:                       0.891
 Model:                            OLS   Adj. R-squared:                  0.886
 Method:                 Least Squares   F-statistic:                     272.5
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.18e-61
-Time:                        12:01:10   Log-Likelihood:                -217.78
+Time:                        14:02:19   Log-Likelihood:                -217.78
 No. Observations:                 120   AIC:                             447.6
 Df Residuals:                     114   BIC:                             464.3
 Df Model:                           5                                         

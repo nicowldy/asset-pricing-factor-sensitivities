@@ -6,7 +6,7 @@ Dep. Variable:           Hlth _Excess   R-squared:                       0.621
 Model:                            OLS   Adj. R-squared:                  0.617
 Method:                 Least Squares   F-statistic:                     111.1
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.04e-18
-Time:                        12:01:10   Log-Likelihood:                -274.31
+Time:                        14:02:18   Log-Likelihood:                -274.31
 No. Observations:                 120   AIC:                             552.6
 Df Residuals:                     118   BIC:                             558.2
 Df Model:                           1                                         

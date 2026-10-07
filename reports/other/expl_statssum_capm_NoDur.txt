@@ -6,7 +6,7 @@ Dep. Variable:           NoDur_Excess   R-squared:                       0.559
 Model:                            OLS   Adj. R-squared:                  0.555
 Method:                 Least Squares   F-statistic:                     140.3
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           8.37e-22
-Time:                        12:01:10   Log-Likelihood:                -261.26
+Time:                        14:02:18   Log-Likelihood:                -261.26
 No. Observations:                 120   AIC:                             526.5
 Df Residuals:                     118   BIC:                             532.1
 Df Model:                           1                                         

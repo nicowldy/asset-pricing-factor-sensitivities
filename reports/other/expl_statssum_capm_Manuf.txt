@@ -6,7 +6,7 @@ Dep. Variable:           Manuf_Excess   R-squared:                       0.880
 Model:                            OLS   Adj. R-squared:                  0.879
 Method:                 Least Squares   F-statistic:                     921.5
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.38e-57
-Time:                        12:01:10   Log-Likelihood:                -234.02
+Time:                        14:02:18   Log-Likelihood:                -234.02
 No. Observations:                 120   AIC:                             472.0
 Df Residuals:                     118   BIC:                             477.6
 Df Model:                           1                                         
