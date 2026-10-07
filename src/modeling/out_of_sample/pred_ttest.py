@@ -66,11 +66,11 @@ def main() -> None:
 
     df_final_results = pd.concat(all_ttest_results, ignore_index=True)
 
-    output_dir = os.path.dirname(str(TTEST))
+    output_dir = os.path.dirname(TTEST)
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
 
-    df_final_results.to_csv(str(TTEST), index=False)
+    df_final_results.to_csv(TTEST, index=False)
 
 
 if __name__ == "__main__":
