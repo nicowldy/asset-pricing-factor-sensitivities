@@ -1,0 +1,27 @@
+Regression Summary for capm on BusEq
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           BusEq_Excess   R-squared:                       0.827
+Model:                            OLS   Adj. R-squared:                  0.826
+Method:                 Least Squares   F-statistic:                     943.6
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           3.97e-58
+Time:                        10:31:33   Log-Likelihood:                -245.43
+No. Observations:                 120   AIC:                             494.9
+Df Residuals:                     118   BIC:                             500.4
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.1459      0.160      0.913      0.361      -0.167       0.459
+MKT            1.0971      0.036     30.718      0.000       1.027       1.167
+==============================================================================
+Omnibus:                        2.029   Durbin-Watson:                   2.241
+Prob(Omnibus):                  0.363   Jarque-Bera (JB):                1.664
+Skew:                          -0.283   Prob(JB):                        0.435
+Kurtosis:                       3.109   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

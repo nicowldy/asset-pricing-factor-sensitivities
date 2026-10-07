@@ -1,0 +1,31 @@
+Regression Summary for ff5 on Shops
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Shops_Excess   R-squared:                       0.834
+Model:                            OLS   Adj. R-squared:                  0.827
+Method:                 Least Squares   F-statistic:                     118.4
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.91e-43
+Time:                        10:31:33   Log-Likelihood:                -220.95
+No. Observations:                 120   AIC:                             453.9
+Df Residuals:                     114   BIC:                             470.6
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.1071      0.153      0.701      0.483      -0.192       0.407
+MKT            0.9496      0.056     16.999      0.000       0.840       1.059
+SMB            0.1170      0.079      1.475      0.140      -0.038       0.272
+HML           -0.3171      0.066     -4.820      0.000      -0.446      -0.188
+RMW            0.4531      0.113      4.023      0.000       0.232       0.674
+CMA            0.2334      0.104      2.254      0.024       0.030       0.436
+==============================================================================
+Omnibus:                        3.692   Durbin-Watson:                   1.919
+Prob(Omnibus):                  0.158   Jarque-Bera (JB):                3.845
+Skew:                           0.162   Prob(JB):                        0.146
+Kurtosis:                       3.815   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

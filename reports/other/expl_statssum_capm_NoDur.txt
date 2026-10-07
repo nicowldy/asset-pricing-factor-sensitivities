@@ -1,0 +1,27 @@
+Regression Summary for capm on NoDur
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           NoDur_Excess   R-squared:                       0.559
+Model:                            OLS   Adj. R-squared:                  0.555
+Method:                 Least Squares   F-statistic:                     140.3
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           8.37e-22
+Time:                        10:31:33   Log-Likelihood:                -261.26
+No. Observations:                 120   AIC:                             526.5
+Df Residuals:                     118   BIC:                             532.1
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.2670      0.206      1.295      0.195      -0.137       0.671
+MKT            0.6439      0.054     11.844      0.000       0.537       0.751
+==============================================================================
+Omnibus:                        7.597   Durbin-Watson:                   2.119
+Prob(Omnibus):                  0.022   Jarque-Bera (JB):                7.221
+Skew:                          -0.569   Prob(JB):                       0.0270
+Kurtosis:                       3.389   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asset-pricing-sector-sensitivities"
+version = "1.0.0"
+description = "Evaluating cross-sectoral sensitivities of asset pricing models (CAPM, FF3, FF5) on industry portfolio returns"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Nico Walendy", email = "nicowalendy@gmail.com" }
+]
+license = { text = "MIT" }
+keywords = ["asset-pricing", "fama-french", "capm", "econometrics", "finance", "quantitative-finance"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "scipy>=1.14.0",
+    "statsmodels>=0.14.0",
+    "matplotlib>=3.9.0",
+    "seaborn>=0.13.0",
+    "openpyxl>=3.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.4.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.pyright]
+extraPaths = ["."]
+

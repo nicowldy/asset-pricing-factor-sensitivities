@@ -1,0 +1,31 @@
+Regression Summary for ff5 on Chems
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Chems_Excess   R-squared:                       0.816
+Model:                            OLS   Adj. R-squared:                  0.808
+Method:                 Least Squares   F-statistic:                     84.27
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.21e-36
+Time:                        10:31:33   Log-Likelihood:                -222.27
+No. Observations:                 120   AIC:                             456.5
+Df Residuals:                     114   BIC:                             473.3
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.1219      0.115     -1.060      0.289      -0.347       0.103
+MKT            0.9188      0.050     18.455      0.000       0.821       1.016
+SMB           -0.0968      0.090     -1.072      0.284      -0.274       0.080
+HML           -0.0534      0.073     -0.732      0.464      -0.197       0.090
+RMW            0.2000      0.100      1.992      0.046       0.003       0.397
+CMA            0.2633      0.107      2.457      0.014       0.053       0.473
+==============================================================================
+Omnibus:                        7.360   Durbin-Watson:                   1.993
+Prob(Omnibus):                  0.025   Jarque-Bera (JB):                8.800
+Skew:                          -0.363   Prob(JB):                       0.0123
+Kurtosis:                       4.111   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

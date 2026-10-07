@@ -1,0 +1,27 @@
+Regression Summary for capm on Money
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Money_Excess   R-squared:                       0.810
+Model:                            OLS   Adj. R-squared:                  0.808
+Method:                 Least Squares   F-statistic:                     464.9
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           9.63e-43
+Time:                        10:31:33   Log-Likelihood:                -260.12
+No. Observations:                 120   AIC:                             524.2
+Df Residuals:                     118   BIC:                             529.8
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.1313      0.187     -0.701      0.483      -0.499       0.236
+MKT            1.1694      0.054     21.562      0.000       1.063       1.276
+==============================================================================
+Omnibus:                        7.708   Durbin-Watson:                   1.915
+Prob(Omnibus):                  0.021   Jarque-Bera (JB):                7.460
+Skew:                           0.515   Prob(JB):                       0.0240
+Kurtosis:                       3.656   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

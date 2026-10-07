@@ -1,0 +1,27 @@
+Regression Summary for capm on Chems
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Chems_Excess   R-squared:                       0.795
+Model:                            OLS   Adj. R-squared:                  0.794
+Method:                 Least Squares   F-statistic:                     436.8
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.79e-41
+Time:                        10:31:33   Log-Likelihood:                -228.64
+No. Observations:                 120   AIC:                             461.3
+Df Residuals:                     118   BIC:                             466.9
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0184      0.122     -0.151      0.880      -0.257       0.221
+MKT            0.8597      0.041     20.900      0.000       0.779       0.940
+==============================================================================
+Omnibus:                        3.666   Durbin-Watson:                   1.973
+Prob(Omnibus):                  0.160   Jarque-Bera (JB):                3.613
+Skew:                          -0.196   Prob(JB):                        0.164
+Kurtosis:                       3.754   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

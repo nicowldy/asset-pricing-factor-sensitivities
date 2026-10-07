@@ -1,0 +1,29 @@
+Regression Summary for ff3 on Telcm
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Telcm_Excess   R-squared:                       0.644
+Model:                            OLS   Adj. R-squared:                  0.634
+Method:                 Least Squares   F-statistic:                     96.84
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.89e-31
+Time:                        10:31:33   Log-Likelihood:                -268.16
+No. Observations:                 120   AIC:                             544.3
+Df Residuals:                     116   BIC:                             555.5
+Df Model:                           3                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.2272      0.219      1.039      0.299      -0.201       0.656
+MKT            0.8530      0.056     15.179      0.000       0.743       0.963
+SMB           -0.2533      0.083     -3.034      0.002      -0.417      -0.090
+HML            0.0659      0.054      1.218      0.223      -0.040       0.172
+==============================================================================
+Omnibus:                        2.925   Durbin-Watson:                   1.968
+Prob(Omnibus):                  0.232   Jarque-Bera (JB):                2.575
+Skew:                          -0.185   Prob(JB):                        0.276
+Kurtosis:                       3.615   Cond. No.                         4.28
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

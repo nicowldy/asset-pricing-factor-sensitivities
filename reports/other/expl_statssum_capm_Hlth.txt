@@ -1,0 +1,27 @@
+Regression Summary for capm on Hlth 
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Hlth _Excess   R-squared:                       0.621
+Model:                            OLS   Adj. R-squared:                  0.617
+Method:                 Least Squares   F-statistic:                     111.1
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.04e-18
+Time:                        10:31:33   Log-Likelihood:                -274.31
+No. Observations:                 120   AIC:                             552.6
+Df Residuals:                     118   BIC:                             558.2
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.2888      0.210      1.376      0.169      -0.123       0.700
+MKT            0.8161      0.077     10.542      0.000       0.664       0.968
+==============================================================================
+Omnibus:                        3.307   Durbin-Watson:                   2.163
+Prob(Omnibus):                  0.191   Jarque-Bera (JB):                3.191
+Skew:                          -0.397   Prob(JB):                        0.203
+Kurtosis:                       2.914   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

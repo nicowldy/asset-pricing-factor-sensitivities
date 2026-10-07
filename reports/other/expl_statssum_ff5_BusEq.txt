@@ -1,0 +1,31 @@
+Regression Summary for ff5 on BusEq
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           BusEq_Excess   R-squared:                       0.891
+Model:                            OLS   Adj. R-squared:                  0.886
+Method:                 Least Squares   F-statistic:                     272.5
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.18e-61
+Time:                        10:31:33   Log-Likelihood:                -217.78
+No. Observations:                 120   AIC:                             447.6
+Df Residuals:                     114   BIC:                             464.3
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.1033      0.124      0.833      0.405      -0.140       0.346
+MKT            1.1290      0.060     18.685      0.000       1.011       1.247
+SMB           -0.1685      0.079     -2.139      0.032      -0.323      -0.014
+HML           -0.0471      0.061     -0.772      0.440      -0.167       0.073
+RMW            0.0221      0.139      0.159      0.874      -0.250       0.294
+CMA           -0.6635      0.161     -4.118      0.000      -0.979      -0.348
+==============================================================================
+Omnibus:                        1.860   Durbin-Watson:                   2.273
+Prob(Omnibus):                  0.395   Jarque-Bera (JB):                1.905
+Skew:                          -0.285   Prob(JB):                        0.386
+Kurtosis:                       2.763   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

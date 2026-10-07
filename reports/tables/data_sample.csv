@@ -1,0 +1,5 @@
+name,raw_rows,processed_rows,raw_range,processed_range,dropped_cleaning,dropped_intersection
+capm,1182,738,192607 to 202412,196307 to 202412,0,444
+ff3,1182,738,192607 to 202412,196307 to 202412,0,444
+ff5,738,738,196307 to 202412,196307 to 202412,0,0
+ind,1182,738,192607 to 202412,196307 to 202412,0,444

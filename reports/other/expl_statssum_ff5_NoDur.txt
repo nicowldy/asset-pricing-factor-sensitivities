@@ -1,0 +1,31 @@
+Regression Summary for ff5 on NoDur
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           NoDur_Excess   R-squared:                       0.723
+Model:                            OLS   Adj. R-squared:                  0.711
+Method:                 Least Squares   F-statistic:                     94.09
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           8.42e-39
+Time:                        10:31:33   Log-Likelihood:                -233.29
+No. Observations:                 120   AIC:                             478.6
+Df Residuals:                     114   BIC:                             495.3
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0407      0.180     -0.227      0.821      -0.393       0.311
+MKT            0.8129      0.043     18.870      0.000       0.728       0.897
+SMB           -0.2923      0.114     -2.574      0.010      -0.515      -0.070
+HML           -0.2558      0.080     -3.210      0.001      -0.412      -0.100
+RMW            0.5216      0.131      3.975      0.000       0.264       0.779
+CMA            0.4845      0.132      3.684      0.000       0.227       0.742
+==============================================================================
+Omnibus:                       11.318   Durbin-Watson:                   2.394
+Prob(Omnibus):                  0.003   Jarque-Bera (JB):               11.782
+Skew:                          -0.668   Prob(JB):                      0.00276
+Kurtosis:                       3.755   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

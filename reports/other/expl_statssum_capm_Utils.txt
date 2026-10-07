@@ -1,0 +1,27 @@
+Regression Summary for capm on Utils
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Utils_Excess   R-squared:                       0.190
+Model:                            OLS   Adj. R-squared:                  0.183
+Method:                 Least Squares   F-statistic:                     55.66
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.60e-11
+Time:                        10:31:33   Log-Likelihood:                -294.77
+No. Observations:                 120   AIC:                             593.5
+Df Residuals:                     118   BIC:                             599.1
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.4853      0.182      2.673      0.008       0.130       0.841
+MKT            0.3662      0.049      7.461      0.000       0.270       0.462
+==============================================================================
+Omnibus:                        5.602   Durbin-Watson:                   2.219
+Prob(Omnibus):                  0.061   Jarque-Bera (JB):                5.173
+Skew:                          -0.497   Prob(JB):                       0.0753
+Kurtosis:                       3.215   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

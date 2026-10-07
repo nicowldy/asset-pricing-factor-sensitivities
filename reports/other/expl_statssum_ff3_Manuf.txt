@@ -1,0 +1,29 @@
+Regression Summary for ff3 on Manuf
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Manuf_Excess   R-squared:                       0.895
+Model:                            OLS   Adj. R-squared:                  0.892
+Method:                 Least Squares   F-statistic:                     736.0
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           2.66e-75
+Time:                        10:31:33   Log-Likelihood:                -225.96
+No. Observations:                 120   AIC:                             459.9
+Df Residuals:                     116   BIC:                             471.1
+Df Model:                           3                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.1083      0.121     -0.895      0.371      -0.345       0.129
+MKT            1.1691      0.039     30.222      0.000       1.093       1.245
+SMB            0.2373      0.073      3.237      0.001       0.094       0.381
+HML            0.1407      0.051      2.766      0.006       0.041       0.240
+==============================================================================
+Omnibus:                        3.472   Durbin-Watson:                   2.402
+Prob(Omnibus):                  0.176   Jarque-Bera (JB):                2.995
+Skew:                          -0.376   Prob(JB):                        0.224
+Kurtosis:                       3.182   Cond. No.                         4.28
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

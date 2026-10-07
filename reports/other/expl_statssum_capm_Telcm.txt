@@ -1,0 +1,27 @@
+Regression Summary for capm on Telcm
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Telcm_Excess   R-squared:                       0.623
+Model:                            OLS   Adj. R-squared:                  0.620
+Method:                 Least Squares   F-statistic:                     200.4
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           3.41e-27
+Time:                        10:31:33   Log-Likelihood:                -271.48
+No. Observations:                 120   AIC:                             547.0
+Df Residuals:                     118   BIC:                             552.5
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.2728      0.231      1.181      0.238      -0.180       0.725
+MKT            0.8020      0.057     14.155      0.000       0.691       0.913
+==============================================================================
+Omnibus:                        0.623   Durbin-Watson:                   1.968
+Prob(Omnibus):                  0.732   Jarque-Bera (JB):                0.320
+Skew:                          -0.105   Prob(JB):                        0.852
+Kurtosis:                       3.140   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

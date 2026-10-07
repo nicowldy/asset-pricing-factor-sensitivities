@@ -1,0 +1,31 @@
+Regression Summary for ff5 on Money
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Money_Excess   R-squared:                       0.921
+Model:                            OLS   Adj. R-squared:                  0.918
+Method:                 Least Squares   F-statistic:                     608.4
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.97e-80
+Time:                        10:31:33   Log-Likelihood:                -207.17
+No. Observations:                 120   AIC:                             426.3
+Df Residuals:                     114   BIC:                             443.1
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.2351      0.121      1.946      0.052      -0.002       0.472
+MKT            1.0269      0.027     38.652      0.000       0.975       1.079
+SMB            0.0115      0.058      0.197      0.844      -0.103       0.126
+HML            0.7299      0.109      6.711      0.000       0.517       0.943
+RMW           -0.5331      0.098     -5.465      0.000      -0.724      -0.342
+CMA           -0.4635      0.111     -4.185      0.000      -0.681      -0.246
+==============================================================================
+Omnibus:                        0.775   Durbin-Watson:                   1.962
+Prob(Omnibus):                  0.679   Jarque-Bera (JB):                0.715
+Skew:                           0.186   Prob(JB):                        0.700
+Kurtosis:                       2.932   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

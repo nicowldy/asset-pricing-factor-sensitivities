@@ -1,0 +1,31 @@
+Regression Summary for ff5 on Manuf
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Manuf_Excess   R-squared:                       0.899
+Model:                            OLS   Adj. R-squared:                  0.895
+Method:                 Least Squares   F-statistic:                     340.0
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           9.71e-67
+Time:                        10:31:33   Log-Likelihood:                -223.56
+No. Observations:                 120   AIC:                             459.1
+Df Residuals:                     114   BIC:                             475.8
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.1556      0.122     -1.272      0.203      -0.395       0.084
+MKT            1.1836      0.039     30.191      0.000       1.107       1.260
+SMB            0.2917      0.061      4.818      0.000       0.173       0.410
+HML            0.0804      0.069      1.169      0.243      -0.054       0.215
+RMW            0.2035      0.068      3.013      0.003       0.071       0.336
+CMA            0.0845      0.151      0.560      0.576      -0.211       0.380
+==============================================================================
+Omnibus:                        3.835   Durbin-Watson:                   2.376
+Prob(Omnibus):                  0.147   Jarque-Bera (JB):                3.570
+Skew:                          -0.422   Prob(JB):                        0.168
+Kurtosis:                       3.028   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

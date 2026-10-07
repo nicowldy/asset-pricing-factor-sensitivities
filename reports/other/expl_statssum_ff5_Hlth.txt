@@ -1,0 +1,31 @@
+Regression Summary for ff5 on Hlth 
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Hlth _Excess   R-squared:                       0.712
+Model:                            OLS   Adj. R-squared:                  0.700
+Method:                 Least Squares   F-statistic:                     38.40
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           6.10e-23
+Time:                        10:31:33   Log-Likelihood:                -257.71
+No. Observations:                 120   AIC:                             527.4
+Df Residuals:                     114   BIC:                             544.1
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.2055      0.205      1.005      0.315      -0.195       0.607
+MKT            0.8236      0.074     11.154      0.000       0.679       0.968
+SMB            0.0073      0.104      0.070      0.944      -0.197       0.212
+HML           -0.5942      0.107     -5.535      0.000      -0.805      -0.384
+RMW           -0.4102      0.156     -2.638      0.008      -0.715      -0.105
+CMA            0.3611      0.242      1.493      0.135      -0.113       0.835
+==============================================================================
+Omnibus:                        1.785   Durbin-Watson:                   2.065
+Prob(Omnibus):                  0.410   Jarque-Bera (JB):                1.512
+Skew:                          -0.123   Prob(JB):                        0.469
+Kurtosis:                       2.508   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

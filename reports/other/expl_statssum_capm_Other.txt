@@ -1,0 +1,27 @@
+Regression Summary for capm on Other
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Other_Excess   R-squared:                       0.920
+Model:                            OLS   Adj. R-squared:                  0.919
+Method:                 Least Squares   F-statistic:                     2140.
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.77e-77
+Time:                        10:31:33   Log-Likelihood:                -190.15
+No. Observations:                 120   AIC:                             384.3
+Df Residuals:                     118   BIC:                             389.9
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.1466      0.108     -1.358      0.175      -0.358       0.065
+MKT            1.0713      0.023     46.259      0.000       1.026       1.117
+==============================================================================
+Omnibus:                        8.272   Durbin-Watson:                   1.782
+Prob(Omnibus):                  0.016   Jarque-Bera (JB):               13.518
+Skew:                           0.256   Prob(JB):                      0.00116
+Kurtosis:                       4.563   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

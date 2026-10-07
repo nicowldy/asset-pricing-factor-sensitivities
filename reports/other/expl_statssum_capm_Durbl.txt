@@ -1,0 +1,27 @@
+Regression Summary for capm on Durbl
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Durbl_Excess   R-squared:                       0.713
+Model:                            OLS   Adj. R-squared:                  0.711
+Method:                 Least Squares   F-statistic:                     138.1
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.39e-21
+Time:                        10:31:33   Log-Likelihood:                -315.54
+No. Observations:                 120   AIC:                             635.1
+Df Residuals:                     118   BIC:                             640.7
+Df Model:                           1                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.5453      0.337     -1.619      0.105      -1.205       0.115
+MKT            1.4195      0.121     11.751      0.000       1.183       1.656
+==============================================================================
+Omnibus:                        1.799   Durbin-Watson:                   1.916
+Prob(Omnibus):                  0.407   Jarque-Bera (JB):                1.374
+Skew:                           0.073   Prob(JB):                        0.503
+Kurtosis:                       3.503   Cond. No.                         4.07
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction

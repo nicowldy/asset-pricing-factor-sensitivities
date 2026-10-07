@@ -1,0 +1,31 @@
+Regression Summary for ff5 on Enrgy
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           Enrgy_Excess   R-squared:                       0.697
+Model:                            OLS   Adj. R-squared:                  0.684
+Method:                 Least Squares   F-statistic:                     53.37
+Date:                Wed, 07 Oct 2026   Prob (F-statistic):           2.73e-28
+Time:                        10:31:33   Log-Likelihood:                -308.98
+No. Observations:                 120   AIC:                             630.0
+Df Residuals:                     114   BIC:                             646.7
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.7280      0.317     -2.297      0.022      -1.349      -0.107
+MKT            1.0885      0.078     14.011      0.000       0.936       1.241
+SMB            0.2876      0.118      2.446      0.014       0.057       0.518
+HML            0.4588      0.234      1.958      0.050      -0.001       0.918
+RMW           -0.0865      0.226     -0.382      0.702      -0.530       0.357
+CMA            0.4898      0.309      1.586      0.113      -0.115       1.095
+==============================================================================
+Omnibus:                        0.863   Durbin-Watson:                   1.848
+Prob(Omnibus):                  0.649   Jarque-Bera (JB):                0.468
+Skew:                           0.103   Prob(JB):                        0.791
+Kurtosis:                       3.226   Cond. No.                         4.55
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 12 lags and without small sample correction
