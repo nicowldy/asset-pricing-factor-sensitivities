@@ -58,8 +58,8 @@ def calculate_paired_t_test():
                 X = np.ones(len(y))
                 model = sm.OLS(y, X)
                 results = model.fit(cov_type="HAC", cov_kwds={"maxlags": 12})
-                t_stat_sq = results.tvalues.iloc[0]
-                p_val_two_sided = results.pvalues.iloc[0]
+                t_stat_sq = float(np.asarray(results.tvalues)[0])
+                p_val_two_sided = float(np.asarray(results.pvalues)[0])
 
                 if t_stat_sq >= 0:
                     p_val_sq = p_val_two_sided / 2

@@ -6,7 +6,7 @@
 	],
 	"settings": {
 		"chat.edits2.enabled": true,
-		"python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+		"python.defaultInterpreterPath": ".venv/bin/python",
 		"python.analysis.extraPaths": [
 			"${workspaceFolder}",
 			"${workspaceFolder}/src",
