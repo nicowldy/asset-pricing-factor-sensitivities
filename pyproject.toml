@@ -51,5 +51,11 @@ line-length = 88
 target-version = "py312"
 
 [tool.pyright]
-extraPaths = ["."]
+extraPaths = [
+    ".",
+    "src",
+    "src/data",
+    "src/modeling/in_sample",
+    "src/modeling/out_of_sample",
+]
 

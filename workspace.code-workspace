@@ -5,6 +5,14 @@
 		}
 	],
 	"settings": {
-		"chat.edits2.enabled": true
+		"chat.edits2.enabled": true,
+		"python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+		"python.analysis.extraPaths": [
+			"${workspaceFolder}",
+			"${workspaceFolder}/src",
+			"${workspaceFolder}/src/data",
+			"${workspaceFolder}/src/modeling/in_sample",
+			"${workspaceFolder}/src/modeling/out_of_sample"
+		]
 	}
 }
