@@ -6,7 +6,7 @@ Dep. Variable:           Chems_Excess   R-squared:                       0.816
 Model:                            OLS   Adj. R-squared:                  0.808
 Method:                 Least Squares   F-statistic:                     84.27
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.21e-36
-Time:                        14:02:19   Log-Likelihood:                -222.27
+Time:                        14:55:00   Log-Likelihood:                -222.27
 No. Observations:                 120   AIC:                             456.5
 Df Residuals:                     114   BIC:                             473.3
 Df Model:                           5                                         

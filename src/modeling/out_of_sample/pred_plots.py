@@ -5,36 +5,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-try:
-    from src.modeling.out_of_sample.pred_config import RSQ, RMSE, get_comp_path, COMPEXAM
-except ModuleNotFoundError:
-    try:
-        from modeling.out_of_sample.pred_config import RSQ, RMSE, get_comp_path, COMPEXAM
-    except ModuleNotFoundError:
-        from pred_config import RSQ, RMSE, get_comp_path, COMPEXAM
-
-try:
-    from src.plot_style import (
-        set_academic_style,
-        MODEL_PALETTE,
-        COLOR_REF_LINE,
-    )
-except ModuleNotFoundError:
-    try:
-        from plot_style import (
-            set_academic_style,
-            MODEL_PALETTE,
-            COLOR_REF_LINE,
-        )
-    except ModuleNotFoundError:
-        import sys
-        from pathlib import Path
-        sys.path.append(str(Path(__file__).resolve().parents[2]))
-        from src.plot_style import (
-            set_academic_style,
-            MODEL_PALETTE,
-            COLOR_REF_LINE,
-        )
+from src.modeling.out_of_sample.pred_config import RSQ, RMSE, get_comp_path, COMPEXAM
+from src.plot_style import (
+    set_academic_style,
+    MODEL_PALETTE,
+    COLOR_REF_LINE,
+)
 
 
 def _plot_bar(df: pd.DataFrame, value_col: str, y_label: str, save_path) -> None:

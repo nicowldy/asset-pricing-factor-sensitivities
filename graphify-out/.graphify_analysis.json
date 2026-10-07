@@ -1,0 +1,362 @@
+{
+  "communities": {
+    "0": [
+      "csv",
+      "path",
+      "pathlib",
+      "pytest",
+      "src_config",
+      "src_config_get_coeffsbydecs_path",
+      "src_config_get_comp_path",
+      "src_config_get_descript_model_path",
+      "src_config_get_params_path",
+      "src_config_get_resids_path",
+      "src_config_get_standard_datasets",
+      "src_config_get_statssum_path",
+      "src_config_rationale_1",
+      "src_data_data_capm",
+      "src_data_data_config",
+      "src_data_data_config_get_standard_datasets",
+      "src_data_data_config_rationale_1",
+      "src_data_data_processing",
+      "src_data_data_processing_process_data",
+      "src_data_data_tables",
+      "src_data_data_tables_export_processing_statistics",
+      "src_data_data_tables_export_processing_statistics_format_dataset_row",
+      "src_data_data_tables_export_to_csv",
+      "src_data_data_utils",
+      "src_data_data_utils_load_data_with_markers",
+      "src_data_data_utils_save_with_markers",
+      "src_modeling_in_sample_expl_config",
+      "tests_test_data",
+      "tests_test_data_rationale_1",
+      "tests_test_data_rationale_16",
+      "tests_test_data_rationale_29",
+      "tests_test_data_rationale_39",
+      "tests_test_data_rationale_53",
+      "tests_test_data_test_date_alignment_across_processed_datasets",
+      "tests_test_data_test_industry_sectors_present",
+      "tests_test_data_test_processed_data_loading_and_markers",
+      "tests_test_data_test_processed_files_exist"
+    ],
+    "1": [
+      "matplotlib",
+      "matplotlib_pyplot",
+      "os",
+      "seaborn",
+      "src_modeling_in_sample_expl_config_get_coeffsbydecs_path",
+      "src_modeling_in_sample_expl_descript_run_all_analyses",
+      "src_modeling_in_sample_expl_plots",
+      "src_modeling_in_sample_expl_plots_plot_cumulative_log_factor_returns",
+      "src_modeling_in_sample_expl_plots_plot_cumulative_log_industry_returns",
+      "src_modeling_in_sample_expl_plots_plot_decade_model_alpha_grids",
+      "src_modeling_in_sample_expl_plots_plot_decade_model_factor_grids",
+      "src_modeling_in_sample_expl_plots_plot_decade_rsquared_grid",
+      "src_modeling_in_sample_expl_plots_plot_factor_distributions",
+      "src_modeling_in_sample_expl_plots_plot_industry_distributions",
+      "src_modeling_in_sample_expl_plots_plot_residuals_fitted_grid",
+      "src_modeling_in_sample_expl_plots_plot_rsq",
+      "src_modeling_out_of_sample_pred_config_get_comp_path",
+      "src_modeling_out_of_sample_pred_plots",
+      "src_modeling_out_of_sample_pred_plots_plot_actual_vs_pred",
+      "src_modeling_out_of_sample_pred_plots_plot_bar",
+      "src_modeling_out_of_sample_pred_plots_plot_comp_three",
+      "src_modeling_out_of_sample_pred_plots_plot_r2_bar",
+      "src_modeling_out_of_sample_pred_plots_plot_rmse_bar",
+      "src_modeling_out_of_sample_pred_plots_py_dataframe",
+      "src_plot_style",
+      "src_plot_style_rationale_1",
+      "src_plot_style_rationale_56",
+      "src_plot_style_set_academic_style",
+      "sys"
+    ],
+    "2": [
+      "modeling_out_of_sample_pred_config",
+      "modeling_out_of_sample_pred_plots",
+      "modeling_out_of_sample_pred_utils",
+      "numpy",
+      "pandas",
+      "src_modeling_out_of_sample_pred_actpred",
+      "src_modeling_out_of_sample_pred_config",
+      "src_modeling_out_of_sample_pred_metrics",
+      "src_modeling_out_of_sample_pred_metrics_main",
+      "src_modeling_out_of_sample_pred_pairttest",
+      "src_modeling_out_of_sample_pred_pairttest_calculate_paired_t_test",
+      "src_modeling_out_of_sample_pred_test",
+      "src_modeling_out_of_sample_pred_test_test_models_and_export",
+      "src_modeling_out_of_sample_pred_train",
+      "src_modeling_out_of_sample_pred_train_train_models_and_export",
+      "src_modeling_out_of_sample_pred_ttest",
+      "src_modeling_out_of_sample_pred_ttest_calculate_t_test_for_model",
+      "src_modeling_out_of_sample_pred_ttest_main",
+      "src_modeling_out_of_sample_pred_ttest_perform_ttest_on_group",
+      "src_modeling_out_of_sample_pred_ttest_py_dataframe",
+      "src_modeling_out_of_sample_pred_ttest_rationale_1",
+      "src_modeling_out_of_sample_pred_utils",
+      "src_modeling_out_of_sample_pred_utils_get_industry_names",
+      "src_modeling_out_of_sample_pred_utils_load_data_with_markers",
+      "statsmodels_api",
+      "tests_test_models_rationale_71",
+      "tests_test_models_test_expanding_window_rmse_metric"
+    ],
+    "3": [
+      "io",
+      "scipy",
+      "scipy_stats",
+      "src_modeling_in_sample_expl_assumptions_main",
+      "src_modeling_in_sample_expl_config_get_statssum_path",
+      "src_modeling_in_sample_expl_utils",
+      "src_modeling_in_sample_expl_utils_calculate_rss",
+      "src_modeling_in_sample_expl_utils_get_regression_parameters",
+      "src_modeling_in_sample_expl_utils_load_data",
+      "src_modeling_in_sample_expl_utils_save_regression_summary",
+      "src_modeling_in_sample_expl_utils_test_homoskedasticity",
+      "src_modeling_in_sample_expl_utils_test_independence",
+      "src_modeling_in_sample_expl_utils_test_linearity",
+      "src_modeling_in_sample_expl_utils_test_multicollinearity",
+      "src_modeling_in_sample_expl_utils_test_stationarity",
+      "statsmodels_stats_diagnostic",
+      "statsmodels_stats_outliers_influence",
+      "statsmodels_stats_stattools",
+      "statsmodels_tsa_stattools"
+    ],
+    "4": [
+      "argparse",
+      "run_pipeline",
+      "run_pipeline_main",
+      "run_pipeline_rationale_1",
+      "run_pipeline_rationale_109",
+      "run_pipeline_rationale_15",
+      "run_pipeline_rationale_33",
+      "run_pipeline_rationale_71",
+      "run_pipeline_run_data_stage",
+      "run_pipeline_run_in_sample_stage",
+      "run_pipeline_run_out_of_sample_stage",
+      "src_data_data_capm_extract_market_factor_data",
+      "src_modeling_in_sample_expl_regress_run_analysis",
+      "src_modeling_out_of_sample_pred_actpred_main",
+      "src_modeling_out_of_sample_pred_pairttest_main",
+      "src_modeling_out_of_sample_pred_test_main",
+      "src_modeling_out_of_sample_pred_train_main",
+      "time"
+    ],
+    "5": [
+      "modeling_in_sample",
+      "modeling_in_sample_expl_tables",
+      "src_modeling_in_sample_expl_assumptions",
+      "src_modeling_in_sample_expl_config_get_descript_model_path",
+      "src_modeling_in_sample_expl_config_get_params_path",
+      "src_modeling_in_sample_expl_config_get_resids_path",
+      "src_modeling_in_sample_expl_descript",
+      "src_modeling_in_sample_expl_descript_calculate_and_save_descriptive_stats",
+      "src_modeling_in_sample_expl_tables",
+      "src_modeling_in_sample_expl_tables_write_assumption_results",
+      "src_modeling_in_sample_expl_tables_write_descriptive_stats_industry",
+      "src_modeling_in_sample_expl_tables_write_descriptive_stats_model",
+      "src_modeling_in_sample_expl_tables_write_model_statistics",
+      "src_modeling_in_sample_expl_utils_calculate_descriptive_stats",
+      "src_modeling_in_sample_expl_utils_rationale_258",
+      "src_modeling_in_sample_init"
+    ],
+    "6": [
+      "src_modeling_in_sample_expl_incrwald",
+      "src_modeling_in_sample_expl_incrwald_main",
+      "src_modeling_in_sample_expl_jointwald",
+      "src_modeling_in_sample_expl_jointwald_main",
+      "src_modeling_in_sample_expl_tables_rationale_51",
+      "src_modeling_in_sample_expl_tables_write_incrwald_results",
+      "src_modeling_in_sample_expl_tables_write_jointwald_results",
+      "src_modeling_in_sample_expl_utils_add_average_row",
+      "src_modeling_in_sample_expl_utils_calculate_excess_returns",
+      "src_modeling_in_sample_expl_utils_get_industry_names",
+      "src_modeling_in_sample_expl_utils_get_models",
+      "src_modeling_in_sample_expl_utils_load_industry_data",
+      "src_modeling_in_sample_expl_utils_perform_hac_wald_test",
+      "src_modeling_in_sample_expl_utils_run_all_regressions",
+      "src_modeling_in_sample_expl_utils_run_regression_analysis"
+    ],
+    "7": [
+      "modeling_in_sample_expl_config",
+      "modeling_in_sample_expl_plots",
+      "modeling_in_sample_expl_utils",
+      "src_modeling_in_sample_expl_bydecs",
+      "src_modeling_in_sample_expl_bydecs_main",
+      "src_modeling_in_sample_expl_regress",
+      "src_modeling_in_sample_expl_utils_collect_industry_statistics",
+      "src_modeling_in_sample_expl_utils_filter_data_by_period",
+      "src_modeling_in_sample_expl_utils_get_decades",
+      "src_modeling_in_sample_expl_utils_process_model_statistics",
+      "src_modeling_in_sample_expl_utils_run_regression_by_decade"
+    ],
+    "8": [
+      "src_modeling_in_sample_expl_jointwald_perform_joint_wald_test",
+      "src_modeling_in_sample_expl_utils_run_regression",
+      "tests_test_models",
+      "tests_test_models_rationale_1",
+      "tests_test_models_rationale_28",
+      "tests_test_models_rationale_39",
+      "tests_test_models_rationale_57",
+      "tests_test_models_test_joint_wald_test",
+      "tests_test_models_test_model_configurations",
+      "tests_test_models_test_ols_regression_with_hac"
+    ],
+    "9": [
+      "fixture",
+      "src_modeling_in_sample_expl_utils_load_factors",
+      "tests_test_models_rationale_18",
+      "tests_test_models_sample_factor_and_excess_industry_data"
+    ],
+    "10": [
+      "src_init",
+      "src_init_rationale_1"
+    ],
+    "11": [
+      "src_modeling_init",
+      "src_modeling_init_rationale_1"
+    ],
+    "12": [
+      "tests_init",
+      "tests_init_rationale_1"
+    ],
+    "13": [
+      "pkg_asset_pricing_sector_sensitivities"
+    ],
+    "14": [
+      "src_data_init"
+    ],
+    "15": [
+      "src_modeling_out_of_sample_init"
+    ]
+  },
+  "cohesion": {
+    "0": 0.09759759759759759,
+    "1": 0.2315270935960591,
+    "2": 0.23076923076923078,
+    "3": 0.14619883040935672,
+    "4": 0.1830065359477124,
+    "5": 0.19166666666666668,
+    "6": 0.37142857142857144,
+    "7": 0.32727272727272727,
+    "8": 0.26666666666666666,
+    "9": 0.5,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0
+  },
+  "gods": [
+    {
+      "id": "src_modeling_in_sample_expl_assumptions_main",
+      "label": "main()",
+      "degree": 20
+    },
+    {
+      "id": "src_modeling_in_sample_expl_utils_load_industry_data",
+      "label": "load_industry_data()",
+      "degree": 18
+    },
+    {
+      "id": "src_modeling_in_sample_expl_utils_load_factors",
+      "label": "load_factors()",
+      "degree": 17
+    },
+    {
+      "id": "src_plot_style_set_academic_style",
+      "label": "set_academic_style()",
+      "degree": 17
+    },
+    {
+      "id": "src_modeling_in_sample_expl_utils_get_models",
+      "label": "get_models()",
+      "degree": 15
+    },
+    {
+      "id": "src_modeling_in_sample_expl_utils_get_industry_names",
+      "label": "get_industry_names()",
+      "degree": 15
+    },
+    {
+      "id": "src_modeling_in_sample_expl_incrwald_main",
+      "label": "main()",
+      "degree": 14
+    },
+    {
+      "id": "src_modeling_in_sample_expl_jointwald_main",
+      "label": "main()",
+      "degree": 14
+    },
+    {
+      "id": "src_modeling_out_of_sample_pred_utils_load_data_with_markers",
+      "label": "load_data_with_markers()",
+      "degree": 14
+    },
+    {
+      "id": "src_modeling_in_sample_expl_utils_process_model_statistics",
+      "label": "process_model_statistics()",
+      "degree": 13
+    }
+  ],
+  "surprises": [
+    {
+      "source": "run_data_stage()",
+      "target": "process_data()",
+      "source_files": [
+        "run_pipeline.py",
+        "src/data/data_processing.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "run_in_sample_stage()",
+      "target": "main()",
+      "source_files": [
+        "run_pipeline.py",
+        "src/modeling/in_sample/expl_assumptions.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "run_in_sample_stage()",
+      "target": "main()",
+      "source_files": [
+        "run_pipeline.py",
+        "src/modeling/in_sample/expl_bydecs.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "run_in_sample_stage()",
+      "target": "run_all_analyses()",
+      "source_files": [
+        "run_pipeline.py",
+        "src/modeling/in_sample/expl_descript.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "run_in_sample_stage()",
+      "target": "main()",
+      "source_files": [
+        "run_pipeline.py",
+        "src/modeling/in_sample/expl_incrwald.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

@@ -2,16 +2,8 @@ import pandas as pd
 import statsmodels.api as sm
 import numpy as np
 import os
-try:
-    from src.modeling.out_of_sample.pred_config import MODELS, TESTED, PAIRTTEST
-    from src.modeling.out_of_sample.pred_utils import load_data_with_markers
-except ModuleNotFoundError:
-    try:
-        from modeling.out_of_sample.pred_config import MODELS, TESTED, PAIRTTEST
-        from modeling.out_of_sample.pred_utils import load_data_with_markers
-    except ModuleNotFoundError:
-        from pred_config import MODELS, TESTED, PAIRTTEST
-        from pred_utils import load_data_with_markers
+from src.modeling.out_of_sample.pred_config import MODELS, TESTED, PAIRTTEST
+from src.modeling.out_of_sample.pred_utils import load_data_with_markers
 
 
 

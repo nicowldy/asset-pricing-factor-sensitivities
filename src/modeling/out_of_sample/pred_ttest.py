@@ -6,16 +6,8 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-try:
-    from src.modeling.out_of_sample.pred_config import MODELS, TESTED, TTEST
-    from src.modeling.out_of_sample.pred_utils import load_data_with_markers
-except (ModuleNotFoundError, ImportError):
-    try:
-        from .pred_config import MODELS, TESTED, TTEST
-        from .pred_utils import load_data_with_markers
-    except (ImportError, ValueError):
-        from pred_config import MODELS, TESTED, TTEST  # type: ignore[import-not-found]
-        from pred_utils import load_data_with_markers  # type: ignore[import-not-found]
+from src.modeling.out_of_sample.pred_config import MODELS, TESTED, TTEST
+from src.modeling.out_of_sample.pred_utils import load_data_with_markers
 
 
 def _perform_ttest_on_group(group: pd.DataFrame) -> dict[str, float]:

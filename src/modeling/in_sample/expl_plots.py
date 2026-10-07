@@ -6,66 +6,22 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 
-try:
-    from src.modeling.in_sample.expl_config import get_coeffsbydecs_path
-    from src.modeling.in_sample.expl_utils import (
-        load_industry_data,
-        get_industry_names,
-        get_models,
-        load_factors,
-    )
-except ModuleNotFoundError:
-    try:
-        from modeling.in_sample.expl_config import get_coeffsbydecs_path
-        from modeling.in_sample.expl_utils import (
-            load_industry_data,
-            get_industry_names,
-            get_models,
-            load_factors,
-        )
-    except ModuleNotFoundError:
-        from expl_config import get_coeffsbydecs_path
-        from expl_utils import (
-            load_industry_data,
-            get_industry_names,
-            get_models,
-            load_factors,
-        )
-
-try:
-    from src.plot_style import (
-        set_academic_style,
-        MODEL_PALETTE,
-        FACTOR_PALETTE,
-        INDUSTRY_PALETTE,
-        COLOR_ZERO_LINE,
-        COLOR_REF_LINE,
-        BOX_STYLE_STATS,
-    )
-except ModuleNotFoundError:
-    try:
-        from plot_style import (
-            set_academic_style,
-            MODEL_PALETTE,
-            FACTOR_PALETTE,
-            INDUSTRY_PALETTE,
-            COLOR_ZERO_LINE,
-            COLOR_REF_LINE,
-            BOX_STYLE_STATS,
-        )
-    except ModuleNotFoundError:
-        import sys
-        from pathlib import Path
-        sys.path.append(str(Path(__file__).resolve().parents[2]))
-        from src.plot_style import (
-            set_academic_style,
-            MODEL_PALETTE,
-            FACTOR_PALETTE,
-            INDUSTRY_PALETTE,
-            COLOR_ZERO_LINE,
-            COLOR_REF_LINE,
-            BOX_STYLE_STATS,
-        )
+from src.modeling.in_sample.expl_config import get_coeffsbydecs_path
+from src.modeling.in_sample.expl_utils import (
+    load_industry_data,
+    get_industry_names,
+    get_models,
+    load_factors,
+)
+from src.plot_style import (
+    set_academic_style,
+    MODEL_PALETTE,
+    FACTOR_PALETTE,
+    INDUSTRY_PALETTE,
+    COLOR_ZERO_LINE,
+    COLOR_REF_LINE,
+    BOX_STYLE_STATS,
+)
 
 
 def plot_rsq(model_results: dict, save_path=None) -> None:

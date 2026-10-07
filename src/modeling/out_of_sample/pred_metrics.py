@@ -2,19 +2,9 @@ import os
 import numpy as np
 import pandas as pd
 
-try:
-    from src.modeling.out_of_sample.pred_config import METRICS, TESTED
-    from src.modeling.out_of_sample.pred_utils import load_data_with_markers
-    from src.modeling.out_of_sample.pred_plots import plot_r2_bar, plot_rmse_bar
-except ModuleNotFoundError:
-    try:
-        from modeling.out_of_sample.pred_config import METRICS, TESTED
-        from modeling.out_of_sample.pred_utils import load_data_with_markers
-        from modeling.out_of_sample.pred_plots import plot_r2_bar, plot_rmse_bar
-    except ModuleNotFoundError:
-        from pred_config import METRICS, TESTED
-        from pred_utils import load_data_with_markers
-        from pred_plots import plot_r2_bar, plot_rmse_bar
+from src.modeling.out_of_sample.pred_config import METRICS, TESTED
+from src.modeling.out_of_sample.pred_utils import load_data_with_markers
+from src.modeling.out_of_sample.pred_plots import plot_r2_bar, plot_rmse_bar
 
 
 

@@ -1,15 +1,7 @@
-import pandas as pd
+"""Prediction utilities reusing shared project data helpers."""
+from __future__ import annotations
 
+from src.data.data_utils import load_data_with_markers
+from src.modeling.in_sample.expl_utils import get_industry_names
 
-def load_data_with_markers(path):
-    try:
-        df = pd.read_csv(path, comment="#")
-    except (FileNotFoundError, IOError):
-        return pd.DataFrame()
-    if "Date" in df.columns:
-        df["Date"] = pd.to_datetime(df["Date"], format="%Y%m")
-    return df
-
-
-def get_industry_names(df):
-    return [c for c in df.columns if c != "Date"]
+__all__ = ["load_data_with_markers", "get_industry_names"]

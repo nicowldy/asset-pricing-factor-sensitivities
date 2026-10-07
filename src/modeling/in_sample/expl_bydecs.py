@@ -1,49 +1,17 @@
-try:
-    from src.modeling.in_sample.expl_utils import (
-        load_industry_data,
-        get_models,
-        filter_data_by_period,
-        run_regression_by_decade,
-        process_model_statistics,
-        get_decades,
-    )
-    from src.modeling.in_sample.expl_config import RSQBYDECS, ALPHABYDECS
-    from src.modeling.in_sample.expl_plots import (
-        plot_decade_rsquared_grid,
-        plot_decade_model_factor_grids,
-        plot_decade_model_alpha_grids,
-    )
-except ModuleNotFoundError:
-    try:
-        from modeling.in_sample.expl_utils import (
-            load_industry_data,
-            get_models,
-            filter_data_by_period,
-            run_regression_by_decade,
-            process_model_statistics,
-            get_decades,
-        )
-        from modeling.in_sample.expl_config import RSQBYDECS, ALPHABYDECS
-        from modeling.in_sample.expl_plots import (
-            plot_decade_rsquared_grid,
-            plot_decade_model_factor_grids,
-            plot_decade_model_alpha_grids,
-        )
-    except ModuleNotFoundError:
-        from expl_utils import (
-            load_industry_data,
-            get_models,
-            filter_data_by_period,
-            run_regression_by_decade,
-            process_model_statistics,
-            get_decades,
-        )
-        from expl_config import RSQBYDECS, ALPHABYDECS
-        from expl_plots import (
-            plot_decade_rsquared_grid,
-            plot_decade_model_factor_grids,
-            plot_decade_model_alpha_grids,
-        )
+from src.modeling.in_sample.expl_utils import (
+    load_industry_data,
+    get_models,
+    filter_data_by_period,
+    run_regression_by_decade,
+    process_model_statistics,
+    get_decades,
+)
+from src.modeling.in_sample.expl_config import RSQBYDECS, ALPHABYDECS
+from src.modeling.in_sample.expl_plots import (
+    plot_decade_rsquared_grid,
+    plot_decade_model_factor_grids,
+    plot_decade_model_alpha_grids,
+)
 
 
 

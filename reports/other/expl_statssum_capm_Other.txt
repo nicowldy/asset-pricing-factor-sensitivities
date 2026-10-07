@@ -6,7 +6,7 @@ Dep. Variable:           Other_Excess   R-squared:                       0.920
 Model:                            OLS   Adj. R-squared:                  0.919
 Method:                 Least Squares   F-statistic:                     2140.
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.77e-77
-Time:                        14:02:18   Log-Likelihood:                -190.15
+Time:                        14:55:00   Log-Likelihood:                -190.15
 No. Observations:                 120   AIC:                             384.3
 Df Residuals:                     118   BIC:                             389.9
 Df Model:                           1                                         

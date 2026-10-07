@@ -1,37 +1,16 @@
+import os
 import pandas as pd
 import statsmodels.api as sm
-import os
-try:
-    from src.modeling.out_of_sample.pred_config import (
-        MODELS,
-        PROCESSED_CAPM_DIR,
-        PROCESSED_FF3_DIR,
-        PROCESSED_FF5_DIR,
-        PROCESSED_IND_DIR,
-        TRAINED,
-    )
-    from src.modeling.out_of_sample.pred_utils import get_industry_names, load_data_with_markers
-except ModuleNotFoundError:
-    try:
-        from modeling.out_of_sample.pred_config import (
-            MODELS,
-            PROCESSED_CAPM_DIR,
-            PROCESSED_FF3_DIR,
-            PROCESSED_FF5_DIR,
-            PROCESSED_IND_DIR,
-            TRAINED,
-        )
-        from modeling.out_of_sample.pred_utils import get_industry_names, load_data_with_markers
-    except ModuleNotFoundError:
-        from pred_config import (
-            MODELS,
-            PROCESSED_CAPM_DIR,
-            PROCESSED_FF3_DIR,
-            PROCESSED_FF5_DIR,
-            PROCESSED_IND_DIR,
-            TRAINED,
-        )
-        from pred_utils import get_industry_names, load_data_with_markers
+
+from src.modeling.out_of_sample.pred_config import (
+    MODELS,
+    PROCESSED_CAPM_DIR,
+    PROCESSED_FF3_DIR,
+    PROCESSED_FF5_DIR,
+    PROCESSED_IND_DIR,
+    TRAINED,
+)
+from src.modeling.out_of_sample.pred_utils import get_industry_names, load_data_with_markers
 
 
 processed_dirs = {

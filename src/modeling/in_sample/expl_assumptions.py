@@ -1,21 +1,9 @@
 import pandas as pd
 import statsmodels.api as sm
-try:
-    from src.modeling.in_sample.expl_tables import write_assumption_results
-    from src.modeling.in_sample.expl_config import get_resids_path
-    from src.modeling.in_sample import expl_utils
-    from src.modeling.in_sample.expl_plots import plot_residuals_fitted_grid
-except ModuleNotFoundError:
-    try:
-        from modeling.in_sample.expl_tables import write_assumption_results
-        from modeling.in_sample.expl_config import get_resids_path
-        from modeling.in_sample import expl_utils
-        from modeling.in_sample.expl_plots import plot_residuals_fitted_grid
-    except ModuleNotFoundError:
-        from expl_tables import write_assumption_results
-        from expl_config import get_resids_path
-        import expl_utils
-        from expl_plots import plot_residuals_fitted_grid
+from src.modeling.in_sample.expl_tables import write_assumption_results
+from src.modeling.in_sample.expl_config import get_resids_path
+from src.modeling.in_sample import expl_utils
+from src.modeling.in_sample.expl_plots import plot_residuals_fitted_grid
 
 
 

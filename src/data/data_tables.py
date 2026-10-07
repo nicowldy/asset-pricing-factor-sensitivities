@@ -1,17 +1,12 @@
+"""Export preprocessing metrics and sample summaries to CSV."""
+from __future__ import annotations
+
 import os
-import csv
+from pathlib import Path
+import pandas as pd
 
 
-def export_to_csv(data, filepath, headers, row_formatter):
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    with open(filepath, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(headers)
-        for item in data:
-            writer.writerow(row_formatter(item))
-
-
-def export_processing_statistics(statistics, stats_filepath):
+def export_processing_statistics(statistics: dict, stats_filepath: str | Path) -> None:
     headers = [
         "name",
         "raw_rows",
@@ -21,21 +16,9 @@ def export_processing_statistics(statistics, stats_filepath):
         "dropped_cleaning",
         "dropped_intersection",
     ]
-
-    def format_dataset_row(dataset):
-        return [
-            dataset["name"],
-            dataset["raw_rows"],
-            dataset.get("processed_rows"),
-            dataset["raw_range"],
-            dataset.get("processed_range"),
-            dataset.get("dropped_cleaning"),
-            dataset.get("dropped_intersection"),
-        ]
-
-    export_to_csv(
-        statistics["datasets"].values(),
-        stats_filepath,
-        headers,
-        format_dataset_row,
-    )
+    df = pd.DataFrame(statistics["datasets"].values())
+    for col in headers:
+        if col not in df.columns:
+            df[col] = None
+    os.makedirs(os.path.dirname(str(stats_filepath)), exist_ok=True)
+    df[headers].to_csv(stats_filepath, index=False)

@@ -1,45 +1,19 @@
 import os
 import pandas as pd
 import numpy as np
-try:
-    from src.modeling.in_sample.expl_utils import (
-        get_industry_names,
-        load_industry_data,
-        add_average_row,
-        run_regression,
-        load_factors,
-        calculate_excess_returns,
-        get_models,
-    )
-    from src.modeling.in_sample.expl_config import TABLES_DIR
-    from src.modeling.in_sample.expl_tables import write_jointwald_results
-except ModuleNotFoundError:
-    try:
-        from modeling.in_sample.expl_utils import (
-            get_industry_names,
-            load_industry_data,
-            add_average_row,
-            run_regression,
-            load_factors,
-            calculate_excess_returns,
-            get_models,
-        )
-        from modeling.in_sample.expl_config import TABLES_DIR
-        from modeling.in_sample.expl_tables import write_jointwald_results
-    except ModuleNotFoundError:
-        from expl_utils import (
-            get_industry_names,
-            load_industry_data,
-            add_average_row,
-            run_regression,
-            load_factors,
-            calculate_excess_returns,
-            get_models,
-        )
-        from expl_config import TABLES_DIR
-        from expl_tables import write_jointwald_results
-
 from scipy import stats  # type: ignore[import-untyped]
+
+from src.modeling.in_sample.expl_utils import (
+    get_industry_names,
+    load_industry_data,
+    add_average_row,
+    run_regression,
+    load_factors,
+    calculate_excess_returns,
+    get_models,
+)
+from src.modeling.in_sample.expl_config import TABLES_DIR
+from src.modeling.in_sample.expl_tables import write_jointwald_results
 
 
 def perform_joint_wald_test(factor_data, industry_data, factor_names, industry):

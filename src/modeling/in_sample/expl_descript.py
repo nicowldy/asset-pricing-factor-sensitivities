@@ -1,51 +1,26 @@
-try:
-    from src.modeling.in_sample.expl_utils import (
-        load_industry_data,
-        get_models,
-        load_factors,
-        get_industry_names,
-        calculate_descriptive_stats,
-    )
-    from src.modeling.in_sample.expl_plots import (
-        plot_industry_distributions,
-        plot_factor_distributions,
-        plot_cumulative_log_factor_returns,
-        plot_cumulative_log_industry_returns,
-    )
-    from src.modeling.in_sample.expl_config import (
-        DISTRIB_IND,
-        DISTRIB_FACT,
-        CUMRETURNS_FACT,
-        CUMRETURNS_IND,
-    )
-    from src.modeling.in_sample.expl_tables import (
-        write_descriptive_stats_model,
-        write_descriptive_stats_industry,
-    )
-except ModuleNotFoundError:
-    from expl_utils import (
-        load_industry_data,
-        get_models,
-        load_factors,
-        get_industry_names,
-        calculate_descriptive_stats,
-    )
-    from expl_plots import (
-        plot_industry_distributions,
-        plot_factor_distributions,
-        plot_cumulative_log_factor_returns,
-        plot_cumulative_log_industry_returns,
-    )
-    from expl_config import (
-        DISTRIB_IND,
-        DISTRIB_FACT,
-        CUMRETURNS_FACT,
-        CUMRETURNS_IND,
-    )
-    from expl_tables import (
-        write_descriptive_stats_model,
-        write_descriptive_stats_industry,
-    )
+from src.modeling.in_sample.expl_utils import (
+    load_industry_data,
+    get_models,
+    load_factors,
+    get_industry_names,
+    calculate_descriptive_stats,
+)
+from src.modeling.in_sample.expl_plots import (
+    plot_industry_distributions,
+    plot_factor_distributions,
+    plot_cumulative_log_factor_returns,
+    plot_cumulative_log_industry_returns,
+)
+from src.modeling.in_sample.expl_config import (
+    DISTRIB_IND,
+    DISTRIB_FACT,
+    CUMRETURNS_FACT,
+    CUMRETURNS_IND,
+)
+from src.modeling.in_sample.expl_tables import (
+    write_descriptive_stats_model,
+    write_descriptive_stats_industry,
+)
 
 
 

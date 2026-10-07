@@ -1,12 +1,7 @@
 import pandas as pd
-try:
-    from src.config import PROCESSING_STATS, get_standard_datasets
-    from src.data.data_utils import save_with_markers
-    from src.data.data_tables import export_processing_statistics
-except ModuleNotFoundError:
-    from data_config import PROCESSING as PROCESSING_STATS, get_standard_datasets
-    from data_utils import save_with_markers
-    from data_tables import export_processing_statistics
+from src.config import PROCESSING_STATS, get_standard_datasets
+from src.data.data_utils import save_with_markers
+from src.data.data_tables import export_processing_statistics
 
 
 def process_data():

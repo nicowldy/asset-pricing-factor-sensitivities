@@ -1,4 +1,3 @@
-import io
 import os
 
 import pandas as pd
@@ -10,31 +9,13 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.stats.stattools import durbin_watson, jarque_bera
 from statsmodels.tsa.stattools import adfuller
 
-try:
-    from src.modeling.in_sample.expl_config import (
-        FF_CAPM_PROCESSED,
-        FF_FF3_PROCESSED,
-        FF_FF5_PROCESSED,
-        FF_IND_PROCESSED,
-        get_statssum_path,
-    )
-except (ModuleNotFoundError, ImportError):
-    try:
-        from .expl_config import (
-            FF_CAPM_PROCESSED,
-            FF_FF3_PROCESSED,
-            FF_FF5_PROCESSED,
-            FF_IND_PROCESSED,
-            get_statssum_path,
-        )
-    except (ImportError, ValueError):
-        from expl_config import (  # type: ignore[import-not-found]
-            FF_CAPM_PROCESSED,
-            FF_FF3_PROCESSED,
-            FF_FF5_PROCESSED,
-            FF_IND_PROCESSED,
-            get_statssum_path,
-        )
+from src.modeling.in_sample.expl_config import (
+    FF_CAPM_PROCESSED,
+    FF_FF3_PROCESSED,
+    FF_FF5_PROCESSED,
+    FF_IND_PROCESSED,
+    get_statssum_path,
+)
 
 
 MODELS = {
@@ -48,11 +29,7 @@ MODELS = {
 
 
 def load_data(file_path):
-    with open(file_path, "r") as file:
-        data = file.read()
-    start = data.find("#data-begin#") + len("#data-begin#")
-    end = data.find("#data-end#")
-    df = pd.read_csv(io.StringIO(data[start:end].strip()))
+    df = pd.read_csv(file_path, comment="#")
     df["Date"] = pd.to_datetime(df["Date"], format="%Y%m")
     return df.set_index("Date")
 
@@ -70,7 +47,11 @@ def load_factors(model_name):
 
 
 def get_industry_names(industry_data):
-    return [col for col in industry_data.columns if not col.endswith("_Excess")]
+    return [
+        col
+        for col in industry_data.columns
+        if col != "Date" and not col.endswith("_Excess")
+    ]
 
 
 def calculate_excess_returns(industry_data, factor_data):
@@ -197,14 +178,7 @@ def process_model_statistics(
         stats_list.append(collect_industry_statistics(reg, industry, factors))
     df = pd.DataFrame(stats_list)
     if save_outputs:
-        try:
-            from src.modeling.in_sample.expl_tables import write_model_statistics
-        except (ModuleNotFoundError, ImportError):
-            try:
-                from .expl_tables import write_model_statistics
-            except (ImportError, ValueError):
-                from expl_tables import write_model_statistics  # type: ignore[import-not-found]
-
+        from src.modeling.in_sample.expl_tables import write_model_statistics
         write_model_statistics(model_name, df)
     return df
 

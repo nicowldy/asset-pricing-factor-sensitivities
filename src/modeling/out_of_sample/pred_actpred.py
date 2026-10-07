@@ -1,16 +1,6 @@
-try:
-    from src.modeling.out_of_sample.pred_config import MODELS, TESTED
-    from src.modeling.out_of_sample.pred_utils import load_data_with_markers
-    from src.modeling.out_of_sample.pred_plots import plot_actual_vs_pred, plot_comp_three
-except ModuleNotFoundError:
-    try:
-        from modeling.out_of_sample.pred_config import MODELS, TESTED
-        from modeling.out_of_sample.pred_utils import load_data_with_markers
-        from modeling.out_of_sample.pred_plots import plot_actual_vs_pred, plot_comp_three
-    except ModuleNotFoundError:
-        from pred_config import MODELS, TESTED
-        from pred_utils import load_data_with_markers
-        from pred_plots import plot_actual_vs_pred, plot_comp_three
+from src.modeling.out_of_sample.pred_config import MODELS, TESTED
+from src.modeling.out_of_sample.pred_utils import load_data_with_markers
+from src.modeling.out_of_sample.pred_plots import plot_actual_vs_pred, plot_comp_three
 
 
 

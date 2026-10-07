@@ -1,48 +1,19 @@
-import pandas as pd
 import os
-try:
-    from src.modeling.out_of_sample.pred_config import (
-        MODELS,
-        PROCESSED_CAPM_DIR,
-        PROCESSED_FF3_DIR,
-        PROCESSED_FF5_DIR,
-        PROCESSED_IND_DIR,
-        TRAINED,
-        TESTED,
-    )
-    from src.modeling.out_of_sample.pred_utils import (
-        load_data_with_markers,
-        get_industry_names,
-    )
-except ModuleNotFoundError:
-    try:
-        from modeling.out_of_sample.pred_config import (
-            MODELS,
-            PROCESSED_CAPM_DIR,
-            PROCESSED_FF3_DIR,
-            PROCESSED_FF5_DIR,
-            PROCESSED_IND_DIR,
-            TRAINED,
-            TESTED,
-        )
-        from modeling.out_of_sample.pred_utils import (
-            load_data_with_markers,
-            get_industry_names,
-        )
-    except ModuleNotFoundError:
-        from pred_config import (
-            MODELS,
-            PROCESSED_CAPM_DIR,
-            PROCESSED_FF3_DIR,
-            PROCESSED_FF5_DIR,
-            PROCESSED_IND_DIR,
-            TRAINED,
-            TESTED,
-        )
-        from pred_utils import (
-            load_data_with_markers,
-            get_industry_names,
-        )
+import pandas as pd
+
+from src.modeling.out_of_sample.pred_config import (
+    MODELS,
+    PROCESSED_CAPM_DIR,
+    PROCESSED_FF3_DIR,
+    PROCESSED_FF5_DIR,
+    PROCESSED_IND_DIR,
+    TRAINED,
+    TESTED,
+)
+from src.modeling.out_of_sample.pred_utils import (
+    load_data_with_markers,
+    get_industry_names,
+)
 
 
 processed_dirs = {

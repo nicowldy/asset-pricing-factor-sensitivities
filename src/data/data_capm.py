@@ -1,11 +1,10 @@
+from __future__ import annotations
+
 import os
-try:
-    from src.config import FF_FF3_RAW as FF_3F_RAW, FF_CAPM_RAW as FF_1F_RAW
-except ModuleNotFoundError:
-    from data_config import FF_FF3_RAW as FF_3F_RAW, FF_CAPM_RAW as FF_1F_RAW
+from src.config import FF_FF3_RAW as FF_3F_RAW, FF_CAPM_RAW as FF_1F_RAW
 
 
-def extract_market_factor_data():
+def extract_market_factor_data() -> None:
     os.makedirs(os.path.dirname(str(FF_1F_RAW)), exist_ok=True)
     with open(str(FF_3F_RAW)) as fin, open(str(FF_1F_RAW), "w") as fout:
         fout.write(",MKT,RF\n")
