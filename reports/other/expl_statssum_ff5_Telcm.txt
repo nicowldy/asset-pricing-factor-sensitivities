@@ -6,7 +6,7 @@ Dep. Variable:           Telcm_Excess   R-squared:                       0.732
 Model:                            OLS   Adj. R-squared:                  0.720
 Method:                 Least Squares   F-statistic:                     138.6
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           9.45e-47
-Time:                        10:31:33   Log-Likelihood:                -251.11
+Time:                        12:01:11   Log-Likelihood:                -251.11
 No. Observations:                 120   AIC:                             514.2
 Df Residuals:                     114   BIC:                             531.0
 Df Model:                           5                                         

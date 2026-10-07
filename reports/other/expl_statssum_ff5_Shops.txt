@@ -6,7 +6,7 @@ Dep. Variable:           Shops_Excess   R-squared:                       0.834
 Model:                            OLS   Adj. R-squared:                  0.827
 Method:                 Least Squares   F-statistic:                     118.4
 Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.91e-43
-Time:                        10:31:33   Log-Likelihood:                -220.95
+Time:                        12:01:11   Log-Likelihood:                -220.95
 No. Observations:                 120   AIC:                             453.9
 Df Residuals:                     114   BIC:                             470.6
 Df Model:                           5                                         
