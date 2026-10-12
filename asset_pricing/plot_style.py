@@ -134,3 +134,46 @@ def save_figure(fig, path=None) -> None:
         Path(path).parent.mkdir(parents=True, exist_ok=True)
         fig.savefig(path, bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
+
+
+def style_axes(ax, grid_width=0.5, grid_alpha=0.7, both=False) -> None:
+    """Remove the top and right spines and draw the light dashed grid.
+
+    The grid is horizontal only unless `both` is set.
+    """
+    sns.despine(ax=ax, top=True, right=True)
+    grid = dict(color="#E2E8F0", linestyle="--", linewidth=grid_width, alpha=grid_alpha)
+    if both:
+        ax.grid(True, **grid)
+    else:
+        ax.yaxis.grid(True, **grid)
+        ax.xaxis.grid(False)
+
+
+def plot_model_bars(df, x, y, y_label, save_path=None, ylim=None) -> None:
+    """Grouped bar chart of `y` per category `x`, one bar per entry in "Model"."""
+    set_academic_style()
+    count = df[x].nunique()
+    fig, ax = plt.subplots(figsize=(max(11, count * 1.1), 6))
+    sns.barplot(
+        x=x, y=y, hue="Model", data=df, palette=MODEL_PALETTE, ax=ax, edgecolor="none"
+    )
+    for container in ax.containers:
+        ax.bar_label(container, fmt="%.2f", fontsize=8.5, padding=2.5, color="#334155")  # type: ignore
+
+    ax.set_xlabel("Industry Sector", labelpad=8)
+    ax.set_ylabel(y_label, labelpad=8)
+    if ylim:
+        ax.set_ylim(*ylim)
+
+    many = count > 6
+    plt.xticks(rotation=40 if many else 0, ha="right" if many else "center")
+    ax.legend(
+        title="Model",
+        loc="upper center",
+        bbox_to_anchor=(0.5, 1.12),
+        ncol=df["Model"].nunique(),
+        frameon=False,
+    )
+    style_axes(ax, grid_width=0.6, grid_alpha=0.8)
+    save_figure(fig, save_path)
