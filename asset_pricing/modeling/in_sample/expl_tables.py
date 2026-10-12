@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from src.config import (
+from asset_pricing.config import (
     ASSUMPTIONS_TABLE,
     DESCRIPT_IND_TABLE,
     INCRWALD_CAPM_TABLE,
@@ -9,7 +9,7 @@ from src.config import (
     get_jointwald_path,
     get_params_path,
 )
-from src.modeling.in_sample.expl_utils import add_average_row
+from asset_pricing.modeling.in_sample.expl_utils import add_average_row
 
 
 def _write(df, path, index=False):

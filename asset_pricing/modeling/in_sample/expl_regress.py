@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from src.config import FIG_RSQ
-from src.modeling.in_sample.expl_plots import plot_rsq
-from src.modeling.in_sample.expl_utils import run_regression_analysis
+from asset_pricing.config import FIG_RSQ
+from asset_pricing.modeling.in_sample.expl_plots import plot_rsq
+from asset_pricing.modeling.in_sample.expl_utils import run_regression_analysis
 
 
 def run_analysis(save_outputs: bool = True):

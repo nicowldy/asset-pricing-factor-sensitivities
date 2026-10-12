@@ -1,10 +1,10 @@
-from src.config import FIG_ALPHABYDECS, FIG_RSQBYDECS
-from src.modeling.in_sample.expl_plots import (
+from asset_pricing.config import FIG_ALPHABYDECS, FIG_RSQBYDECS
+from asset_pricing.modeling.in_sample.expl_plots import (
     plot_decade_model_alpha_grids,
     plot_decade_model_factor_grids,
     plot_decade_rsquared_grid,
 )
-from src.modeling.in_sample.expl_utils import (
+from asset_pricing.modeling.in_sample.expl_utils import (
     filter_data_by_period,
     get_decades,
     get_models,

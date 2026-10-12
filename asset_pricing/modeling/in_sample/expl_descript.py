@@ -1,20 +1,20 @@
-from src.config import (
+from asset_pricing.config import (
     FIG_CUMRETURNS_FACT,
     FIG_CUMRETURNS_IND,
     FIG_DISTRIB_FACT,
     FIG_DISTRIB_IND,
 )
-from src.modeling.in_sample.expl_plots import (
+from asset_pricing.modeling.in_sample.expl_plots import (
     plot_cumulative_log_factor_returns,
     plot_cumulative_log_industry_returns,
     plot_factor_distributions,
     plot_industry_distributions,
 )
-from src.modeling.in_sample.expl_tables import (
+from asset_pricing.modeling.in_sample.expl_tables import (
     write_descriptive_stats_industry,
     write_descriptive_stats_model,
 )
-from src.modeling.in_sample.expl_utils import (
+from asset_pricing.modeling.in_sample.expl_utils import (
     calculate_descriptive_stats,
     get_industry_names,
     get_models,

@@ -10,7 +10,7 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.stats.stattools import durbin_watson, jarque_bera
 from statsmodels.tsa.stattools import adfuller
 
-from src.config import FF_IND_PROCESSED, MODELS, PROCESSED, get_statssum_path
+from asset_pricing.config import FF_IND_PROCESSED, MODELS, PROCESSED, get_statssum_path
 
 
 def load_data(file_path):
@@ -170,7 +170,7 @@ def process_model_statistics(
         stats_list.append(collect_industry_statistics(reg, industry, factors))
     df = pd.DataFrame(stats_list)
     if save_outputs:
-        from src.modeling.in_sample.expl_tables import write_model_statistics
+        from asset_pricing.modeling.in_sample.expl_tables import write_model_statistics
 
         write_model_statistics(model_name, df)
     return df

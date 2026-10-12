@@ -1,8 +1,8 @@
 import pandas as pd
 
-from src.config import PROCESSING_STATS, get_standard_datasets
-from src.data.data_tables import export_processing_statistics
-from src.data.data_utils import save_with_markers
+from asset_pricing.config import PROCESSING_STATS, get_standard_datasets
+from asset_pricing.data.data_tables import export_processing_statistics
+from asset_pricing.data.data_utils import save_with_markers
 
 
 def _date_range(dates) -> str:

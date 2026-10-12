@@ -2,8 +2,8 @@
 
 import pytest
 
-from src.config import MODELS
-from src.modeling.in_sample.expl_utils import (
+from asset_pricing.config import MODELS
+from asset_pricing.modeling.in_sample.expl_utils import (
     calculate_excess_returns,
     load_factors,
     load_industry_data,

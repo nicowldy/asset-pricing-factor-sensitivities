@@ -2,13 +2,13 @@
 
 import pandas as pd
 
-from src.config import (
+from asset_pricing.config import (
     FF_CAPM_PROCESSED,
     FF_FF3_PROCESSED,
     FF_FF5_PROCESSED,
     FF_IND_PROCESSED,
 )
-from src.data.data_utils import load_data_with_markers
+from asset_pricing.data.data_utils import load_data_with_markers
 
 
 def test_processed_files_exist():

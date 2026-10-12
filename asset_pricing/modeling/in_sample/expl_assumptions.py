@@ -1,10 +1,10 @@
 import pandas as pd
 import statsmodels.api as sm
 
-from src.config import get_resids_path
-from src.modeling.in_sample import expl_utils
-from src.modeling.in_sample.expl_plots import plot_residuals_fitted_grid
-from src.modeling.in_sample.expl_tables import write_assumption_results
+from asset_pricing.config import get_resids_path
+from asset_pricing.modeling.in_sample import expl_utils
+from asset_pricing.modeling.in_sample.expl_plots import plot_residuals_fitted_grid
+from asset_pricing.modeling.in_sample.expl_tables import write_assumption_results
 
 
 def main(save_to_csv=True, cov_type="HAC"):

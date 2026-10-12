@@ -1,7 +1,7 @@
 import pandas as pd
 
-from src.modeling.in_sample.expl_tables import write_jointwald_results
-from src.modeling.in_sample.expl_utils import (
+from asset_pricing.modeling.in_sample.expl_tables import write_jointwald_results
+from asset_pricing.modeling.in_sample.expl_utils import (
     add_average_row,
     calculate_excess_returns,
     get_industry_names,

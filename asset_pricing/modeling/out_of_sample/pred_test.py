@@ -1,8 +1,8 @@
 import pandas as pd
 
-from src.config import FF_IND_PROCESSED, MODELS, PROCESSED, TESTED, TRAINED
-from src.data.data_utils import load_data_with_markers, save_with_markers
-from src.modeling.in_sample.expl_utils import get_industry_names
+from asset_pricing.config import FF_IND_PROCESSED, MODELS, PROCESSED, TESTED, TRAINED
+from asset_pricing.data.data_utils import load_data_with_markers, save_with_markers
+from asset_pricing.modeling.in_sample.expl_utils import get_industry_names
 
 
 def test_models_and_export(model_type):

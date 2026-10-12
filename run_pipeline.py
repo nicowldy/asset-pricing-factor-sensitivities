@@ -17,7 +17,7 @@ def run_data_stage() -> None:
     print("STAGE 1: DATA EXTRACTION & PREPROCESSING")
     print("=" * 60)
 
-    from src.data.data_processing import process_data
+    from asset_pricing.data.data_processing import process_data
 
     print("--> Aligning sample windows, cleaning, and exporting processed datasets...")
     process_data()
@@ -30,12 +30,18 @@ def run_in_sample_stage() -> None:
     print("STAGE 2: IN-SAMPLE ECONOMETRIC ANALYSIS")
     print("=" * 60)
 
-    from src.modeling.in_sample.expl_assumptions import main as run_assumptions
-    from src.modeling.in_sample.expl_bydecs import main as run_bydecs
-    from src.modeling.in_sample.expl_descript import run_all_analyses as run_descript
-    from src.modeling.in_sample.expl_incrwald import main as run_incrwald
-    from src.modeling.in_sample.expl_jointwald import main as run_jointwald
-    from src.modeling.in_sample.expl_regress import run_analysis as run_regress
+    from asset_pricing.modeling.in_sample.expl_assumptions import (
+        main as run_assumptions,
+    )
+    from asset_pricing.modeling.in_sample.expl_bydecs import main as run_bydecs
+    from asset_pricing.modeling.in_sample.expl_descript import (
+        run_all_analyses as run_descript,
+    )
+    from asset_pricing.modeling.in_sample.expl_incrwald import main as run_incrwald
+    from asset_pricing.modeling.in_sample.expl_jointwald import main as run_jointwald
+    from asset_pricing.modeling.in_sample.expl_regress import (
+        run_analysis as run_regress,
+    )
 
     print("--> Computing descriptive statistics and cumulative return plots...")
     run_descript(save_plots=True)
@@ -70,12 +76,14 @@ def run_out_of_sample_stage() -> None:
     print("STAGE 3: OUT-OF-SAMPLE PREDICTIVE EVALUATION")
     print("=" * 60)
 
-    from src.modeling.out_of_sample.pred_actpred import main as run_actpred
-    from src.modeling.out_of_sample.pred_metrics import main as run_metrics
-    from src.modeling.out_of_sample.pred_pairttest import main as run_pairttest
-    from src.modeling.out_of_sample.pred_test import main as run_test
-    from src.modeling.out_of_sample.pred_train import main as run_train
-    from src.modeling.out_of_sample.pred_ttest import main as run_ttest
+    from asset_pricing.modeling.out_of_sample.pred_actpred import main as run_actpred
+    from asset_pricing.modeling.out_of_sample.pred_metrics import main as run_metrics
+    from asset_pricing.modeling.out_of_sample.pred_pairttest import (
+        main as run_pairttest,
+    )
+    from asset_pricing.modeling.out_of_sample.pred_test import main as run_test
+    from asset_pricing.modeling.out_of_sample.pred_train import main as run_train
+    from asset_pricing.modeling.out_of_sample.pred_ttest import main as run_ttest
 
     print("--> Training predictive models via expanding window OLS...")
     run_train()

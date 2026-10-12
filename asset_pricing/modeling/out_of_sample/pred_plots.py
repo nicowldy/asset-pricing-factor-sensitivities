@@ -4,8 +4,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from src.config import FIG_PRED_COMPEXAM, FIG_PRED_RMSE, FIG_PRED_RSQ, get_comp_path
-from src.plot_style import (
+from asset_pricing.config import (
+    FIG_PRED_COMPEXAM,
+    FIG_PRED_RMSE,
+    FIG_PRED_RSQ,
+    get_comp_path,
+)
+from asset_pricing.plot_style import (
     COLOR_REF_LINE,
     MODEL_PALETTE,
     save_figure,

@@ -67,7 +67,7 @@ The analysis is conducted through two complementary lenses:
 │   ├── figures/                  # Vector graphic visualizations (SVG)
 │   ├── tables/                   # Econometric regression tables, Wald tests, metrics (CSV)
 │   └── other/                    # Full-sample regression summaries per model and industry (TXT)
-├── src/                          # Modular Python source package
+├── asset_pricing/                # Modular Python source package
 │   ├── config.py                 # Centralized path and model configuration
 │   ├── plot_style.py             # Shared plot style and deterministic figure export
 │   ├── data/                     # Ingestion, cleaning, date alignment & CAPM derivation

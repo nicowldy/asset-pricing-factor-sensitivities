@@ -11,7 +11,7 @@ import sys
 import pandas as pd
 import pytest
 
-from src.config import PROJECT_ROOT
+from asset_pricing.config import PROJECT_ROOT
 
 pytestmark = pytest.mark.golden
 
@@ -38,7 +38,9 @@ def fresh_run(tmp_path_factory):
     """Run the pipeline on a copy of the code and raw data, away from the repo."""
     root = tmp_path_factory.mktemp("pipeline")
     shutil.copytree(
-        PROJECT_ROOT / "src", root / "src", ignore=shutil.ignore_patterns("__pycache__")
+        PROJECT_ROOT / "asset_pricing",
+        root / "asset_pricing",
+        ignore=shutil.ignore_patterns("__pycache__"),
     )
     shutil.copytree(PROJECT_ROOT / "data" / "raw", root / "data" / "raw")
     shutil.copy(PROJECT_ROOT / "run_pipeline.py", root)

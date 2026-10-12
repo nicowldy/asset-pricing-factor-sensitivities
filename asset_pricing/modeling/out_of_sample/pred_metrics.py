@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 
-from src.config import PRED_METRICS_TABLE, TESTED
-from src.data.data_utils import load_data_with_markers
-from src.modeling.out_of_sample.pred_plots import plot_r2_bar, plot_rmse_bar
+from asset_pricing.config import PRED_METRICS_TABLE, TESTED
+from asset_pricing.data.data_utils import load_data_with_markers
+from asset_pricing.modeling.out_of_sample.pred_plots import plot_r2_bar, plot_rmse_bar
 
 
 def main():

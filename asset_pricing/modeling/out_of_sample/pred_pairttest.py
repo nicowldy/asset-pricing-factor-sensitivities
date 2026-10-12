@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-from src.config import MODELS, PRED_PAIRTTEST_TABLE, TESTED
-from src.data.data_utils import load_data_with_markers
+from asset_pricing.config import MODELS, PRED_PAIRTTEST_TABLE, TESTED
+from asset_pricing.data.data_utils import load_data_with_markers
 
 
 def calculate_paired_t_test():

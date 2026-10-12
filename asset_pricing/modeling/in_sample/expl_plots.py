@@ -5,14 +5,14 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from src.config import get_coeffsbydecs_path
-from src.modeling.in_sample.expl_utils import (
+from asset_pricing.config import get_coeffsbydecs_path
+from asset_pricing.modeling.in_sample.expl_utils import (
     get_industry_names,
     get_models,
     load_factors,
     load_industry_data,
 )
-from src.plot_style import (
+from asset_pricing.plot_style import (
     BOX_STYLE_STATS,
     COLOR_REF_LINE,
     COLOR_ZERO_LINE,

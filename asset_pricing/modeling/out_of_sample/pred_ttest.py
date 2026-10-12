@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-from src.config import MODELS, PRED_TTEST_TABLE, TESTED
-from src.data.data_utils import load_data_with_markers
+from asset_pricing.config import MODELS, PRED_TTEST_TABLE, TESTED
+from asset_pricing.data.data_utils import load_data_with_markers
 
 
 def _perform_ttest_on_group(group: pd.DataFrame) -> dict[str, float]:
