@@ -2,27 +2,27 @@ Regression Summary for ff3 on Utils
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Utils_Excess   R-squared:                       0.207
-Model:                            OLS   Adj. R-squared:                  0.187
-Method:                 Least Squares   F-statistic:                     17.54
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.86e-09
-Time:                        15:42:00   Log-Likelihood:                -293.45
-No. Observations:                 120   AIC:                             594.9
-Df Residuals:                     116   BIC:                             606.1
+Dep. Variable:           Utils_Excess   R-squared:                       0.416
+Model:                            OLS   Adj. R-squared:                  0.414
+Method:                 Least Squares   F-statistic:                     100.9
+Date:                                   Prob (F-statistic):           1.12e-54
+Time:                                   Log-Likelihood:                -1883.8
+No. Observations:                 738   AIC:                             3776.
+Df Residuals:                     734   BIC:                             3794.
 Df Model:                           3                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const          0.4208      0.168      2.510      0.012       0.092       0.749
-MKT            0.4128      0.066      6.277      0.000       0.284       0.542
-SMB           -0.1857      0.174     -1.069      0.285      -0.526       0.155
-HML           -0.0586      0.087     -0.676      0.499      -0.229       0.111
+const          0.0635      0.105      0.607      0.544      -0.142       0.269
+MKT            0.6124      0.038     16.224      0.000       0.538       0.686
+SMB           -0.2054      0.050     -4.115      0.000      -0.303      -0.108
+HML            0.3088      0.074      4.159      0.000       0.163       0.454
 ==============================================================================
-Omnibus:                        5.373   Durbin-Watson:                   2.231
-Prob(Omnibus):                  0.068   Jarque-Bera (JB):                4.809
-Skew:                          -0.456   Prob(JB):                       0.0903
-Kurtosis:                       3.363   Cond. No.                         4.28
+Omnibus:                        6.020   Durbin-Watson:                   2.027
+Prob(Omnibus):                  0.049   Jarque-Bera (JB):                7.955
+Skew:                           0.033   Prob(JB):                       0.0187
+Kurtosis:                       3.504   Cond. No.                         4.82
 ==============================================================================
 
 Notes:

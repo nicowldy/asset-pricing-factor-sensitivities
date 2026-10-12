@@ -2,29 +2,29 @@ Regression Summary for ff5 on Manuf
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Manuf_Excess   R-squared:                       0.899
-Model:                            OLS   Adj. R-squared:                  0.895
-Method:                 Least Squares   F-statistic:                     340.0
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           9.71e-67
-Time:                        15:42:00   Log-Likelihood:                -223.56
-No. Observations:                 120   AIC:                             459.1
-Df Residuals:                     114   BIC:                             475.8
+Dep. Variable:           Manuf_Excess   R-squared:                       0.890
+Model:                            OLS   Adj. R-squared:                  0.889
+Method:                 Least Squares   F-statistic:                     633.2
+Date:                                   Prob (F-statistic):          5.63e-263
+Time:                                   Log-Likelihood:                -1473.4
+No. Observations:                 738   AIC:                             2959.
+Df Residuals:                     732   BIC:                             2987.
 Df Model:                           5                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const         -0.1556      0.122     -1.272      0.203      -0.395       0.084
-MKT            1.1836      0.039     30.191      0.000       1.107       1.260
-SMB            0.2917      0.061      4.818      0.000       0.173       0.410
-HML            0.0804      0.069      1.169      0.243      -0.054       0.215
-RMW            0.2035      0.068      3.013      0.003       0.071       0.336
-CMA            0.0845      0.151      0.560      0.576      -0.211       0.380
+const         -0.1903      0.072     -2.637      0.008      -0.332      -0.049
+MKT            1.1338      0.025     44.938      0.000       1.084       1.183
+SMB            0.1882      0.034      5.489      0.000       0.121       0.255
+HML            0.1530      0.040      3.869      0.000       0.076       0.231
+RMW            0.2610      0.043      6.003      0.000       0.176       0.346
+CMA            0.0668      0.064      1.037      0.300      -0.059       0.193
 ==============================================================================
-Omnibus:                        3.835   Durbin-Watson:                   2.376
-Prob(Omnibus):                  0.147   Jarque-Bera (JB):                3.570
-Skew:                          -0.422   Prob(JB):                        0.168
-Kurtosis:                       3.028   Cond. No.                         4.55
+Omnibus:                       14.293   Durbin-Watson:                   2.050
+Prob(Omnibus):                  0.001   Jarque-Bera (JB):               24.064
+Skew:                          -0.103   Prob(JB):                     5.95e-06
+Kurtosis:                       3.860   Cond. No.                         5.15
 ==============================================================================
 
 Notes:

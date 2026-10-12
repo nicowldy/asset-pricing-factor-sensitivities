@@ -2,29 +2,29 @@ Regression Summary for ff5 on BusEq
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           BusEq_Excess   R-squared:                       0.891
-Model:                            OLS   Adj. R-squared:                  0.886
-Method:                 Least Squares   F-statistic:                     272.5
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.18e-61
-Time:                        15:42:00   Log-Likelihood:                -217.78
-No. Observations:                 120   AIC:                             447.6
-Df Residuals:                     114   BIC:                             464.3
+Dep. Variable:           BusEq_Excess   R-squared:                       0.830
+Model:                            OLS   Adj. R-squared:                  0.829
+Method:                 Least Squares   F-statistic:                     391.1
+Date:                                   Prob (F-statistic):          6.33e-204
+Time:                                   Log-Likelihood:                -1759.0
+No. Observations:                 738   AIC:                             3530.
+Df Residuals:                     732   BIC:                             3558.
 Df Model:                           5                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const          0.1033      0.124      0.833      0.405      -0.140       0.346
-MKT            1.1290      0.060     18.685      0.000       1.011       1.247
-SMB           -0.1685      0.079     -2.139      0.032      -0.323      -0.014
-HML           -0.0471      0.061     -0.772      0.440      -0.167       0.073
-RMW            0.0221      0.139      0.159      0.874      -0.250       0.294
-CMA           -0.6635      0.161     -4.118      0.000      -0.979      -0.348
+const          0.4148      0.110      3.779      0.000       0.200       0.630
+MKT            1.0608      0.039     26.945      0.000       0.984       1.138
+SMB            0.0640      0.050      1.278      0.201      -0.034       0.162
+HML           -0.3360      0.052     -6.409      0.000      -0.439      -0.233
+RMW           -0.3337      0.091     -3.666      0.000      -0.512      -0.155
+CMA           -0.4536      0.125     -3.615      0.000      -0.700      -0.208
 ==============================================================================
-Omnibus:                        1.860   Durbin-Watson:                   2.273
-Prob(Omnibus):                  0.395   Jarque-Bera (JB):                1.905
-Skew:                          -0.285   Prob(JB):                        0.386
-Kurtosis:                       2.763   Cond. No.                         4.55
+Omnibus:                        7.291   Durbin-Watson:                   2.018
+Prob(Omnibus):                  0.026   Jarque-Bera (JB):                8.119
+Skew:                           0.159   Prob(JB):                       0.0173
+Kurtosis:                       3.404   Cond. No.                         5.15
 ==============================================================================
 
 Notes:

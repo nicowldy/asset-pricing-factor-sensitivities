@@ -2,29 +2,29 @@ Regression Summary for ff5 on Telcm
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Telcm_Excess   R-squared:                       0.732
-Model:                            OLS   Adj. R-squared:                  0.720
-Method:                 Least Squares   F-statistic:                     138.6
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           9.45e-47
-Time:                        15:42:00   Log-Likelihood:                -251.11
-No. Observations:                 120   AIC:                             514.2
-Df Residuals:                     114   BIC:                             531.0
+Dep. Variable:           Telcm_Excess   R-squared:                       0.589
+Model:                            OLS   Adj. R-squared:                  0.586
+Method:                 Least Squares   F-statistic:                     131.4
+Date:                                   Prob (F-statistic):           2.77e-99
+Time:                                   Log-Likelihood:                -1858.3
+No. Observations:                 738   AIC:                             3729.
+Df Residuals:                     732   BIC:                             3756.
 Df Model:                           5                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const          0.0375      0.167      0.224      0.823      -0.290       0.365
-MKT            0.9265      0.037     25.027      0.000       0.854       0.999
-SMB           -0.1944      0.061     -3.164      0.002      -0.315      -0.074
-HML           -0.2704      0.106     -2.562      0.010      -0.477      -0.064
-RMW            0.2596      0.105      2.463      0.014       0.053       0.466
-CMA            0.9199      0.224      4.101      0.000       0.480       1.360
+const          0.0003      0.118      0.003      0.998      -0.231       0.232
+MKT            0.8406      0.041     20.605      0.000       0.761       0.921
+SMB           -0.2357      0.057     -4.143      0.000      -0.347      -0.124
+HML            0.1276      0.059      2.160      0.031       0.012       0.243
+RMW           -0.2234      0.088     -2.530      0.011      -0.397      -0.050
+CMA            0.1273      0.108      1.174      0.240      -0.085       0.340
 ==============================================================================
-Omnibus:                        1.146   Durbin-Watson:                   1.992
-Prob(Omnibus):                  0.564   Jarque-Bera (JB):                1.120
-Skew:                           0.229   Prob(JB):                        0.571
-Kurtosis:                       2.884   Cond. No.                         4.55
+Omnibus:                       30.533   Durbin-Watson:                   2.022
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               76.506
+Skew:                           0.141   Prob(JB):                     2.44e-17
+Kurtosis:                       4.552   Cond. No.                         5.15
 ==============================================================================
 
 Notes:
