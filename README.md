@@ -56,7 +56,6 @@ The analysis is conducted through two complementary lenses:
 ├── Makefile                      # Shortcuts: make run, make test, make verify, make lint
 ├── pyproject.toml                # Build specification, dependency ranges, tool config
 ├── requirements.txt              # Exact versions the committed outputs were produced with
-├── environment.yml               # Conda environment built from requirements.txt
 ├── CLAUDE.md                     # Working rules for coding agents
 ├── run_pipeline.py               # Unified CLI runner for end-to-end execution
 ├── data/
@@ -105,14 +104,9 @@ The analysis is conducted through two complementary lenses:
 
 ### 1. Environment Setup
 
-Clone the repository and install the dependencies in a dedicated environment:
+Clone the repository and install the pinned dependencies in a virtual environment:
 
 ```bash
-# Option A: Conda
-conda env create -f environment.yml
-conda activate thesis_env
-
-# Option B: virtual environment with pip
 python3.12 -m venv .venv && source .venv/bin/activate
 make install
 ```

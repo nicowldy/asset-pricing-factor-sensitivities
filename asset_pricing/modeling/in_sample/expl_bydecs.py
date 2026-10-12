@@ -50,11 +50,9 @@ def main():
         all_decade_results[decade_name] = decade_results
         all_decade_stats[decade_name] = decade_stats
 
-    plot_decade_rsquared_grid(all_decade_stats, decades_order, True, FIG_RSQBYDECS)
-    plot_decade_model_factor_grids(all_decade_results, decades_order, True)
-    plot_decade_model_alpha_grids(
-        all_decade_results, decades_order, True, FIG_ALPHABYDECS
-    )
+    plot_decade_rsquared_grid(all_decade_stats, decades_order, FIG_RSQBYDECS)
+    plot_decade_model_factor_grids(all_decade_results, decades_order)
+    plot_decade_model_alpha_grids(all_decade_results, decades_order, FIG_ALPHABYDECS)
 
 
 if __name__ == "__main__":

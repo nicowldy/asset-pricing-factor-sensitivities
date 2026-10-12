@@ -26,7 +26,7 @@ def main():
             "industry"
         )
     }
-    plot_comp_three(data3, "ff5", industries=["Manuf", "Utils"])
+    plot_comp_three(data3, industries=("Manuf", "Utils"))
 
 
 if __name__ == "__main__":

@@ -19,382 +19,75 @@ from asset_pricing.plot_style import (
     FACTOR_PALETTE,
     INDUSTRY_PALETTE,
     MODEL_PALETTE,
+    plot_model_bars,
     save_figure,
     set_academic_style,
+    style_axes,
 )
+
+# Series drawn in the decade grids, in plotting order, with their markers.
+MODEL_MARKERS = {"CAPM": "o", "FF3": "s", "FF5": "^"}
+FACTOR_MARKERS = {"MKT": "o", "SMB": "s", "HML": "^", "RMW": "D", "CMA": "v"}
+
+
+def _zero_line(ax) -> None:
+    ax.axhline(0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
 
 
 def plot_rsq(model_results: dict, save_path=None) -> None:
-    set_academic_style()
-    rows = []
-    for model, industries in model_results.items():
-        for industry, params in industries.items():
-            rows.append(
-                {
-                    "Model": model.upper(),
-                    "Industry": industry,
-                    "Adjusted R-squared": params["adj_r_squared"],
-                }
-            )
-    df = pd.DataFrame(rows)
-    count = len(df["Industry"].unique())
-    fig_width = max(11, count * 1.1)
-
-    fig, ax = plt.subplots(figsize=(fig_width, 6))
-    sns.barplot(
-        x="Industry",
-        y="Adjusted R-squared",
-        hue="Model",
-        data=df,
-        palette=MODEL_PALETTE,
-        ax=ax,
-        edgecolor="none",
+    df = pd.DataFrame(
+        [
+            {
+                "Model": model.upper(),
+                "Industry": industry,
+                "Adjusted R-squared": params["adj_r_squared"],
+            }
+            for model, industries in model_results.items()
+            for industry, params in industries.items()
+        ]
+    )
+    plot_model_bars(
+        df,
+        "Industry",
+        "Adjusted R-squared",
+        "In-Sample Adjusted $R^2$",
+        save_path,
+        ylim=(0, max(1.0, df["Adjusted R-squared"].max() + 0.12)),
     )
 
-    for container in ax.containers:
-        ax.bar_label(container, fmt="%.2f", fontsize=8.5, padding=2.5, color="#334155")  # type: ignore
 
-    ax.set_xlabel("Industry Sector", labelpad=8)
-    ax.set_ylabel("In-Sample Adjusted $R^2$", labelpad=8)
-    ax.set_ylim(0, max(1.0, df["Adjusted R-squared"].max() + 0.12))
-
-    many = count > 6
-    plt.xticks(rotation=40 if many else 0, ha="right" if many else "center")
-
-    ax.legend(
-        title="Model",
-        loc="upper center",
-        bbox_to_anchor=(0.5, 1.12),
-        ncol=len(df["Model"].unique()),
-        frameon=False,
-    )
-
-    sns.despine(ax=ax, top=True, right=True)
-    ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.6, alpha=0.8)
-    ax.xaxis.grid(False)
-
-    save_figure(fig, save_path)
-
-
-def plot_industry_distributions(save_path=None) -> None:
-    set_academic_style()
-    industry_data = load_industry_data()
-    industry_names = get_industry_names(industry_data)
-    rows, cols = 3, 4
-    fig = plt.figure(figsize=(16, 11))
-
-    for i, industry in enumerate(industry_names):
-        if i < rows * cols:
-            ax = fig.add_subplot(rows, cols, i + 1)
-            data_to_plot = industry_data[industry].dropna()
-            if isinstance(data_to_plot, pd.Series) and not data_to_plot.empty:
-                sns.histplot(
-                    x=data_to_plot,
-                    kde=True,
-                    stat="density",
-                    color="#2563EB",
-                    alpha=0.35,
-                    line_kws={"linewidth": 1.4, "color": "#1D4ED8"},
-                    ax=ax,
-                    edgecolor="none",
-                )
-            mean = industry_data[industry].mean()
-            std = industry_data[industry].std()
-            skew = industry_data[industry].skew()
-            kurt = industry_data[industry].kurtosis()
-
-            ax.axvline(
-                x=mean,
-                color=COLOR_REF_LINE,
-                linestyle="--",
-                linewidth=1.1,
-                alpha=0.85,
-            )
-            ax.axvline(
-                x=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7
-            )
-
-            stats = f"μ:   {mean:5.2f}%\nσ:   {std:5.2f}%\nSkew:{skew:5.2f}\nKurt:{kurt:5.2f}"
-            ax.text(
-                0.95,
-                0.94,
-                stats,
-                transform=ax.transAxes,
-                va="top",
-                ha="right",
-                fontsize=7.5,
-                family="monospace",
-                bbox=BOX_STYLE_STATS,
-            )
-            ax.set_title(industry, pad=5)
-            ax.set_xlabel("Monthly Return (%)")
-            ax.set_ylabel("Density")
-
-            sns.despine(ax=ax, top=True, right=True)
-            ax.yaxis.grid(
-                True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
-            )
-            ax.xaxis.grid(False)
-
-    save_figure(fig, save_path)
-
-
-def plot_decade_rsquared_grid(
-    all_decade_stats: dict,
-    decades_order: list[str],
-    save_outputs: bool = True,
-    save_path=None,
+def _plot_distribution_grid(
+    df, color, line_color, x_label, save_path, fig_height=None
 ) -> None:
+    """One histogram with density curve and summary statistics per column."""
     set_academic_style()
-    industries = set()
-    for stats in all_decade_stats.values():
-        for df in stats.values():
-            industries.update(df["Industry"].tolist())
-    industries.discard("Average")
-    sorted_industries = sorted(industries)
+    rows = (len(df.columns) + 3) // 4
+    cols = min(4, len(df.columns))
+    fig = plt.figure(figsize=(16, fig_height or 3.8 * rows))
 
-    data = []
-    for decade, stats in all_decade_stats.items():
-        for model, df_stats in stats.items():
-            for _, row in df_stats.iterrows():
-                if row["Industry"] != "Average":
-                    data.append(
-                        {
-                            "Industry": row["Industry"],
-                            "Decade": decade,
-                            "Model": model.upper(),
-                            "Adj_R_squared": row["Adj_R_squared"],
-                        }
-                    )
-    df = pd.DataFrame(data)
-
-    n = len(sorted_industries)
-    rows = (n + 3) // 4
-    cols = min(4, n)
-    fig = plt.figure(figsize=(16, 3.8 * rows))
-
-    model_markers = {"CAPM": "o", "FF3": "s", "FF5": "^"}
-
-    for i, industry in enumerate(sorted_industries):
+    for i, name in enumerate(df.columns):
         ax = fig.add_subplot(rows, cols, i + 1)
-        sub = df[df["Industry"] == industry]
-        if not sub.empty:
-            for model_name, sub_model in sub.groupby("Model"):
-                ax.plot(
-                    sub_model["Decade"],
-                    sub_model["Adj_R_squared"],
-                    marker=model_markers.get(str(model_name), "o"),
-                    markersize=4.5,
-                    linewidth=1.4,
-                    color=MODEL_PALETTE.get(str(model_name), "#2563EB"),
-                    label=str(model_name),
-                )
-            ax.set_xticks(range(len(decades_order)))
-            ax.set_xticklabels(decades_order, rotation=40, ha="right")
-            ax.set_title(industry, pad=5)
-            ax.set_ylabel("Adjusted $R^2$")
-            ax.set_ylim(0, 1.05)
-
-            sns.despine(ax=ax, top=True, right=True)
-            ax.yaxis.grid(
-                True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
-            )
-            ax.xaxis.grid(False)
-
-            # Show legend only on first subplot to eliminate visual redundancy
-            if i == 0:
-                ax.legend(title="Model", frameon=False, fontsize=8)
-
-    save_figure(fig, save_path if save_outputs else None)
-
-
-def plot_decade_model_factor_grids(
-    all_decade_results: dict,
-    decades_order: list[str],
-    save_outputs: bool = True,
-) -> None:
-    set_academic_style()
-    models = get_models()
-    factor_order = ["MKT", "SMB", "HML", "RMW", "CMA"]
-    first_decade = next(iter(all_decade_results))
-    first_model = next(iter(models))
-    industries = sorted(all_decade_results[first_decade][first_model].keys())
-
-    factor_markers = {"MKT": "o", "SMB": "s", "HML": "^", "RMW": "D", "CMA": "v"}
-
-    for model, info in models.items():
-        factors = info["factors"]
-        data = []
-        for decade, results in all_decade_results.items():
-            if model in results:
-                for industry, params in results[model].items():
-                    for factor in factors:
-                        if factor in params["betas"]:
-                            data.append(
-                                {
-                                    "Industry": industry,
-                                    "Decade": decade,
-                                    "Factor": factor,
-                                    "Coefficient": params["betas"][factor],
-                                }
-                            )
-        df = pd.DataFrame(data)
-        if df.empty:
-            continue
-
-        n = len(industries)
-        rows = (n + 3) // 4
-        cols = min(4, n)
-        fig = plt.figure(figsize=(16, 3.8 * rows))
-
-        for i, industry in enumerate(industries):
-            ax = fig.add_subplot(rows, cols, i + 1)
-            sub = df[df["Industry"] == industry]
-            if not sub.empty:
-                for factor_name in [f for f in factor_order if f in factors]:
-                    sub_f = sub[sub["Factor"] == factor_name]
-                    if not sub_f.empty:
-                        ax.plot(
-                            sub_f["Decade"],
-                            sub_f["Coefficient"],
-                            marker=factor_markers.get(factor_name, "o"),
-                            markersize=4.5,
-                            linewidth=1.4,
-                            color=FACTOR_PALETTE.get(factor_name, "#2563EB"),
-                            label=factor_name,
-                        )
-                ax.set_xticks(range(len(decades_order)))
-                ax.set_xticklabels(decades_order, rotation=40, ha="right")
-                ax.set_title(industry, pad=5)
-                ax.set_ylabel("Factor Sensitivity (Beta)")
-                ax.axhline(
-                    y=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7
-                )
-
-                sns.despine(ax=ax, top=True, right=True)
-                ax.yaxis.grid(
-                    True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
-                )
-                ax.xaxis.grid(False)
-
-                if i == 0:
-                    ax.legend(title="Factor", frameon=False, fontsize=8)
-
-        save_figure(fig, get_coeffsbydecs_path(model) if save_outputs else None)
-
-
-def plot_decade_model_alpha_grids(
-    all_decade_results: dict,
-    decades_order: list[str],
-    save_outputs: bool = True,
-    save_path=None,
-) -> None:
-    set_academic_style()
-    data = []
-    for decade, results in all_decade_results.items():
-        for model, industries in results.items():
-            for industry, params in industries.items():
-                data.append(
-                    {
-                        "Industry": industry,
-                        "Decade": decade,
-                        "Model": model.upper(),
-                        "Alpha": params.get("alpha"),
-                    }
-                )
-    df = pd.DataFrame(data)
-    industries = sorted(df["Industry"].unique())
-    rows = (len(industries) + 3) // 4
-    cols = min(4, len(industries))
-    fig = plt.figure(figsize=(16, 3.8 * rows))
-
-    model_markers = {"CAPM": "o", "FF3": "s", "FF5": "^"}
-
-    for i, industry in enumerate(industries):
-        ax = fig.add_subplot(rows, cols, i + 1)
-        sub = df[df["Industry"] == industry]
-        if not sub.empty:
-            for model_name, sub_model in sub.groupby("Model"):
-                ax.plot(
-                    sub_model["Decade"],
-                    sub_model["Alpha"],
-                    marker=model_markers.get(str(model_name), "o"),
-                    markersize=4.5,
-                    linewidth=1.4,
-                    color=MODEL_PALETTE.get(str(model_name), "#2563EB"),
-                    label=str(model_name),
-                )
-            ax.set_xticks(range(len(decades_order)))
-            ax.set_xticklabels(decades_order, rotation=40, ha="right")
-            ax.set_title(industry, pad=5)
-            ax.set_ylabel("Alpha (%)")
-            ax.axhline(
-                y=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7
-            )
-
-            sns.despine(ax=ax, top=True, right=True)
-            ax.yaxis.grid(
-                True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
-            )
-            ax.xaxis.grid(False)
-
-            if i == 0:
-                ax.legend(title="Model", frameon=False, fontsize=8)
-
-    save_figure(fig, save_path if save_outputs else None)
-
-
-def plot_factor_distributions(save_path=None) -> None:
-    set_academic_style()
-    models = get_models()
-    all_factors = {}
-    for model, info in models.items():
-        data = load_factors(model)
-        for factor in info["factors"]:
-            label = f"SMB ({model.upper()})" if factor == "SMB" else factor
-            all_factors[label] = data[factor]
-    df = pd.DataFrame(all_factors)
-
-    num = len(df.columns)
-    rows = (num + 3) // 4
-    cols = min(4, num)
-    fig = plt.figure(figsize=(16, 3.8 * rows))
-
-    for i, factor in enumerate(df.columns):
-        ax = fig.add_subplot(rows, cols, i + 1)
-        data_to_plot = df[factor].dropna()
-        if isinstance(data_to_plot, pd.Series) and not data_to_plot.empty:
-            sns.histplot(
-                x=data_to_plot,
-                kde=True,
-                stat="density",
-                color="#0D9488",
-                alpha=0.35,
-                line_kws={"linewidth": 1.4, "color": "#0F766E"},
-                ax=ax,
-                edgecolor="none",
-            )
-        mean = df[factor].mean()
-        std = df[factor].std()
-        skew = df[factor].skew()
-        kurt = df[factor].kurtosis()
-
+        series = df[name]
+        sns.histplot(
+            x=series.dropna(),
+            kde=True,
+            stat="density",
+            color=color,
+            alpha=0.35,
+            line_kws={"linewidth": 1.4, "color": line_color},
+            ax=ax,
+            edgecolor="none",
+        )
+        mean = series.mean()
         ax.axvline(
-            x=mean,
-            color=COLOR_REF_LINE,
-            linestyle="--",
-            linewidth=1.1,
-            alpha=0.85,
+            x=mean, color=COLOR_REF_LINE, linestyle="--", linewidth=1.1, alpha=0.85
         )
         ax.axvline(x=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-
-        stats = (
-            f"μ:   {mean:5.2f}%\nσ:   {std:5.2f}%\nSkew:{skew:5.2f}\nKurt:{kurt:5.2f}"
-        )
         ax.text(
             0.95,
             0.94,
-            stats,
+            f"μ:   {mean:5.2f}%\nσ:   {series.std():5.2f}%\n"
+            f"Skew:{series.skew():5.2f}\nKurt:{series.kurtosis():5.2f}",
             transform=ax.transAxes,
             va="top",
             ha="right",
@@ -402,15 +95,179 @@ def plot_factor_distributions(save_path=None) -> None:
             family="monospace",
             bbox=BOX_STYLE_STATS,
         )
-        ax.set_title(factor, pad=5)
-        ax.set_xlabel("Factor Return (%)")
+        ax.set_title(name, pad=5)
+        ax.set_xlabel(x_label)
         ax.set_ylabel("Density")
-
-        sns.despine(ax=ax, top=True, right=True)
-        ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
-        ax.xaxis.grid(False)
+        style_axes(ax)
 
     save_figure(fig, save_path)
+
+
+def plot_industry_distributions(save_path=None) -> None:
+    industry_data = load_industry_data()
+    _plot_distribution_grid(
+        industry_data[get_industry_names(industry_data)],
+        color="#2563EB",
+        line_color="#1D4ED8",
+        x_label="Monthly Return (%)",
+        save_path=save_path,
+        fig_height=11,
+    )
+
+
+def plot_factor_distributions(save_path=None) -> None:
+    all_factors = {}
+    for model, info in get_models().items():
+        data = load_factors(model)
+        for factor in info["factors"]:
+            label = f"SMB ({model.upper()})" if factor == "SMB" else factor
+            all_factors[label] = data[factor]
+    _plot_distribution_grid(
+        pd.DataFrame(all_factors),
+        color="#0D9488",
+        line_color="#0F766E",
+        x_label="Factor Return (%)",
+        save_path=save_path,
+    )
+
+
+def _plot_decade_grid(
+    df,
+    decades_order,
+    series_col,
+    value_col,
+    markers,
+    palette,
+    y_label,
+    save_path,
+    zero_line=True,
+    ylim=None,
+) -> None:
+    """One panel per industry with a line over the decades for each series.
+
+    `df` is in long format with the columns "Industry", "Decade", `series_col`
+    and `value_col`. `markers` names the series and fixes their drawing order.
+    """
+    set_academic_style()
+    industries = sorted(df["Industry"].unique())
+    rows = (len(industries) + 3) // 4
+    cols = min(4, len(industries))
+    fig = plt.figure(figsize=(16, 3.8 * rows))
+
+    for i, industry in enumerate(industries):
+        ax = fig.add_subplot(rows, cols, i + 1)
+        sub = df[df["Industry"] == industry]
+        for name, marker in markers.items():
+            sub_series = sub[sub[series_col] == name]
+            if not sub_series.empty:
+                ax.plot(
+                    sub_series["Decade"],
+                    sub_series[value_col],
+                    marker=marker,
+                    markersize=4.5,
+                    linewidth=1.4,
+                    color=palette[name],
+                    label=name,
+                )
+        ax.set_xticks(range(len(decades_order)))
+        ax.set_xticklabels(decades_order, rotation=40, ha="right")
+        ax.set_title(industry, pad=5)
+        ax.set_ylabel(y_label)
+        if ylim:
+            ax.set_ylim(*ylim)
+        if zero_line:
+            _zero_line(ax)
+        style_axes(ax)
+
+        # Show legend only on first subplot to eliminate visual redundancy
+        if i == 0:
+            ax.legend(title=series_col, frameon=False, fontsize=8)
+
+    save_figure(fig, save_path)
+
+
+def plot_decade_rsquared_grid(
+    all_decade_stats: dict, decades_order: list[str], save_path=None
+) -> None:
+    df = pd.concat(
+        [
+            df_stats[["Industry", "Adj_R_squared"]].assign(
+                Decade=decade, Model=model.upper()
+            )
+            for decade, stats in all_decade_stats.items()
+            for model, df_stats in stats.items()
+        ],
+        ignore_index=True,
+    )
+    _plot_decade_grid(
+        df,
+        decades_order,
+        "Model",
+        "Adj_R_squared",
+        MODEL_MARKERS,
+        MODEL_PALETTE,
+        "Adjusted $R^2$",
+        save_path,
+        zero_line=False,
+        ylim=(0, 1.05),
+    )
+
+
+def plot_decade_model_factor_grids(
+    all_decade_results: dict, decades_order: list[str]
+) -> None:
+    for model in get_models():
+        df = pd.DataFrame(
+            [
+                {
+                    "Industry": industry,
+                    "Decade": decade,
+                    "Factor": factor,
+                    "Coefficient": coefficient,
+                }
+                for decade, results in all_decade_results.items()
+                for industry, params in results[model].items()
+                for factor, coefficient in params["betas"].items()
+            ]
+        )
+        _plot_decade_grid(
+            df,
+            decades_order,
+            "Factor",
+            "Coefficient",
+            FACTOR_MARKERS,
+            FACTOR_PALETTE,
+            "Factor Sensitivity (Beta)",
+            get_coeffsbydecs_path(model),
+        )
+
+
+def plot_decade_model_alpha_grids(
+    all_decade_results: dict, decades_order: list[str], save_path=None
+) -> None:
+    df = pd.DataFrame(
+        [
+            {
+                "Industry": industry,
+                "Decade": decade,
+                "Model": model.upper(),
+                "Alpha": params["alpha"],
+            }
+            for decade, results in all_decade_results.items()
+            for model, industries in results.items()
+            for industry, params in industries.items()
+        ]
+    )
+    _plot_decade_grid(
+        df,
+        decades_order,
+        "Model",
+        "Alpha",
+        MODEL_MARKERS,
+        MODEL_PALETTE,
+        "Alpha (%)",
+        save_path,
+    )
 
 
 def plot_residuals_fitted_grid(
@@ -418,19 +275,22 @@ def plot_residuals_fitted_grid(
 ) -> None:
     set_academic_style()
     fig, axes = plt.subplots(rows, cols, figsize=(15, 3.5 * rows))
-    axes_flat = axes.flatten() if hasattr(axes, "flatten") else [axes]
+    axes_flat = axes.flatten()
 
-    for ax, industry in zip(axes_flat, reg_results.keys(), strict=False):
-        res = reg_results[industry]["residuals"]
-        fit = reg_results[industry]["fitted"]
-        ax.scatter(fit, res, alpha=0.45, s=12, color="#2563EB", edgecolors="none")
+    for ax, (industry, params) in zip(axes_flat, reg_results.items(), strict=False):
+        ax.scatter(
+            params["fitted"],
+            params["residuals"],
+            alpha=0.45,
+            s=12,
+            color="#2563EB",
+            edgecolors="none",
+        )
         ax.axhline(0, color=COLOR_REF_LINE, linestyle="--", linewidth=1.1, alpha=0.85)
         ax.set_title(industry, pad=5)
         ax.set_xlabel("Fitted Values (%)")
         ax.set_ylabel("Residuals (%)")
-
-        sns.despine(ax=ax, top=True, right=True)
-        ax.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
+        style_axes(ax, both=True)
 
     for ax in axes_flat[len(reg_results) :]:
         fig.delaxes(ax)
@@ -438,8 +298,31 @@ def plot_residuals_fitted_grid(
     save_figure(fig, save_path)
 
 
-def plot_cumulative_log_factor_returns(save_path=None) -> None:
+def _plot_cumulative_log_returns(
+    returns_pct, colors, linewidth, legend_ncol, legend_fontsize, save_path
+) -> None:
+    """Cumulative log return of each column, starting at zero."""
     set_academic_style()
+    log_cum = np.log1p(returns_pct / 100.0).cumsum()
+    log_cum = log_cum - log_cum.iloc[0]
+
+    fig, ax = plt.subplots(figsize=(11, 5.5))
+    for col, color in zip(log_cum.columns, colors, strict=True):
+        ax.plot(
+            log_cum.index, log_cum[col], label=col, color=color, linewidth=linewidth
+        )
+
+    ax.set_xlabel("Date", labelpad=8)
+    ax.set_ylabel("Cumulative Log Return", labelpad=8)
+    _zero_line(ax)
+    ax.legend(
+        loc="upper left", ncol=legend_ncol, frameon=False, fontsize=legend_fontsize
+    )
+    style_axes(ax, grid_width=0.6, grid_alpha=0.8)
+    save_figure(fig, save_path)
+
+
+def plot_cumulative_log_factor_returns(save_path=None) -> None:
     data3 = load_factors("ff3")
     data5 = load_factors("ff5")
     df_factors = pd.DataFrame(
@@ -452,87 +335,24 @@ def plot_cumulative_log_factor_returns(save_path=None) -> None:
             "CMA": data5["CMA"],
         }
     )
-    df_factors = df_factors / 100.0
-    log_cum = np.log1p(df_factors).cumsum()
-    if not isinstance(log_cum, pd.DataFrame):
-        log_cum = pd.DataFrame(log_cum)
-
-    if not log_cum.empty:
-        log_cum = log_cum - log_cum.iloc[0]
-
-    fig, ax = plt.subplots(figsize=(11, 5.5))
-    if isinstance(log_cum, pd.DataFrame):
-        for col in log_cum.columns:
-            color = FACTOR_PALETTE.get(col, "#2563EB")
-            ax.plot(log_cum.index, log_cum[col], label=col, color=color, linewidth=1.6)
-
-    ax.set_xlabel("Date", labelpad=8)
-    ax.set_ylabel("Cumulative Log Return", labelpad=8)
-    ax.axhline(0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-
-    ax.legend(
-        loc="upper left",
-        ncol=3,
-        frameon=False,
-        fontsize=8.5,
+    _plot_cumulative_log_returns(
+        df_factors,
+        colors=[FACTOR_PALETTE[col] for col in df_factors.columns],
+        linewidth=1.6,
+        legend_ncol=3,
+        legend_fontsize=8.5,
+        save_path=save_path,
     )
-
-    sns.despine(ax=ax, top=True, right=True)
-    ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.6, alpha=0.8)
-    ax.xaxis.grid(False)
-
-    save_figure(fig, save_path)
 
 
 def plot_cumulative_log_industry_returns(save_path=None) -> None:
-    set_academic_style()
     industry_data = load_industry_data()
     industry_names = get_industry_names(industry_data)
-    df_industry = industry_data[industry_names] / 100.0
-
-    log_cum_intermediate = np.log1p(df_industry).cumsum()
-
-    if isinstance(log_cum_intermediate, pd.Series):
-        log_cum = pd.DataFrame(log_cum_intermediate)
-    elif isinstance(log_cum_intermediate, pd.DataFrame):
-        log_cum = log_cum_intermediate
-    else:
-        if isinstance(df_industry, pd.DataFrame):
-            log_cum = pd.DataFrame(
-                log_cum_intermediate,
-                index=df_industry.index,
-                columns=df_industry.columns,
-            )
-        elif isinstance(df_industry, pd.Series):
-            col_name = df_industry.name if df_industry.name is not None else 0
-            log_cum = pd.DataFrame(
-                log_cum_intermediate, index=df_industry.index, columns=[col_name]
-            )
-        else:
-            log_cum = pd.DataFrame(log_cum_intermediate)
-
-    if not log_cum.empty:
-        log_cum = log_cum - log_cum.iloc[0]
-
-    fig, ax = plt.subplots(figsize=(11, 5.5))
-    if isinstance(log_cum, pd.DataFrame):
-        for idx, col in enumerate(log_cum.columns):
-            color = INDUSTRY_PALETTE[idx % len(INDUSTRY_PALETTE)]
-            ax.plot(log_cum.index, log_cum[col], label=col, color=color, linewidth=1.4)
-
-    ax.set_xlabel("Date", labelpad=8)
-    ax.set_ylabel("Cumulative Log Return", labelpad=8)
-    ax.axhline(0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-
-    ax.legend(
-        loc="upper left",
-        ncol=4,
-        frameon=False,
-        fontsize=8,
+    _plot_cumulative_log_returns(
+        industry_data[industry_names],
+        colors=INDUSTRY_PALETTE[: len(industry_names)],
+        linewidth=1.4,
+        legend_ncol=4,
+        legend_fontsize=8,
+        save_path=save_path,
     )
-
-    sns.despine(ax=ax, top=True, right=True)
-    ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.6, alpha=0.8)
-    ax.xaxis.grid(False)
-
-    save_figure(fig, save_path)
