@@ -1,5 +1,8 @@
 """Modern publication-ready styling utilities and palettes for asset pricing plots."""
+
 from __future__ import annotations
+
+from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -8,20 +11,20 @@ import seaborn as sns
 # Professional executive/academic palette for factor models
 MODEL_PALETTE = {
     "CAPM": "#64748B",  # Cool Slate Gray (Benchmark)
-    "FF3": "#1D4ED8",   # Deep Cobalt Blue (3-Factor)
-    "FF5": "#0D9488",   # Rich Teal (5-Factor)
+    "FF3": "#1D4ED8",  # Deep Cobalt Blue (3-Factor)
+    "FF5": "#0D9488",  # Rich Teal (5-Factor)
 }
 
 # Unified palette for Fama-French factors
 FACTOR_PALETTE = {
-    "MKT": "#1E293B",       # Charcoal / Dark Slate
-    "SMB": "#2563EB",       # Blue
+    "MKT": "#1E293B",  # Charcoal / Dark Slate
+    "SMB": "#2563EB",  # Blue
     "SMB (CAPM)": "#64748B",
     "SMB (FF3)": "#2563EB",
-    "SMB (FF5)": "#0284C7", # Sky Blue
-    "HML": "#D97706",       # Warm Amber
-    "RMW": "#059669",       # Emerald Green
-    "CMA": "#7C3AED",       # Violet
+    "SMB (FF5)": "#0284C7",  # Sky Blue
+    "HML": "#D97706",  # Warm Amber
+    "RMW": "#059669",  # Emerald Green
+    "CMA": "#7C3AED",  # Violet
 }
 
 # Curated qualitative palette for 12 industry sectors
@@ -54,12 +57,12 @@ BOX_STYLE_STATS = dict(
 
 def set_academic_style() -> None:
     """Apply modern publication-grade Matplotlib / Seaborn aesthetic defaults.
-    
+
     Adheres to Tufte minimalism: high data-ink ratio, subtle muted gridlines,
     removed distracting top/right spines, and clean modern typography.
     """
     sns.set_theme(style="white", palette="deep")
-    
+
     rc_custom = {
         # Typography & Anti-aliasing
         "font.family": "sans-serif",
@@ -73,7 +76,6 @@ def set_academic_style() -> None:
         "text.color": "#1E293B",
         "figure.facecolor": "#FFFFFF",
         "axes.facecolor": "#FFFFFF",
-        
         # Axes & Labels
         "axes.edgecolor": "#94A3B8",
         "axes.linewidth": 0.8,
@@ -84,7 +86,6 @@ def set_academic_style() -> None:
         "axes.titleweight": "semibold",
         "axes.titlecolor": "#0F172A",
         "axes.titlepad": 8,
-        
         # Ticks
         "xtick.color": "#475569",
         "ytick.color": "#475569",
@@ -94,11 +95,9 @@ def set_academic_style() -> None:
         "ytick.major.size": 3.5,
         "xtick.major.width": 0.8,
         "ytick.major.width": 0.8,
-        
         # Spines (Tufte style: eliminate top & right)
         "axes.spines.top": False,
         "axes.spines.right": False,
-        
         # Subtle horizontal grid for readable quantitative comparisons
         "axes.grid": True,
         "axes.grid.axis": "y",
@@ -106,21 +105,32 @@ def set_academic_style() -> None:
         "grid.linestyle": "--",
         "grid.linewidth": 0.6,
         "grid.alpha": 0.75,
-        
         # Legend
         "legend.frameon": False,
         "legend.fontsize": 8.5,
         "legend.title_fontsize": 9,
-        
         # Plot elements
         "lines.linewidth": 1.6,
         "lines.markersize": 5,
         "patch.linewidth": 0.6,
-        
-        # Export settings
+        # Export settings (fixed salt keeps SVG element ids stable across runs)
+        "svg.hashsalt": "asset-pricing-sector-sensitivities",
         "savefig.dpi": 300,
         "savefig.bbox": "tight",
         "savefig.pad_inches": 0.05,
     }
-    
+
     mpl.rcParams.update(rc_custom)
+
+
+def save_figure(fig, path=None) -> None:
+    """Lay out a figure, save it if a path is given, and close it.
+
+    The creation date is left out of the file so that re-running the pipeline
+    reproduces the figure byte-for-byte.
+    """
+    fig.tight_layout()
+    if path:
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(path, bbox_inches="tight", metadata={"Date": None})
+    plt.close(fig)

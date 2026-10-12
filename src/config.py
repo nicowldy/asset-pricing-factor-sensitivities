@@ -1,4 +1,5 @@
 """Centralized configuration and path management using pathlib."""
+
 from pathlib import Path
 
 # Base Paths
@@ -17,27 +18,14 @@ OTHER_DIR = REPORTS_DIR / "other"
 
 # Factor Models Configuration
 MODELS = {
-    "capm": {
-        "factors": ["MKT"],
-        "data_type": "capm",
-        "label": "CAPM",
-    },
-    "ff3": {
-        "factors": ["MKT", "SMB", "HML"],
-        "data_type": "ff3",
-        "label": "Fama-French 3-Factor",
-    },
-    "ff5": {
-        "factors": ["MKT", "SMB", "HML", "RMW", "CMA"],
-        "data_type": "ff5",
-        "label": "Fama-French 5-Factor",
-    },
+    "capm": {"factors": ["MKT"]},
+    "ff3": {"factors": ["MKT", "SMB", "HML"]},
+    "ff5": {"factors": ["MKT", "SMB", "HML", "RMW", "CMA"]},
 }
 
 DATA_DATE = "2025-02-24"
 
 # Raw Data Paths
-FF_CAPM_RAW = RAW_DIR / f"ff_capm_monthly_pct_raw_{DATA_DATE}.csv"
 FF_FF3_RAW = RAW_DIR / f"ff_ff3_monthly_pct_raw_{DATA_DATE}.csv"
 FF_FF5_RAW = RAW_DIR / f"ff_ff5_monthly_pct_raw_{DATA_DATE}.csv"
 FF_IND_RAW = RAW_DIR / f"ff_ind_monthly_pct_raw_{DATA_DATE}.csv"
@@ -47,16 +35,15 @@ FF_CAPM_PROCESSED = PROCESSED_DIR / "ff_capm_processed.csv"
 FF_FF3_PROCESSED = PROCESSED_DIR / "ff_ff3_processed.csv"
 FF_FF5_PROCESSED = PROCESSED_DIR / "ff_ff5_processed.csv"
 FF_IND_PROCESSED = PROCESSED_DIR / "ff_ind_processed.csv"
+PROCESSED = {
+    "capm": FF_CAPM_PROCESSED,
+    "ff3": FF_FF3_PROCESSED,
+    "ff5": FF_FF5_PROCESSED,
+}
 
 # Interim Data Paths
-TRAINED = {
-    m: INTERIM_DIR / f"ff_{m}_trained.csv"
-    for m in MODELS
-}
-TESTED = {
-    m: INTERIM_DIR / f"ff_{m}_tested.csv"
-    for m in MODELS
-}
+TRAINED = {m: INTERIM_DIR / f"ff_{m}_trained.csv" for m in MODELS}
+TESTED = {m: INTERIM_DIR / f"ff_{m}_tested.csv" for m in MODELS}
 
 # Reports - Tables
 PROCESSING_STATS = TABLES_DIR / "data_sample.csv"
@@ -64,9 +51,6 @@ DESCRIPT_IND_TABLE = TABLES_DIR / "expl_descript_ind.csv"
 ASSUMPTIONS_TABLE = TABLES_DIR / "expl_assumptions.csv"
 INCRWALD_CAPM_TABLE = TABLES_DIR / "expl_incrwald_capm.csv"
 INCRWALD_FF3_TABLE = TABLES_DIR / "expl_incrwald_ff3.csv"
-JOINTWALD_CAPM_TABLE = TABLES_DIR / "expl_jointwald_capm.csv"
-JOINTWALD_FF3_TABLE = TABLES_DIR / "expl_jointwald_ff3.csv"
-JOINTWALD_FF5_TABLE = TABLES_DIR / "expl_jointwald_ff5.csv"
 PRED_METRICS_TABLE = TABLES_DIR / "pred_metrics.csv"
 PRED_TTEST_TABLE = TABLES_DIR / "pred_ttest.csv"
 PRED_PAIRTTEST_TABLE = TABLES_DIR / "pred_pairttest.csv"
@@ -86,7 +70,13 @@ FIG_PRED_COMPEXAM = FIGURES_DIR / "pred_compexample.svg"
 
 def get_standard_datasets():
     return [
-        {"input": FF_CAPM_RAW, "output": FF_CAPM_PROCESSED, "name": "capm"},
+        # CAPM has no raw file of its own: MKT and RF come from the FF3 file.
+        {
+            "input": FF_FF3_RAW,
+            "output": FF_CAPM_PROCESSED,
+            "name": "capm",
+            "columns": ["MKT", "RF"],
+        },
         {"input": FF_FF3_RAW, "output": FF_FF3_PROCESSED, "name": "ff3"},
         {"input": FF_FF5_RAW, "output": FF_FF5_PROCESSED, "name": "ff5"},
         {"input": FF_IND_RAW, "output": FF_IND_PROCESSED, "name": "ind"},
@@ -95,6 +85,10 @@ def get_standard_datasets():
 
 def get_descript_model_path(model_name: str) -> Path:
     return TABLES_DIR / f"expl_descript_{model_name}.csv"
+
+
+def get_jointwald_path(model_name: str) -> Path:
+    return TABLES_DIR / f"expl_jointwald_{model_name}.csv"
 
 
 def get_params_path(model_name: str) -> Path:

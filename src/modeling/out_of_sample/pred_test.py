@@ -1,34 +1,15 @@
-import os
 import pandas as pd
 
-from src.modeling.out_of_sample.pred_config import (
-    MODELS,
-    PROCESSED_CAPM_DIR,
-    PROCESSED_FF3_DIR,
-    PROCESSED_FF5_DIR,
-    PROCESSED_IND_DIR,
-    TRAINED,
-    TESTED,
-)
-from src.modeling.out_of_sample.pred_utils import (
-    load_data_with_markers,
-    get_industry_names,
-)
-
-
-processed_dirs = {
-    "capm": PROCESSED_CAPM_DIR,
-    "ff3": PROCESSED_FF3_DIR,
-    "ff5": PROCESSED_FF5_DIR,
-}
+from src.config import FF_IND_PROCESSED, MODELS, PROCESSED, TESTED, TRAINED
+from src.data.data_utils import load_data_with_markers, save_with_markers
+from src.modeling.in_sample.expl_utils import get_industry_names
 
 
 def test_models_and_export(model_type):
     df_coefs = load_data_with_markers(TRAINED[model_type])
-    df_ind = load_data_with_markers(PROCESSED_IND_DIR)
-    df_fs = {dt: load_data_with_markers(fp) for dt, fp in processed_dirs.items()}
+    df_ind = load_data_with_markers(FF_IND_PROCESSED)
+    df_f = load_data_with_markers(PROCESSED[model_type])
     factors = MODELS[model_type]["factors"]
-    df_f = df_fs[MODELS[model_type]["data_type"]]
     n_folds = max(len(df_f) - 24, 0)
     results = []
 
@@ -58,13 +39,7 @@ def test_models_and_export(model_type):
                     error=actual - exp,
                 )
             )
-    df_out = pd.DataFrame(results)
-    out_path = TESTED[model_type]
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    with open(out_path, "w") as f:
-        f.write("#data-begin#\n")
-        f.write(df_out.to_csv(index=False))
-        f.write("#data-end#\n")
+    save_with_markers(pd.DataFrame(results), TESTED[model_type])
 
 
 def main():

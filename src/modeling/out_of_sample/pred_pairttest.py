@@ -1,15 +1,14 @@
+import numpy as np
 import pandas as pd
 import statsmodels.api as sm
-import numpy as np
-import os
-from src.modeling.out_of_sample.pred_config import MODELS, TESTED, PAIRTTEST
-from src.modeling.out_of_sample.pred_utils import load_data_with_markers
 
+from src.config import MODELS, PRED_PAIRTTEST_TABLE, TESTED
+from src.data.data_utils import load_data_with_markers
 
 
 def calculate_paired_t_test():
     model_errors = {}
-    for model_key in MODELS.keys():
+    for model_key in MODELS:
         df_tested = load_data_with_markers(TESTED[model_key])
         if not df_tested.empty:
             model_errors[model_key] = df_tested.set_index(["industry", "fold"])["error"]
@@ -24,7 +23,7 @@ def calculate_paired_t_test():
     for errors_df in model_errors.values():
         all_industries.update(errors_df.index.get_level_values("industry").unique())
 
-    for ind in all_industries:
+    for ind in sorted(all_industries):
         for model_a_key, model_b_key in specific_model_pairs:
             if model_a_key not in model_errors or model_b_key not in model_errors:
                 continue
@@ -74,9 +73,8 @@ def calculate_paired_t_test():
 def main():
     df_paired_results = calculate_paired_t_test()
 
-    output_dir_paired = os.path.dirname(PAIRTTEST)
-    os.makedirs(output_dir_paired, exist_ok=True)
-    df_paired_results.to_csv(PAIRTTEST, index=False)
+    PRED_PAIRTTEST_TABLE.parent.mkdir(parents=True, exist_ok=True)
+    df_paired_results.to_csv(PRED_PAIRTTEST_TABLE, index=False)
 
 
 if __name__ == "__main__":

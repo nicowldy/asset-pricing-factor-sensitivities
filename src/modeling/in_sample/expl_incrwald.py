@@ -1,23 +1,19 @@
-import os
 import pandas as pd
-from src.modeling.in_sample.expl_utils import (
-    run_all_regressions,
-    get_industry_names,
-    load_industry_data,
-    add_average_row,
-    perform_hac_wald_test,
-    load_factors,
-    calculate_excess_returns,
-    get_models,
-)
-from src.modeling.in_sample.expl_config import TABLES_DIR
-from src.modeling.in_sample.expl_tables import write_incrwald_results
 
+from src.modeling.in_sample.expl_tables import write_incrwald_results
+from src.modeling.in_sample.expl_utils import (
+    add_average_row,
+    calculate_excess_returns,
+    get_industry_names,
+    get_models,
+    load_factors,
+    load_industry_data,
+    perform_hac_wald_test,
+    run_all_regressions,
+)
 
 
 def main():
-    os.makedirs(TABLES_DIR, exist_ok=True)
-
     all_results = run_all_regressions()
     industry_data = load_industry_data()
     industry_names = get_industry_names(industry_data)

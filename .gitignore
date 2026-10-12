@@ -76,6 +76,9 @@ venv.bak/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# Graphify cache
-graphify-out/cache/
+# Graphify knowledge graph (local, regenerate with /graphify)
+graphify-out/
+
+# Claude Code local settings
+.claude/settings.local.json
 

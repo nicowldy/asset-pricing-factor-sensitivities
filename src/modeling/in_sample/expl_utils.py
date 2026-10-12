@@ -1,31 +1,16 @@
-import os
+import re
 
+import numpy as np
 import pandas as pd
-from scipy.stats import pearsonr  # type: ignore[import-untyped]
 from scipy import stats  # type: ignore[import-untyped]
+from scipy.stats import pearsonr  # type: ignore[import-untyped]
 from statsmodels.api import OLS, add_constant
 from statsmodels.stats.diagnostic import het_breuschpagan
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.stats.stattools import durbin_watson, jarque_bera
 from statsmodels.tsa.stattools import adfuller
 
-from src.modeling.in_sample.expl_config import (
-    FF_CAPM_PROCESSED,
-    FF_FF3_PROCESSED,
-    FF_FF5_PROCESSED,
-    FF_IND_PROCESSED,
-    get_statssum_path,
-)
-
-
-MODELS = {
-    "capm": {"factors": ["MKT"], "file_path": FF_CAPM_PROCESSED},
-    "ff3": {"factors": ["MKT", "SMB", "HML"], "file_path": FF_FF3_PROCESSED},
-    "ff5": {
-        "factors": ["MKT", "SMB", "HML", "RMW", "CMA"],
-        "file_path": FF_FF5_PROCESSED,
-    },
-}
+from src.config import FF_IND_PROCESSED, MODELS, PROCESSED, get_statssum_path
 
 
 def load_data(file_path):
@@ -43,7 +28,7 @@ def get_models():
 
 
 def load_factors(model_name):
-    return load_data(MODELS[model_name]["file_path"])
+    return load_data(PROCESSED[model_name])
 
 
 def get_industry_names(industry_data):
@@ -146,7 +131,7 @@ def collect_industry_statistics(reg_params, industry, factors):
 
 def add_average_row(model_df):
     numeric = model_df.select_dtypes(include=["number"]).columns
-    avg = {"Industry": "Average"}
+    avg = {model_df.columns[0]: "Average"}
     for col in numeric:
         avg[col] = model_df[col].mean()
     return pd.concat([model_df, pd.DataFrame([avg])], ignore_index=True)
@@ -154,10 +139,17 @@ def add_average_row(model_df):
 
 def save_regression_summary(model_name, industry, results):
     path = get_statssum_path(model_name, industry)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # Blank the run timestamp so the summary is reproducible byte-for-byte.
+    summary = re.sub(
+        r"^(Date|Time):(\s+)(\S.*?)(?=\s{3})",
+        lambda m: f"{m[1]}:{m[2]}{' ' * len(m[3])}",
+        results.summary().as_text(),
+        flags=re.MULTILINE,
+    )
     with open(path, "w") as f:
         f.write(f"Regression Summary for {model_name} on {industry}\n\n")
-        f.write(results.summary().as_text())
+        f.write(summary)
 
 
 def process_model_statistics(
@@ -179,6 +171,7 @@ def process_model_statistics(
     df = pd.DataFrame(stats_list)
     if save_outputs:
         from src.modeling.in_sample.expl_tables import write_model_statistics
+
         write_model_statistics(model_name, df)
     return df
 
@@ -193,10 +186,6 @@ def run_regression_analysis(save_outputs=True):
             name, info, all_results, industry_data, save_outputs
         )
     return all_results, all_model_stats
-
-
-def calculate_rss(residuals):
-    return (residuals**2).sum()
 
 
 def filter_data_by_period(df, start, end):
@@ -263,39 +252,30 @@ def test_homoskedasticity(results):
 
 
 def test_stationarity(series):
-    adf_stat, pvalue, _, _, _, _ = adfuller(series.dropna())  # type: ignore
+    adf_stat, pvalue, _, _, _, _ = adfuller(series.dropna(), result_object=False)  # type: ignore
     return {"adf_stat": adf_stat, "adf_pvalue": pvalue, "passed": pvalue < 0.05}
+
+
+def wald_test(results, factor_names):
+    """Wald test that the coefficients on `factor_names` are jointly zero.
+
+    Uses the covariance matrix of `results`, so the test is HAC-robust when the
+    regression was fitted with HAC standard errors.
+    """
+    beta = results.params[factor_names].to_numpy()
+    cov = results.cov_params().loc[factor_names, factor_names].to_numpy()
+    wald_stat = beta.T @ np.linalg.inv(cov) @ beta
+    p_value = 1 - stats.chi2.cdf(wald_stat, len(factor_names))
+    return float(wald_stat), float(p_value)
 
 
 def perform_hac_wald_test(
     factor_data, industry_data, industry, restricted_factors, unrestricted_factors
 ):
-    import numpy as np
-
     unrestricted_results = run_regression(
         factor_data, industry_data, unrestricted_factors, industry, cov_type="HAC"
     )
-
     additional_factors = [
         f for f in unrestricted_factors if f not in restricted_factors
     ]
-    q = len(additional_factors)
-
-    param_names = unrestricted_results.params.index.tolist()
-    restriction_indices = [param_names.index(factor) for factor in additional_factors]
-
-    beta = unrestricted_results.params
-    cov_matrix = unrestricted_results.cov_params()
-
-    k_total = len(param_names)
-    R = np.zeros((q, k_total))
-    for i, idx in enumerate(restriction_indices):
-        R[i, idx] = 1
-
-    Rbeta = R @ beta
-    RcovR = R @ cov_matrix @ R.T
-    wald_stat = Rbeta.T @ np.linalg.inv(RcovR) @ Rbeta
-
-    p_value = 1 - stats.chi2.cdf(wald_stat, q)
-
-    return float(wald_stat), float(p_value)
+    return wald_test(unrestricted_results, additional_factors)

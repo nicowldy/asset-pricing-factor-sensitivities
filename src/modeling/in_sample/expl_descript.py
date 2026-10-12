@@ -1,27 +1,26 @@
-from src.modeling.in_sample.expl_utils import (
-    load_industry_data,
-    get_models,
-    load_factors,
-    get_industry_names,
-    calculate_descriptive_stats,
+from src.config import (
+    FIG_CUMRETURNS_FACT,
+    FIG_CUMRETURNS_IND,
+    FIG_DISTRIB_FACT,
+    FIG_DISTRIB_IND,
 )
 from src.modeling.in_sample.expl_plots import (
-    plot_industry_distributions,
-    plot_factor_distributions,
     plot_cumulative_log_factor_returns,
     plot_cumulative_log_industry_returns,
-)
-from src.modeling.in_sample.expl_config import (
-    DISTRIB_IND,
-    DISTRIB_FACT,
-    CUMRETURNS_FACT,
-    CUMRETURNS_IND,
+    plot_factor_distributions,
+    plot_industry_distributions,
 )
 from src.modeling.in_sample.expl_tables import (
-    write_descriptive_stats_model,
     write_descriptive_stats_industry,
+    write_descriptive_stats_model,
 )
-
+from src.modeling.in_sample.expl_utils import (
+    calculate_descriptive_stats,
+    get_industry_names,
+    get_models,
+    load_factors,
+    load_industry_data,
+)
 
 
 def calculate_and_save_descriptive_stats():
@@ -42,11 +41,13 @@ def calculate_and_save_descriptive_stats():
 
 def run_all_analyses(save_plots=True):
     calculate_and_save_descriptive_stats()
-    plot_industry_distributions(save_path=DISTRIB_IND if save_plots else None)
-    plot_factor_distributions(save_path=DISTRIB_FACT if save_plots else None)
-    plot_cumulative_log_factor_returns(save_path=CUMRETURNS_FACT if save_plots else None)
+    plot_industry_distributions(save_path=FIG_DISTRIB_IND if save_plots else None)
+    plot_factor_distributions(save_path=FIG_DISTRIB_FACT if save_plots else None)
+    plot_cumulative_log_factor_returns(
+        save_path=FIG_CUMRETURNS_FACT if save_plots else None
+    )
     plot_cumulative_log_industry_returns(
-        save_path=CUMRETURNS_IND if save_plots else None
+        save_path=FIG_CUMRETURNS_IND if save_plots else None
     )
 
 

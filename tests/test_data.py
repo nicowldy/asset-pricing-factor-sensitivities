@@ -1,7 +1,6 @@
 """Unit and integration tests for data loading, processing, and integrity."""
-from pathlib import Path
+
 import pandas as pd
-import pytest
 
 from src.config import (
     FF_CAPM_PROCESSED,
@@ -22,7 +21,9 @@ def test_processed_files_exist():
     ]
     for file_path in expected_files:
         assert file_path.exists(), f"Processed data file missing: {file_path}"
-        assert file_path.stat().st_size > 0, f"Processed data file is empty: {file_path}"
+        assert file_path.stat().st_size > 0, (
+            f"Processed data file is empty: {file_path}"
+        )
 
 
 def test_processed_data_loading_and_markers():
@@ -38,8 +39,18 @@ def test_processed_data_loading_and_markers():
 def test_industry_sectors_present():
     """Verify that all 12 Kenneth French industry portfolios are present."""
     expected_sectors = [
-        "NoDur", "Durbl", "Manuf", "Enrgy", "Chems",
-        "BusEq", "Telcm", "Utils", "Shops", "Hlth", "Money", "Other",
+        "NoDur",
+        "Durbl",
+        "Manuf",
+        "Enrgy",
+        "Chems",
+        "BusEq",
+        "Telcm",
+        "Utils",
+        "Shops",
+        "Hlth",
+        "Money",
+        "Other",
     ]
     df_ind = load_data_with_markers(str(FF_IND_PROCESSED))
     assert not df_ind.empty
@@ -59,10 +70,14 @@ def test_date_alignment_across_processed_datasets():
     }
 
     reference_dates = datasets["capm"]["Date"].tolist()
-    assert len(reference_dates) > 600, "Sample size should be over 50 years of monthly data"
+    assert len(reference_dates) > 600, (
+        "Sample size should be over 50 years of monthly data"
+    )
 
     for name, df in datasets.items():
         assert len(df) == len(reference_dates), f"{name} length mismatch"
-        assert df["Date"].tolist() == reference_dates, f"{name} dates do not align with reference"
+        assert df["Date"].tolist() == reference_dates, (
+            f"{name} dates do not align with reference"
+        )
         # Check no missing values
         assert df.isna().sum().sum() == 0, f"{name} contains NaN values"

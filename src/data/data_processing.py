@@ -1,28 +1,32 @@
 import pandas as pd
+
 from src.config import PROCESSING_STATS, get_standard_datasets
-from src.data.data_utils import save_with_markers
 from src.data.data_tables import export_processing_statistics
+from src.data.data_utils import save_with_markers
+
+
+def _date_range(dates) -> str:
+    return f"{dates.min():%Y%m} to {dates.max():%Y%m}"
 
 
 def process_data():
     stats, dfs = {}, []
     for ds in get_standard_datasets():
-        input_path = str(ds["input"])
-        output_path = str(ds["output"])
-        df = pd.read_csv(input_path)
-        df.columns = ["Date"] + list(df.columns[1:])
-        df = df.replace([-99.99, -999], pd.NA).dropna()
+        raw = pd.read_csv(ds["input"])
+        raw.columns = ["Date", *raw.columns[1:]]
+        if "columns" in ds:
+            raw = raw[["Date", *ds["columns"]]]
+        raw_dates = pd.to_datetime(raw["Date"], format="%Y%m")
+        df = raw.replace([-99.99, -999], pd.NA).dropna()
         df["Date"] = pd.to_datetime(df["Date"], format="%Y%m")
-        idx = df["Date"]
         name = ds["name"]
         stats[name] = {
             "name": name,
-            "raw_rows": len(df),
-            "raw_range": f"{idx.iloc[0].strftime('%Y%m')} to {idx.iloc[-1].strftime('%Y%m')}",
-            "cleaned_rows": len(df),
-            "cleaned_range": f"{idx.iloc[0].strftime('%Y%m')} to {idx.iloc[-1].strftime('%Y%m')}",
+            "raw_rows": len(raw),
+            "raw_range": _date_range(raw_dates),
+            "dropped_cleaning": len(raw) - len(df),
         }
-        dfs.append((name, df.set_index("Date"), output_path))
+        dfs.append((name, df.set_index("Date"), ds["output"]))
 
     common_idx = dfs[0][1].index
     for _, df, _ in dfs[1:]:
@@ -30,18 +34,14 @@ def process_data():
 
     for name, df, output in dfs:
         df_proc = df.loc[common_idx]
-        st = stats[name]
-        st.update(
-            {
-                "processed_rows": len(df_proc),
-                "processed_range": f"{common_idx.min().strftime('%Y%m')} to {common_idx.max().strftime('%Y%m')}",
-                "dropped_cleaning": st["raw_rows"] - st["cleaned_rows"],
-                "dropped_intersection": st["cleaned_rows"] - len(df_proc),
-            }
+        stats[name].update(
+            processed_rows=len(df_proc),
+            processed_range=_date_range(common_idx),
+            dropped_intersection=len(df) - len(df_proc),
         )
         save_with_markers(df_proc, output)
 
-    export_processing_statistics({"datasets": stats}, str(PROCESSING_STATS))
+    export_processing_statistics({"datasets": stats}, PROCESSING_STATS)
 
 
 if __name__ == "__main__":

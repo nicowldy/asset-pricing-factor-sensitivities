@@ -1,11 +1,9 @@
-import os
 import numpy as np
 import pandas as pd
 
-from src.modeling.out_of_sample.pred_config import METRICS, TESTED
-from src.modeling.out_of_sample.pred_utils import load_data_with_markers
+from src.config import PRED_METRICS_TABLE, TESTED
+from src.data.data_utils import load_data_with_markers
 from src.modeling.out_of_sample.pred_plots import plot_r2_bar, plot_rmse_bar
-
 
 
 def main():
@@ -31,12 +29,14 @@ def main():
             ss_tot = ((y_true - y_true.mean()) ** 2).sum()
             r2 = 1 - ss_res / ss_tot if ss_tot > 0 else np.nan
 
-            metrics.append({
-                "model": model,
-                "industry": industry,
-                "r2": r2,
-                "rmse": rmse,
-            })
+            metrics.append(
+                {
+                    "model": model,
+                    "industry": industry,
+                    "r2": r2,
+                    "rmse": rmse,
+                }
+            )
 
     for entry in metrics:
         idx = models_order.index(entry["model"])
@@ -46,21 +46,26 @@ def main():
         else:
             prev_model = models_order[idx - 1]
             ref = next(
-                e for e in metrics
+                e
+                for e in metrics
                 if e["industry"] == entry["industry"] and e["model"] == prev_model
             )
             entry["r2_delta"] = entry["r2"] - ref["r2"]
             entry["rmse_delta"] = entry["rmse"] - ref["rmse"]
 
     df_metrics = pd.DataFrame(metrics)
-    os.makedirs(os.path.dirname(METRICS), exist_ok=True)
-    df_metrics.to_csv(METRICS, index=False)
+    PRED_METRICS_TABLE.parent.mkdir(parents=True, exist_ok=True)
+    df_metrics.to_csv(PRED_METRICS_TABLE, index=False)
 
     plot_r2_bar(
-        df_metrics.rename(columns={"model": "Model", "industry": "industry", "r2": "R2"})
+        df_metrics.rename(
+            columns={"model": "Model", "industry": "industry", "r2": "R2"}
+        )
     )
     plot_rmse_bar(
-        df_metrics.rename(columns={"model": "Model", "industry": "industry", "rmse": "RMSE"})
+        df_metrics.rename(
+            columns={"model": "Model", "industry": "industry", "rmse": "RMSE"}
+        )
     )
 
 

@@ -1,26 +1,26 @@
 from __future__ import annotations
 
-import os
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
-import numpy as np
 
-from src.modeling.in_sample.expl_config import get_coeffsbydecs_path
+from src.config import get_coeffsbydecs_path
 from src.modeling.in_sample.expl_utils import (
-    load_industry_data,
     get_industry_names,
     get_models,
     load_factors,
+    load_industry_data,
 )
 from src.plot_style import (
-    set_academic_style,
-    MODEL_PALETTE,
+    BOX_STYLE_STATS,
+    COLOR_REF_LINE,
+    COLOR_ZERO_LINE,
     FACTOR_PALETTE,
     INDUSTRY_PALETTE,
-    COLOR_ZERO_LINE,
-    COLOR_REF_LINE,
-    BOX_STYLE_STATS,
+    MODEL_PALETTE,
+    save_figure,
+    set_academic_style,
 )
 
 
@@ -39,7 +39,7 @@ def plot_rsq(model_results: dict, save_path=None) -> None:
     df = pd.DataFrame(rows)
     count = len(df["Industry"].unique())
     fig_width = max(11, count * 1.1)
-    
+
     fig, ax = plt.subplots(figsize=(fig_width, 6))
     sns.barplot(
         x="Industry",
@@ -50,17 +50,17 @@ def plot_rsq(model_results: dict, save_path=None) -> None:
         ax=ax,
         edgecolor="none",
     )
-    
+
     for container in ax.containers:
         ax.bar_label(container, fmt="%.2f", fontsize=8.5, padding=2.5, color="#334155")  # type: ignore
-        
+
     ax.set_xlabel("Industry Sector", labelpad=8)
     ax.set_ylabel("In-Sample Adjusted $R^2$", labelpad=8)
     ax.set_ylim(0, max(1.0, df["Adjusted R-squared"].max() + 0.12))
-    
+
     many = count > 6
     plt.xticks(rotation=40 if many else 0, ha="right" if many else "center")
-    
+
     ax.legend(
         title="Model",
         loc="upper center",
@@ -68,16 +68,12 @@ def plot_rsq(model_results: dict, save_path=None) -> None:
         ncol=len(df["Model"].unique()),
         frameon=False,
     )
-    
+
     sns.despine(ax=ax, top=True, right=True)
     ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.6, alpha=0.8)
     ax.xaxis.grid(False)
-    
-    plt.tight_layout()
-    if save_path:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+
+    save_figure(fig, save_path)
 
 
 def plot_industry_distributions(save_path=None) -> None:
@@ -86,7 +82,7 @@ def plot_industry_distributions(save_path=None) -> None:
     industry_names = get_industry_names(industry_data)
     rows, cols = 3, 4
     fig = plt.figure(figsize=(16, 11))
-    
+
     for i, industry in enumerate(industry_names):
         if i < rows * cols:
             ax = fig.add_subplot(rows, cols, i + 1)
@@ -106,7 +102,7 @@ def plot_industry_distributions(save_path=None) -> None:
             std = industry_data[industry].std()
             skew = industry_data[industry].skew()
             kurt = industry_data[industry].kurtosis()
-            
+
             ax.axvline(
                 x=mean,
                 color=COLOR_REF_LINE,
@@ -114,8 +110,10 @@ def plot_industry_distributions(save_path=None) -> None:
                 linewidth=1.1,
                 alpha=0.85,
             )
-            ax.axvline(x=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-            
+            ax.axvline(
+                x=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7
+            )
+
             stats = f"μ:   {mean:5.2f}%\nσ:   {std:5.2f}%\nSkew:{skew:5.2f}\nKurt:{kurt:5.2f}"
             ax.text(
                 0.95,
@@ -131,16 +129,14 @@ def plot_industry_distributions(save_path=None) -> None:
             ax.set_title(industry, pad=5)
             ax.set_xlabel("Monthly Return (%)")
             ax.set_ylabel("Density")
-            
+
             sns.despine(ax=ax, top=True, right=True)
-            ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
+            ax.yaxis.grid(
+                True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
+            )
             ax.xaxis.grid(False)
 
-    plt.tight_layout()
-    if save_path:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+    save_figure(fig, save_path)
 
 
 def plot_decade_rsquared_grid(
@@ -198,20 +194,18 @@ def plot_decade_rsquared_grid(
             ax.set_title(industry, pad=5)
             ax.set_ylabel("Adjusted $R^2$")
             ax.set_ylim(0, 1.05)
-            
+
             sns.despine(ax=ax, top=True, right=True)
-            ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
+            ax.yaxis.grid(
+                True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
+            )
             ax.xaxis.grid(False)
-            
+
             # Show legend only on first subplot to eliminate visual redundancy
             if i == 0:
                 ax.legend(title="Model", frameon=False, fontsize=8)
 
-    plt.tight_layout()
-    if save_outputs and save_path:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+    save_figure(fig, save_path if save_outputs else None)
 
 
 def plot_decade_model_factor_grids(
@@ -273,21 +267,20 @@ def plot_decade_model_factor_grids(
                 ax.set_xticklabels(decades_order, rotation=40, ha="right")
                 ax.set_title(industry, pad=5)
                 ax.set_ylabel("Factor Sensitivity (Beta)")
-                ax.axhline(y=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-                
+                ax.axhline(
+                    y=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7
+                )
+
                 sns.despine(ax=ax, top=True, right=True)
-                ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
+                ax.yaxis.grid(
+                    True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
+                )
                 ax.xaxis.grid(False)
-                
+
                 if i == 0:
                     ax.legend(title="Factor", frameon=False, fontsize=8)
 
-        plt.tight_layout()
-        if save_outputs:
-            path = get_coeffsbydecs_path(model)
-            os.makedirs(os.path.dirname(path), exist_ok=True)
-            plt.savefig(path, bbox_inches="tight")
-        plt.close(fig)
+        save_figure(fig, get_coeffsbydecs_path(model) if save_outputs else None)
 
 
 def plot_decade_model_alpha_grids(
@@ -314,7 +307,7 @@ def plot_decade_model_alpha_grids(
     rows = (len(industries) + 3) // 4
     cols = min(4, len(industries))
     fig = plt.figure(figsize=(16, 3.8 * rows))
-    
+
     model_markers = {"CAPM": "o", "FF3": "s", "FF5": "^"}
 
     for i, industry in enumerate(industries):
@@ -335,20 +328,20 @@ def plot_decade_model_alpha_grids(
             ax.set_xticklabels(decades_order, rotation=40, ha="right")
             ax.set_title(industry, pad=5)
             ax.set_ylabel("Alpha (%)")
-            ax.axhline(y=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-            
+            ax.axhline(
+                y=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7
+            )
+
             sns.despine(ax=ax, top=True, right=True)
-            ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
+            ax.yaxis.grid(
+                True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7
+            )
             ax.xaxis.grid(False)
-            
+
             if i == 0:
                 ax.legend(title="Model", frameon=False, fontsize=8)
 
-    plt.tight_layout()
-    if save_outputs and save_path:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+    save_figure(fig, save_path if save_outputs else None)
 
 
 def plot_factor_distributions(save_path=None) -> None:
@@ -358,10 +351,7 @@ def plot_factor_distributions(save_path=None) -> None:
     for model, info in models.items():
         data = load_factors(model)
         for factor in info["factors"]:
-            if factor == "SMB":
-                label = f"SMB ({model.upper()})"
-            else:
-                label = factor
+            label = f"SMB ({model.upper()})" if factor == "SMB" else factor
             all_factors[label] = data[factor]
     df = pd.DataFrame(all_factors)
 
@@ -369,7 +359,7 @@ def plot_factor_distributions(save_path=None) -> None:
     rows = (num + 3) // 4
     cols = min(4, num)
     fig = plt.figure(figsize=(16, 3.8 * rows))
-    
+
     for i, factor in enumerate(df.columns):
         ax = fig.add_subplot(rows, cols, i + 1)
         data_to_plot = df[factor].dropna()
@@ -388,7 +378,7 @@ def plot_factor_distributions(save_path=None) -> None:
         std = df[factor].std()
         skew = df[factor].skew()
         kurt = df[factor].kurtosis()
-        
+
         ax.axvline(
             x=mean,
             color=COLOR_REF_LINE,
@@ -397,8 +387,10 @@ def plot_factor_distributions(save_path=None) -> None:
             alpha=0.85,
         )
         ax.axvline(x=0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-        
-        stats = f"μ:   {mean:5.2f}%\nσ:   {std:5.2f}%\nSkew:{skew:5.2f}\nKurt:{kurt:5.2f}"
+
+        stats = (
+            f"μ:   {mean:5.2f}%\nσ:   {std:5.2f}%\nSkew:{skew:5.2f}\nKurt:{kurt:5.2f}"
+        )
         ax.text(
             0.95,
             0.94,
@@ -413,24 +405,22 @@ def plot_factor_distributions(save_path=None) -> None:
         ax.set_title(factor, pad=5)
         ax.set_xlabel("Factor Return (%)")
         ax.set_ylabel("Density")
-        
+
         sns.despine(ax=ax, top=True, right=True)
         ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
         ax.xaxis.grid(False)
 
-    plt.tight_layout()
-    if save_path:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+    save_figure(fig, save_path)
 
 
-def plot_residuals_fitted_grid(reg_results: dict, save_path=None, rows: int = 3, cols: int = 4) -> None:
+def plot_residuals_fitted_grid(
+    reg_results: dict, save_path=None, rows: int = 3, cols: int = 4
+) -> None:
     set_academic_style()
     fig, axes = plt.subplots(rows, cols, figsize=(15, 3.5 * rows))
     axes_flat = axes.flatten() if hasattr(axes, "flatten") else [axes]
-    
-    for ax, industry in zip(axes_flat, reg_results.keys()):
+
+    for ax, industry in zip(axes_flat, reg_results.keys(), strict=False):
         res = reg_results[industry]["residuals"]
         fit = reg_results[industry]["fitted"]
         ax.scatter(fit, res, alpha=0.45, s=12, color="#2563EB", edgecolors="none")
@@ -438,18 +428,14 @@ def plot_residuals_fitted_grid(reg_results: dict, save_path=None, rows: int = 3,
         ax.set_title(industry, pad=5)
         ax.set_xlabel("Fitted Values (%)")
         ax.set_ylabel("Residuals (%)")
-        
+
         sns.despine(ax=ax, top=True, right=True)
         ax.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.5, alpha=0.7)
 
-    for ax in axes_flat[len(reg_results):]:
+    for ax in axes_flat[len(reg_results) :]:
         fig.delaxes(ax)
 
-    plt.tight_layout()
-    if save_path:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+    save_figure(fig, save_path)
 
 
 def plot_cumulative_log_factor_returns(save_path=None) -> None:
@@ -483,23 +469,19 @@ def plot_cumulative_log_factor_returns(save_path=None) -> None:
     ax.set_xlabel("Date", labelpad=8)
     ax.set_ylabel("Cumulative Log Return", labelpad=8)
     ax.axhline(0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-    
+
     ax.legend(
         loc="upper left",
         ncol=3,
         frameon=False,
         fontsize=8.5,
     )
-    
+
     sns.despine(ax=ax, top=True, right=True)
     ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.6, alpha=0.8)
     ax.xaxis.grid(False)
 
-    if save_path:
-        fig.tight_layout()
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+    save_figure(fig, save_path)
 
 
 def plot_cumulative_log_industry_returns(save_path=None) -> None:
@@ -541,20 +523,16 @@ def plot_cumulative_log_industry_returns(save_path=None) -> None:
     ax.set_xlabel("Date", labelpad=8)
     ax.set_ylabel("Cumulative Log Return", labelpad=8)
     ax.axhline(0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
-    
+
     ax.legend(
         loc="upper left",
         ncol=4,
         frameon=False,
         fontsize=8,
     )
-    
+
     sns.despine(ax=ax, top=True, right=True)
     ax.yaxis.grid(True, color="#E2E8F0", linestyle="--", linewidth=0.6, alpha=0.8)
     ax.xaxis.grid(False)
 
-    if save_path:
-        fig.tight_layout()
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        plt.savefig(save_path, bbox_inches="tight")
-    plt.close(fig)
+    save_figure(fig, save_path)
