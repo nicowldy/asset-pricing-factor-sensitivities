@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make test)",
+      "Bash(make verify)",
+      "Bash(make lint)",
+      "Bash(.venv/bin/python -m pytest:*)",
+      "Bash(.venv/bin/python -m ruff:*)"
+    ]
+  }
+}

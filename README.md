@@ -53,23 +53,24 @@ The analysis is conducted through two complementary lenses:
 
 ```
 .
-├── Makefile                      # Standard shortcuts: make run, make test, make clean
-├── pyproject.toml                # Modern PEP 517/621 build specification & dependencies
-├── requirements.txt              # Pinned pip requirements
-├── environment.yml               # Reproducible Conda environment specification
+├── Makefile                      # Shortcuts: make run, make test, make verify, make lint
+├── pyproject.toml                # Build specification, dependency ranges, tool config
+├── requirements.txt              # Exact versions the committed outputs were produced with
+├── environment.yml               # Conda environment built from requirements.txt
+├── CLAUDE.md                     # Working rules for coding agents
 ├── run_pipeline.py               # Unified CLI runner for end-to-end execution
 ├── data/
-│   ├── raw/                      # Original Kenneth R. French monthly dataset files
+│   ├── raw/                      # Original Kenneth R. French monthly dataset files (input, never written)
 │   ├── interim/                  # Expanding-window model parameters & forecast outputs
 │   └── processed/                # Date-aligned, clean factor & industry CSV datasets
 ├── reports/
 │   ├── figures/                  # Vector graphic visualizations (SVG)
 │   ├── tables/                   # Econometric regression tables, Wald tests, metrics (CSV)
-│   └── other/                    # Full regression summaries per model and industry (TXT)
-├── src/                          # Modular Python source package
+│   └── other/                    # Full-sample regression summaries per model and industry (TXT)
+├── asset_pricing/                # Modular Python source package
 │   ├── config.py                 # Centralized path and model configuration
+│   ├── plot_style.py             # Shared plot style and deterministic figure export
 │   ├── data/                     # Ingestion, cleaning, date alignment & CAPM derivation
-│   │   ├── data_capm.py
 │   │   ├── data_processing.py
 │   │   ├── data_tables.py
 │   │   └── data_utils.py
@@ -91,11 +92,11 @@ The analysis is conducted through two complementary lenses:
 │           ├── pred_plots.py
 │           ├── pred_test.py
 │           ├── pred_train.py
-│           ├── pred_ttest.py
-│           └── pred_utils.py
+│           └── pred_ttest.py
 └── tests/                        # Automated Pytest suite
     ├── test_data.py              # Data integrity, date alignment, French 12 sector tests
-    └── test_models.py            # Econometric OLS fitting, HAC SEs, Wald statistics tests
+    ├── test_models.py            # Econometric OLS fitting, HAC SEs, Wald statistics tests
+    └── test_golden.py            # Full pipeline re-run compared with the committed outputs
 ```
 
 ---
@@ -111,8 +112,9 @@ Clone the repository and install the dependencies in a dedicated environment:
 conda env create -f environment.yml
 conda activate thesis_env
 
-# Option B: Pip with editable package install
-pip install -e .
+# Option B: virtual environment with pip
+python3.12 -m venv .venv && source .venv/bin/activate
+make install
 ```
 
 ### 2. Execute the Full Empirical Pipeline
@@ -138,19 +140,27 @@ python run_pipeline.py --data
 # In-sample regressions and Wald hypothesis tests only
 python run_pipeline.py --in-sample
 
-# Out-of-sample expanding window forecasts and Diebold-Mariano tests only
+# Out-of-sample expanding window forecasts and forecast-error tests only
 python run_pipeline.py --out-of-sample
 ```
 
 ### 4. Running the Test Suite
 
 ```bash
-# Run all unit and integration tests
-pytest tests/ -v
-
-# Or via Makefile
+# Fast unit and integration tests
 make test
+
+# Re-run the full pipeline in a temporary directory and compare it with the
+# committed outputs (two to three minutes)
+make verify
 ```
+
+### 5. Reproducibility Guarantee
+
+The pipeline is deterministic. With the pinned environment from `requirements.txt`,
+`make run` reproduces every committed table, summary and figure byte-for-byte, so
+`git status` stays clean afterwards. `make verify` checks the same thing without
+touching the working tree and tolerates floating-point noise between platforms.
 
 ---
 
@@ -171,6 +181,7 @@ make test
 - **Robust Standard Errors:** All in-sample hypothesis tests use Newey-West HAC covariance matrices to safeguard against autocorrelation and conditional heteroskedasticity in financial return time series.
 - **Model Comparison:** Incremental Wald tests evaluate the null hypothesis $H_0: \beta_{\text{additional factors}} = 0$.
 - **Out-of-Sample Forecasting:** Expanding-window OLS avoids look-ahead bias and simulates real-world recursive forecasting.
+- **Forecast Comparison:** One-sided $t$-tests on the difference of squared forecast errors between nested models, with Newey-West HAC standard errors.
 
 ---
 

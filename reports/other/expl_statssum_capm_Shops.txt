@@ -2,25 +2,25 @@ Regression Summary for capm on Shops
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Shops_Excess   R-squared:                       0.783
-Model:                            OLS   Adj. R-squared:                  0.781
-Method:                 Least Squares   F-statistic:                     210.4
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           5.45e-28
-Time:                        15:42:00   Log-Likelihood:                -237.30
-No. Observations:                 120   AIC:                             478.6
-Df Residuals:                     118   BIC:                             484.2
+Dep. Variable:           Shops_Excess   R-squared:                       0.757
+Model:                            OLS   Adj. R-squared:                  0.756
+Method:                 Least Squares   F-statistic:                     787.9
+Date:                                   Prob (F-statistic):          1.96e-118
+Time:                                   Log-Likelihood:                -1735.2
+No. Observations:                 738   AIC:                             3474.
+Df Residuals:                     736   BIC:                             3484.
 Df Model:                           1                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const          0.2871      0.190      1.514      0.130      -0.084       0.659
-MKT            0.8893      0.061     14.504      0.000       0.769       1.009
+const          0.1294      0.105      1.237      0.216      -0.076       0.334
+MKT            1.0010      0.036     28.070      0.000       0.931       1.071
 ==============================================================================
-Omnibus:                        2.954   Durbin-Watson:                   1.830
-Prob(Omnibus):                  0.228   Jarque-Bera (JB):                2.376
-Skew:                           0.297   Prob(JB):                        0.305
-Kurtosis:                       3.348   Cond. No.                         4.07
+Omnibus:                       19.899   Durbin-Watson:                   1.813
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               40.719
+Skew:                           0.086   Prob(JB):                     1.44e-09
+Kurtosis:                       4.138   Cond. No.                         4.56
 ==============================================================================
 
 Notes:

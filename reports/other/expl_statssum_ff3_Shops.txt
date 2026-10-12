@@ -2,27 +2,27 @@ Regression Summary for ff3 on Shops
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Shops_Excess   R-squared:                       0.801
-Model:                            OLS   Adj. R-squared:                  0.796
-Method:                 Least Squares   F-statistic:                     114.7
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.47e-34
-Time:                        15:42:00   Log-Likelihood:                -231.82
-No. Observations:                 120   AIC:                             471.6
-Df Residuals:                     116   BIC:                             482.8
+Dep. Variable:           Shops_Excess   R-squared:                       0.760
+Model:                            OLS   Adj. R-squared:                  0.759
+Method:                 Least Squares   F-statistic:                     320.0
+Date:                                   Prob (F-statistic):          7.91e-133
+Time:                                   Log-Likelihood:                -1730.8
+No. Observations:                 738   AIC:                             3470.
+Df Residuals:                     734   BIC:                             3488.
 Df Model:                           3                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const          0.2205      0.167      1.317      0.188      -0.108       0.549
-MKT            0.9089      0.066     13.812      0.000       0.780       1.038
-SMB            0.0003      0.088      0.004      0.997      -0.172       0.173
-HML           -0.2287      0.064     -3.578      0.000      -0.354      -0.103
+const          0.1374      0.101      1.365      0.172      -0.060       0.335
+MKT            0.9791      0.033     29.324      0.000       0.914       1.045
+SMB            0.0855      0.085      1.009      0.313      -0.081       0.252
+HML           -0.0338      0.082     -0.410      0.682      -0.195       0.128
 ==============================================================================
-Omnibus:                        1.916   Durbin-Watson:                   1.832
-Prob(Omnibus):                  0.384   Jarque-Bera (JB):                1.537
-Skew:                          -0.047   Prob(JB):                        0.464
-Kurtosis:                       3.546   Cond. No.                         4.28
+Omnibus:                       25.142   Durbin-Watson:                   1.826
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               59.388
+Skew:                           0.082   Prob(JB):                     1.27e-13
+Kurtosis:                       4.380   Cond. No.                         4.82
 ==============================================================================
 
 Notes:

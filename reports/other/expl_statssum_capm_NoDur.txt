@@ -2,25 +2,25 @@ Regression Summary for capm on NoDur
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           NoDur_Excess   R-squared:                       0.559
-Model:                            OLS   Adj. R-squared:                  0.555
-Method:                 Least Squares   F-statistic:                     140.3
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           8.37e-22
-Time:                        15:42:00   Log-Likelihood:                -261.26
-No. Observations:                 120   AIC:                             526.5
-Df Residuals:                     118   BIC:                             532.1
+Dep. Variable:           NoDur_Excess   R-squared:                       0.672
+Model:                            OLS   Adj. R-squared:                  0.672
+Method:                 Least Squares   F-statistic:                     293.0
+Date:                                   Prob (F-statistic):           1.53e-55
+Time:                                   Log-Likelihood:                -1699.3
+No. Observations:                 738   AIC:                             3403.
+Df Residuals:                     736   BIC:                             3412.
 Df Model:                           1                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const          0.2670      0.206      1.295      0.195      -0.137       0.671
-MKT            0.6439      0.054     11.844      0.000       0.537       0.751
+const          0.1974      0.114      1.732      0.083      -0.026       0.421
+MKT            0.7737      0.045     17.117      0.000       0.685       0.862
 ==============================================================================
-Omnibus:                        7.597   Durbin-Watson:                   2.119
-Prob(Omnibus):                  0.022   Jarque-Bera (JB):                7.221
-Skew:                          -0.569   Prob(JB):                       0.0270
-Kurtosis:                       3.389   Cond. No.                         4.07
+Omnibus:                       38.074   Durbin-Watson:                   1.812
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              115.941
+Skew:                           0.128   Prob(JB):                     6.67e-26
+Kurtosis:                       4.925   Cond. No.                         4.56
 ==============================================================================
 
 Notes:

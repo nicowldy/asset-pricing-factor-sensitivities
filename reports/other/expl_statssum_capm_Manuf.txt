@@ -2,25 +2,25 @@ Regression Summary for capm on Manuf
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Manuf_Excess   R-squared:                       0.880
-Model:                            OLS   Adj. R-squared:                  0.879
-Method:                 Least Squares   F-statistic:                     921.5
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.38e-57
-Time:                        15:42:00   Log-Likelihood:                -234.02
-No. Observations:                 120   AIC:                             472.0
-Df Residuals:                     118   BIC:                             477.6
+Dep. Variable:           Manuf_Excess   R-squared:                       0.863
+Model:                            OLS   Adj. R-squared:                  0.863
+Method:                 Least Squares   F-statistic:                     1774.
+Date:                                   Prob (F-statistic):          2.91e-198
+Time:                                   Log-Likelihood:                -1553.2
+No. Observations:                 738   AIC:                             3110.
+Df Residuals:                     736   BIC:                             3120.
 Df Model:                           1                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const         -0.2100      0.138     -1.524      0.128      -0.480       0.060
-MKT            1.2344      0.041     30.356      0.000       1.155       1.314
+const         -0.0074      0.079     -0.094      0.925      -0.162       0.147
+MKT            1.1136      0.026     42.121      0.000       1.062       1.165
 ==============================================================================
-Omnibus:                        2.706   Durbin-Watson:                   2.449
-Prob(Omnibus):                  0.258   Jarque-Bera (JB):                2.362
-Skew:                          -0.341   Prob(JB):                        0.307
-Kurtosis:                       3.078   Cond. No.                         4.07
+Omnibus:                       27.760   Durbin-Watson:                   1.956
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               64.162
+Skew:                           0.148   Prob(JB):                     1.17e-14
+Kurtosis:                       4.414   Cond. No.                         4.56
 ==============================================================================
 
 Notes:

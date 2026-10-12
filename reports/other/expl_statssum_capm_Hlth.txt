@@ -2,25 +2,25 @@ Regression Summary for capm on Hlth
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Hlth _Excess   R-squared:                       0.621
-Model:                            OLS   Adj. R-squared:                  0.617
-Method:                 Least Squares   F-statistic:                     111.1
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           1.04e-18
-Time:                        15:42:00   Log-Likelihood:                -274.31
-No. Observations:                 120   AIC:                             552.6
-Df Residuals:                     118   BIC:                             558.2
+Dep. Variable:           Hlth _Excess   R-squared:                       0.587
+Model:                            OLS   Adj. R-squared:                  0.586
+Method:                 Least Squares   F-statistic:                     343.6
+Date:                                   Prob (F-statistic):           3.10e-63
+Time:                                   Log-Likelihood:                -1877.6
+No. Observations:                 738   AIC:                             3759.
+Df Residuals:                     736   BIC:                             3768.
 Df Model:                           1                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const          0.2888      0.210      1.376      0.169      -0.123       0.700
-MKT            0.8161      0.077     10.542      0.000       0.664       0.968
+const          0.2031      0.119      1.701      0.089      -0.031       0.437
+MKT            0.8199      0.044     18.535      0.000       0.733       0.907
 ==============================================================================
-Omnibus:                        3.307   Durbin-Watson:                   2.163
-Prob(Omnibus):                  0.191   Jarque-Bera (JB):                3.191
-Skew:                          -0.397   Prob(JB):                        0.203
-Kurtosis:                       2.914   Cond. No.                         4.07
+Omnibus:                       40.127   Durbin-Watson:                   2.026
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              135.666
+Skew:                          -0.063   Prob(JB):                     3.47e-30
+Kurtosis:                       5.097   Cond. No.                         4.56
 ==============================================================================
 
 Notes:

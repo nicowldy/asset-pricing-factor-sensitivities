@@ -2,29 +2,29 @@ Regression Summary for ff5 on NoDur
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           NoDur_Excess   R-squared:                       0.723
-Model:                            OLS   Adj. R-squared:                  0.711
-Method:                 Least Squares   F-statistic:                     94.09
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           8.42e-39
-Time:                        15:42:00   Log-Likelihood:                -233.29
-No. Observations:                 120   AIC:                             478.6
-Df Residuals:                     114   BIC:                             495.3
+Dep. Variable:           NoDur_Excess   R-squared:                       0.762
+Model:                            OLS   Adj. R-squared:                  0.760
+Method:                 Least Squares   F-statistic:                     143.5
+Date:                                   Prob (F-statistic):          4.68e-106
+Time:                                   Log-Likelihood:                -1580.9
+No. Observations:                 738   AIC:                             3174.
+Df Residuals:                     732   BIC:                             3201.
 Df Model:                           5                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const         -0.0407      0.180     -0.227      0.821      -0.393       0.311
-MKT            0.8129      0.043     18.870      0.000       0.728       0.897
-SMB           -0.2923      0.114     -2.574      0.010      -0.515      -0.070
-HML           -0.2558      0.080     -3.210      0.001      -0.412      -0.100
-RMW            0.5216      0.131      3.975      0.000       0.264       0.779
-CMA            0.4845      0.132      3.684      0.000       0.227       0.742
+const         -0.1213      0.088     -1.385      0.166      -0.293       0.050
+MKT            0.8702      0.034     25.939      0.000       0.804       0.936
+SMB            0.0802      0.037      2.173      0.030       0.008       0.152
+HML           -0.0432      0.044     -0.979      0.328      -0.130       0.043
+RMW            0.5508      0.055     10.105      0.000       0.444       0.658
+CMA            0.3962      0.056      7.016      0.000       0.286       0.507
 ==============================================================================
-Omnibus:                       11.318   Durbin-Watson:                   2.394
-Prob(Omnibus):                  0.003   Jarque-Bera (JB):               11.782
-Skew:                          -0.668   Prob(JB):                      0.00276
-Kurtosis:                       3.755   Cond. No.                         4.55
+Omnibus:                       25.688   Durbin-Watson:                   1.960
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               59.338
+Skew:                          -0.113   Prob(JB):                     1.30e-13
+Kurtosis:                       4.371   Cond. No.                         5.15
 ==============================================================================
 
 Notes:

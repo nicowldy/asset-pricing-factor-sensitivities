@@ -24,7 +24,7 @@ dependencies = [
     "numpy>=2.0.0",
     "pandas>=2.2.0",
     "scipy>=1.14.0",
-    "statsmodels>=0.14.0",
+    "statsmodels>=0.15.0",
     "matplotlib>=3.9.0",
     "seaborn>=0.13.0",
 ]
@@ -38,24 +38,23 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["src*"]
+include = ["asset_pricing*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_functions = ["test_*"]
+markers = ["golden: re-runs the full pipeline and compares it with the committed outputs"]
+addopts = "-m 'not golden'"
 
 [tool.ruff]
 line-length = 88
 target-version = "py312"
 
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]  # line length is the formatter's job
+
 [tool.pyright]
-extraPaths = [
-    ".",
-    "src",
-    "src/data",
-    "src/modeling/in_sample",
-    "src/modeling/out_of_sample",
-]
 reportMissingTypeStubs = false
 

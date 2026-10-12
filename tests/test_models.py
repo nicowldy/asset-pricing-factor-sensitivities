@@ -1,16 +1,15 @@
 """Unit and integration tests for asset pricing models and econometric tests."""
-import numpy as np
-import pandas as pd
+
 import pytest
 
-from src.config import MODELS
-from src.modeling.in_sample.expl_utils import (
+from asset_pricing.config import MODELS
+from asset_pricing.modeling.in_sample.expl_utils import (
     calculate_excess_returns,
     load_factors,
     load_industry_data,
     run_regression,
+    wald_test,
 )
-from src.modeling.in_sample.expl_jointwald import perform_joint_wald_test
 
 
 @pytest.fixture
@@ -41,7 +40,9 @@ def test_ols_regression_with_hac(sample_factor_and_excess_industry_data):
     factors = ["MKT", "SMB", "HML"]
     target_industry = "Manuf"
 
-    results = run_regression(fact_df, excess_df, factors, target_industry, cov_type="HAC")
+    results = run_regression(
+        fact_df, excess_df, factors, target_industry, cov_type="HAC"
+    )
 
     assert results is not None
     assert "const" in results.params
@@ -59,23 +60,10 @@ def test_joint_wald_test(sample_factor_and_excess_industry_data):
     factors = ["MKT", "SMB", "HML"]
     target_industry = "Manuf"
 
-    wald_stat, p_val = perform_joint_wald_test(fact_df, excess_df, factors, target_industry)
+    results = run_regression(fact_df, excess_df, factors, target_industry)
+    wald_stat, p_val = wald_test(results, factors)
 
     assert wald_stat > 0
     assert 0.0 <= p_val <= 1.0
     # Market & size/value factors are overwhelmingly jointly significant in Manufacturing
     assert p_val < 0.01
-
-
-def test_expanding_window_rmse_metric():
-    """Verify RMSE and R2 calculations match standard statistical definitions."""
-    y_true = np.array([1.0, 2.0, 3.0, 4.0, 5.0], dtype=float)
-    y_pred = np.array([1.1, 1.9, 3.2, 3.8, 5.1], dtype=float)
-
-    rmse = float(np.sqrt(((y_true - y_pred) ** 2).mean()))
-    ss_res = float(((y_true - y_pred) ** 2).sum())
-    ss_tot = float(((y_true - y_true.mean()) ** 2).sum())
-    r2 = float(1.0 - (ss_res / ss_tot))
-
-    assert 0.0 < rmse < 0.3
-    assert r2 > 0.95

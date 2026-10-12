@@ -2,25 +2,25 @@ Regression Summary for capm on Money
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Money_Excess   R-squared:                       0.810
-Model:                            OLS   Adj. R-squared:                  0.808
-Method:                 Least Squares   F-statistic:                     464.9
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           9.63e-43
-Time:                        15:42:00   Log-Likelihood:                -260.12
-No. Observations:                 120   AIC:                             524.2
-Df Residuals:                     118   BIC:                             529.8
+Dep. Variable:           Money_Excess   R-squared:                       0.760
+Model:                            OLS   Adj. R-squared:                  0.760
+Method:                 Least Squares   F-statistic:                     713.6
+Date:                                   Prob (F-statistic):          1.97e-110
+Time:                                   Log-Likelihood:                -1778.0
+No. Observations:                 738   AIC:                             3560.
+Df Residuals:                     736   BIC:                             3569.
 Df Model:                           1                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const         -0.1313      0.187     -0.701      0.483      -0.499       0.236
-MKT            1.1694      0.054     21.562      0.000       1.063       1.276
+const          0.0097      0.124      0.078      0.938      -0.233       0.252
+MKT            1.0698      0.040     26.713      0.000       0.991       1.148
 ==============================================================================
-Omnibus:                        7.708   Durbin-Watson:                   1.915
-Prob(Omnibus):                  0.021   Jarque-Bera (JB):                7.460
-Skew:                           0.515   Prob(JB):                       0.0240
-Kurtosis:                       3.656   Cond. No.                         4.07
+Omnibus:                       51.909   Durbin-Watson:                   1.892
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              209.585
+Skew:                          -0.136   Prob(JB):                     3.09e-46
+Kurtosis:                       5.596   Cond. No.                         4.56
 ==============================================================================
 
 Notes:

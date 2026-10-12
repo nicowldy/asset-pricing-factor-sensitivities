@@ -2,27 +2,27 @@ Regression Summary for ff3 on Durbl
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:           Durbl_Excess   R-squared:                       0.764
-Model:                            OLS   Adj. R-squared:                  0.758
-Method:                 Least Squares   F-statistic:                     126.4
-Date:                Wed, 07 Oct 2026   Prob (F-statistic):           2.07e-36
-Time:                        15:42:00   Log-Likelihood:                -303.95
-No. Observations:                 120   AIC:                             615.9
-Df Residuals:                     116   BIC:                             627.0
+Dep. Variable:           Durbl_Excess   R-squared:                       0.597
+Model:                            OLS   Adj. R-squared:                  0.595
+Method:                 Least Squares   F-statistic:                     170.2
+Date:                                   Prob (F-statistic):           9.27e-84
+Time:                                   Log-Likelihood:                -2183.1
+No. Observations:                 738   AIC:                             4374.
+Df Residuals:                     734   BIC:                             4393.
 Df Model:                           3                                         
 Covariance Type:                  HAC                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-const         -0.3089      0.321     -0.962      0.336      -0.938       0.321
-MKT            1.2667      0.103     12.343      0.000       1.066       1.468
-SMB            0.5591      0.114      4.886      0.000       0.335       0.783
-HML            0.3203      0.154      2.075      0.038       0.018       0.623
+const         -0.1644      0.172     -0.954      0.340      -0.502       0.173
+MKT            1.2468      0.059     20.999      0.000       1.130       1.363
+SMB            0.2047      0.111      1.848      0.065      -0.012       0.422
+HML            0.3162      0.121      2.610      0.009       0.079       0.554
 ==============================================================================
-Omnibus:                        5.325   Durbin-Watson:                   1.954
-Prob(Omnibus):                  0.070   Jarque-Bera (JB):                7.887
-Skew:                           0.031   Prob(JB):                       0.0194
-Kurtosis:                       4.254   Cond. No.                         4.28
+Omnibus:                      239.382   Durbin-Watson:                   1.911
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2581.675
+Skew:                           1.134   Prob(JB):                         0.00
+Kurtosis:                      11.878   Cond. No.                         4.82
 ==============================================================================
 
 Notes:
