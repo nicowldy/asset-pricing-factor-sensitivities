@@ -1,112 +1,92 @@
-"""Centralized configuration and path management using pathlib."""
+"""Paths and model definitions for the whole pipeline."""
 
 from pathlib import Path
 
-# Base Paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
-INTERIM_DIR = DATA_DIR / "interim"
 PROCESSED_DIR = DATA_DIR / "processed"
+INTERIM_DIR = DATA_DIR / "interim"
 
 REPORTS_DIR = PROJECT_ROOT / "reports"
-FIGURES_DIR = REPORTS_DIR / "figures"
 TABLES_DIR = REPORTS_DIR / "tables"
-OTHER_DIR = REPORTS_DIR / "other"
+FIGURES_DIR = REPORTS_DIR / "figures"
+SUMMARIES_DIR = REPORTS_DIR / "summaries"
 
-# Factor Models Configuration
 MODELS = {
     "capm": {"factors": ["MKT"]},
     "ff3": {"factors": ["MKT", "SMB", "HML"]},
     "ff5": {"factors": ["MKT", "SMB", "HML", "RMW", "CMA"]},
 }
 
+# Raw input from the Kenneth R. French Data Library
 DATA_DATE = "2025-02-24"
+FF3_RAW = RAW_DIR / f"ff_ff3_monthly_pct_raw_{DATA_DATE}.csv"
+FF5_RAW = RAW_DIR / f"ff_ff5_monthly_pct_raw_{DATA_DATE}.csv"
+INDUSTRY_RAW = RAW_DIR / f"ff_ind_monthly_pct_raw_{DATA_DATE}.csv"
 
-# Raw Data Paths
-FF_FF3_RAW = RAW_DIR / f"ff_ff3_monthly_pct_raw_{DATA_DATE}.csv"
-FF_FF5_RAW = RAW_DIR / f"ff_ff5_monthly_pct_raw_{DATA_DATE}.csv"
-FF_IND_RAW = RAW_DIR / f"ff_ind_monthly_pct_raw_{DATA_DATE}.csv"
+# Stage 1: data
+FACTORS_PROCESSED = {m: PROCESSED_DIR / f"{m}_factors.csv" for m in MODELS}
+INDUSTRY_PROCESSED = PROCESSED_DIR / "industry_returns.csv"
+SAMPLE_TABLE = TABLES_DIR / "data_sample.csv"
 
-# Processed Data Paths
-FF_CAPM_PROCESSED = PROCESSED_DIR / "ff_capm_processed.csv"
-FF_FF3_PROCESSED = PROCESSED_DIR / "ff_ff3_processed.csv"
-FF_FF5_PROCESSED = PROCESSED_DIR / "ff_ff5_processed.csv"
-FF_IND_PROCESSED = PROCESSED_DIR / "ff_ind_processed.csv"
-PROCESSED = {
-    "capm": FF_CAPM_PROCESSED,
-    "ff3": FF_FF3_PROCESSED,
-    "ff5": FF_FF5_PROCESSED,
+DATASETS = [
+    # CAPM has no raw file of its own: MKT and RF come from the FF3 file.
+    {
+        "name": "capm",
+        "input": FF3_RAW,
+        "output": FACTORS_PROCESSED["capm"],
+        "columns": ["MKT", "RF"],
+    },
+    {"name": "ff3", "input": FF3_RAW, "output": FACTORS_PROCESSED["ff3"]},
+    {"name": "ff5", "input": FF5_RAW, "output": FACTORS_PROCESSED["ff5"]},
+    {"name": "ind", "input": INDUSTRY_RAW, "output": INDUSTRY_PROCESSED},
+]
+
+# Stage 2: in-sample
+DESCRIPTIVE_FACTORS_TABLE = {m: TABLES_DIR / f"descriptive_{m}.csv" for m in MODELS}
+DESCRIPTIVE_INDUSTRIES_TABLE = TABLES_DIR / "descriptive_industries.csv"
+FIG_DISTRIBUTION_FACTORS = FIGURES_DIR / "descriptive_distribution_factors.svg"
+FIG_DISTRIBUTION_INDUSTRIES = FIGURES_DIR / "descriptive_distribution_industries.svg"
+FIG_CUMULATIVE_FACTORS = FIGURES_DIR / "descriptive_cumulative_returns_factors.svg"
+FIG_CUMULATIVE_INDUSTRIES = (
+    FIGURES_DIR / "descriptive_cumulative_returns_industries.svg"
+)
+
+REGRESSION_TABLE = {m: TABLES_DIR / f"in_sample_regression_{m}.csv" for m in MODELS}
+WALD_JOINT_TABLE = {m: TABLES_DIR / f"in_sample_wald_joint_{m}.csv" for m in MODELS}
+WALD_CAPM_FF3_TABLE = TABLES_DIR / "in_sample_wald_incremental_capm_ff3.csv"
+WALD_FF3_FF5_TABLE = TABLES_DIR / "in_sample_wald_incremental_ff3_ff5.csv"
+DIAGNOSTICS_TABLE = TABLES_DIR / "in_sample_diagnostics.csv"
+
+FIG_ADJ_R2 = FIGURES_DIR / "in_sample_adj_r2.svg"
+FIG_RESIDUALS = {m: FIGURES_DIR / f"in_sample_residuals_{m}.svg" for m in MODELS}
+FIG_ADJ_R2_BY_DECADE = FIGURES_DIR / "in_sample_adj_r2_by_decade.svg"
+FIG_ALPHA_BY_DECADE = FIGURES_DIR / "in_sample_alpha_by_decade.svg"
+FIG_BETAS_BY_DECADE = {
+    m: FIGURES_DIR / f"in_sample_betas_by_decade_{m}.svg" for m in MODELS
 }
 
-# Interim Data Paths
-TRAINED = {m: INTERIM_DIR / f"ff_{m}_trained.csv" for m in MODELS}
-TESTED = {m: INTERIM_DIR / f"ff_{m}_tested.csv" for m in MODELS}
 
-# Reports - Tables
-PROCESSING_STATS = TABLES_DIR / "data_sample.csv"
-DESCRIPT_IND_TABLE = TABLES_DIR / "expl_descript_ind.csv"
-ASSUMPTIONS_TABLE = TABLES_DIR / "expl_assumptions.csv"
-INCRWALD_CAPM_TABLE = TABLES_DIR / "expl_incrwald_capm.csv"
-INCRWALD_FF3_TABLE = TABLES_DIR / "expl_incrwald_ff3.csv"
-PRED_METRICS_TABLE = TABLES_DIR / "pred_metrics.csv"
-PRED_TTEST_TABLE = TABLES_DIR / "pred_ttest.csv"
-PRED_PAIRTTEST_TABLE = TABLES_DIR / "pred_pairttest.csv"
-
-# Reports - Figures
-FIG_RSQ = FIGURES_DIR / "expl_rsq.svg"
-FIG_DISTRIB_IND = FIGURES_DIR / "expl_distrib_ind.svg"
-FIG_DISTRIB_FACT = FIGURES_DIR / "expl_distrib_fact.svg"
-FIG_CUMRETURNS_FACT = FIGURES_DIR / "expl_cumreturns_fact.svg"
-FIG_CUMRETURNS_IND = FIGURES_DIR / "expl_cumreturns_ind.svg"
-FIG_RSQBYDECS = FIGURES_DIR / "expl_rsqbydecs.svg"
-FIG_ALPHABYDECS = FIGURES_DIR / "expl_alphabydecs.svg"
-FIG_PRED_RSQ = FIGURES_DIR / "pred_rsq.svg"
-FIG_PRED_RMSE = FIGURES_DIR / "pred_rmse.svg"
-FIG_PRED_COMPEXAM = FIGURES_DIR / "pred_compexample.svg"
+def summary_path(model_name: str, industry: str) -> Path:
+    # The raw industry file names one column "Hlth " with a trailing space.
+    return SUMMARIES_DIR / f"in_sample_summary_{model_name}_{industry.strip()}.txt"
 
 
-def get_standard_datasets():
-    return [
-        # CAPM has no raw file of its own: MKT and RF come from the FF3 file.
-        {
-            "input": FF_FF3_RAW,
-            "output": FF_CAPM_PROCESSED,
-            "name": "capm",
-            "columns": ["MKT", "RF"],
-        },
-        {"input": FF_FF3_RAW, "output": FF_FF3_PROCESSED, "name": "ff3"},
-        {"input": FF_FF5_RAW, "output": FF_FF5_PROCESSED, "name": "ff5"},
-        {"input": FF_IND_RAW, "output": FF_IND_PROCESSED, "name": "ind"},
-    ]
+# Stage 3: out-of-sample
+COEFFICIENTS = {m: INTERIM_DIR / f"{m}_coefficients.csv" for m in MODELS}
+PREDICTIONS = {m: INTERIM_DIR / f"{m}_predictions.csv" for m in MODELS}
 
+OOS_METRICS_TABLE = TABLES_DIR / "out_of_sample_metrics.csv"
+OOS_ERROR_TTEST_TABLE = TABLES_DIR / "out_of_sample_error_ttest.csv"
+OOS_PAIRED_TTEST_TABLE = TABLES_DIR / "out_of_sample_paired_ttest.csv"
 
-def get_descript_model_path(model_name: str) -> Path:
-    return TABLES_DIR / f"expl_descript_{model_name}.csv"
-
-
-def get_jointwald_path(model_name: str) -> Path:
-    return TABLES_DIR / f"expl_jointwald_{model_name}.csv"
-
-
-def get_params_path(model_name: str) -> Path:
-    return TABLES_DIR / f"expl_regress_{model_name}.csv"
-
-
-def get_coeffsbydecs_path(model_name: str) -> Path:
-    return FIGURES_DIR / f"expl_coeffbydecs_{model_name}.svg"
-
-
-def get_resids_path(model_name: str) -> Path:
-    return FIGURES_DIR / f"expl_resids_{model_name}.svg"
-
-
-def get_statssum_path(model_name: str, industry: str) -> Path:
-    # Use .strip() to avoid trailing spaces in industry names (e.g., 'Hlth ')
-    clean_ind = industry.strip()
-    return OTHER_DIR / f"expl_statssum_{model_name}_{clean_ind}.txt"
-
-
-def get_comp_path(model_type: str) -> Path:
-    return FIGURES_DIR / f"pred_comp_{model_type}.svg"
+FIG_OOS_R2 = FIGURES_DIR / "out_of_sample_r2.svg"
+FIG_OOS_RMSE = FIGURES_DIR / "out_of_sample_rmse.svg"
+FIG_OOS_ACTUAL_VS_PREDICTED = {
+    m: FIGURES_DIR / f"out_of_sample_actual_vs_predicted_{m}.svg" for m in MODELS
+}
+FIG_OOS_ACTUAL_VS_PREDICTED_EXAMPLES = (
+    FIGURES_DIR / "out_of_sample_actual_vs_predicted_examples.svg"
+)

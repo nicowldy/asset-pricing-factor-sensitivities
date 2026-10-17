@@ -3,13 +3,13 @@
 import pytest
 
 from asset_pricing.config import MODELS
-from asset_pricing.modeling.in_sample.expl_utils import (
+from asset_pricing.data.loaders import (
     calculate_excess_returns,
     load_factors,
     load_industry_data,
-    run_regression,
-    wald_test,
 )
+from asset_pricing.modeling.in_sample.regression import run_regression
+from asset_pricing.modeling.in_sample.wald import wald_test
 
 
 @pytest.fixture

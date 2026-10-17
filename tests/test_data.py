@@ -2,23 +2,13 @@
 
 import pandas as pd
 
-from asset_pricing.config import (
-    FF_CAPM_PROCESSED,
-    FF_FF3_PROCESSED,
-    FF_FF5_PROCESSED,
-    FF_IND_PROCESSED,
-)
-from asset_pricing.data.data_utils import load_data_with_markers
+from asset_pricing.config import FACTORS_PROCESSED, INDUSTRY_PROCESSED
+from asset_pricing.data.storage import read_marked_csv
 
 
 def test_processed_files_exist():
     """Verify that all processed data files exist in data/processed/."""
-    expected_files = [
-        FF_CAPM_PROCESSED,
-        FF_FF3_PROCESSED,
-        FF_FF5_PROCESSED,
-        FF_IND_PROCESSED,
-    ]
+    expected_files = [*FACTORS_PROCESSED.values(), INDUSTRY_PROCESSED]
     for file_path in expected_files:
         assert file_path.exists(), f"Processed data file missing: {file_path}"
         assert file_path.stat().st_size > 0, (
@@ -27,8 +17,8 @@ def test_processed_files_exist():
 
 
 def test_processed_data_loading_and_markers():
-    """Test that load_data_with_markers correctly strips comments and parses dates."""
-    df_capm = load_data_with_markers(str(FF_CAPM_PROCESSED))
+    """Test that read_marked_csv correctly strips comments and parses dates."""
+    df_capm = read_marked_csv(FACTORS_PROCESSED["capm"])
     assert not df_capm.empty
     assert "Date" in df_capm.columns
     assert "MKT" in df_capm.columns
@@ -52,7 +42,7 @@ def test_industry_sectors_present():
         "Money",
         "Other",
     ]
-    df_ind = load_data_with_markers(str(FF_IND_PROCESSED))
+    df_ind = read_marked_csv(INDUSTRY_PROCESSED)
     assert not df_ind.empty
     # Strip any trailing whitespace from Kenneth French column names
     cols = [c.strip() for c in df_ind.columns]
@@ -63,10 +53,10 @@ def test_industry_sectors_present():
 def test_date_alignment_across_processed_datasets():
     """Verify that date ranges are identical across factor and industry datasets."""
     datasets = {
-        "capm": load_data_with_markers(str(FF_CAPM_PROCESSED)),
-        "ff3": load_data_with_markers(str(FF_FF3_PROCESSED)),
-        "ff5": load_data_with_markers(str(FF_FF5_PROCESSED)),
-        "ind": load_data_with_markers(str(FF_IND_PROCESSED)),
+        "capm": read_marked_csv(FACTORS_PROCESSED["capm"]),
+        "ff3": read_marked_csv(FACTORS_PROCESSED["ff3"]),
+        "ff5": read_marked_csv(FACTORS_PROCESSED["ff5"]),
+        "ind": read_marked_csv(INDUSTRY_PROCESSED),
     }
 
     reference_dates = datasets["capm"]["Date"].tolist()

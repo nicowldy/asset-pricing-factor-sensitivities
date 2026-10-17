@@ -19,7 +19,7 @@ OUTPUT_DIRS = [
     "data/processed",
     "data/interim",
     "reports/tables",
-    "reports/other",
+    "reports/summaries",
     "reports/figures",
 ]
 

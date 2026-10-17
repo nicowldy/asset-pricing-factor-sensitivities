@@ -1,13 +1,15 @@
+"""Figures of the out-of-sample stage."""
+
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import pandas as pd
 
 from asset_pricing.config import (
-    FIG_PRED_COMPEXAM,
-    FIG_PRED_RMSE,
-    FIG_PRED_RSQ,
-    get_comp_path,
+    FIG_OOS_ACTUAL_VS_PREDICTED,
+    FIG_OOS_ACTUAL_VS_PREDICTED_EXAMPLES,
+    FIG_OOS_R2,
+    FIG_OOS_RMSE,
 )
 from asset_pricing.plot_style import (
     COLOR_REF_LINE,
@@ -24,11 +26,11 @@ def _plot_bar(df: pd.DataFrame, value_col: str, y_label: str, save_path) -> None
 
 
 def plot_rmse_bar(df: pd.DataFrame) -> None:
-    _plot_bar(df, "RMSE", "Root Mean Squared Error (RMSE, %)", FIG_PRED_RMSE)
+    _plot_bar(df, "RMSE", "Root Mean Squared Error (RMSE, %)", FIG_OOS_RMSE)
 
 
 def plot_r2_bar(df: pd.DataFrame) -> None:
-    _plot_bar(df, "R2", "Out-of-Sample $R^2$", FIG_PRED_RSQ)
+    _plot_bar(df, "R2", "Out-of-Sample $R^2$", FIG_OOS_R2)
 
 
 def _scatter_actual_vs_pred(ax, df: pd.DataFrame, title: str, size: float) -> None:
@@ -70,10 +72,10 @@ def plot_actual_vs_pred(data: dict, model: str) -> None:
     for ax in axes_flat[len(inds) :]:
         fig.delaxes(ax)
 
-    save_figure(fig, get_comp_path(model))
+    save_figure(fig, FIG_OOS_ACTUAL_VS_PREDICTED[model])
 
 
-def plot_comp_three(
+def plot_actual_vs_pred_examples(
     data: dict, industries: tuple[str, ...] = ("Manuf", "Utils")
 ) -> None:
     set_academic_style()
@@ -88,4 +90,4 @@ def plot_comp_three(
     for ax, ind in zip(axes.flatten(), industries, strict=True):
         _scatter_actual_vs_pred(ax, data[ind], ind, size=14)
 
-    save_figure(fig, FIG_PRED_COMPEXAM)
+    save_figure(fig, FIG_OOS_ACTUAL_VS_PREDICTED_EXAMPLES)

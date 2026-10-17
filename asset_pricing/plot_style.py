@@ -19,7 +19,6 @@ MODEL_PALETTE = {
 FACTOR_PALETTE = {
     "MKT": "#1E293B",  # Charcoal / Dark Slate
     "SMB": "#2563EB",  # Blue
-    "SMB (CAPM)": "#64748B",
     "SMB (FF3)": "#2563EB",
     "SMB (FF5)": "#0284C7",  # Sky Blue
     "HML": "#D97706",  # Warm Amber

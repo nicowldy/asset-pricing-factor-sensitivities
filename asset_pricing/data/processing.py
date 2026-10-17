@@ -1,8 +1,20 @@
+"""Stage 1: clean the raw files and cut them to their common sample."""
+
 import pandas as pd
 
-from asset_pricing.config import PROCESSING_STATS, get_standard_datasets
-from asset_pricing.data.data_tables import export_processing_statistics
-from asset_pricing.data.data_utils import save_with_markers
+from asset_pricing.config import DATASETS, SAMPLE_TABLE
+from asset_pricing.data.storage import write_marked_csv
+
+# Column order of the sample table in reports/tables/data_sample.csv
+STATS_COLUMNS = [
+    "name",
+    "raw_rows",
+    "processed_rows",
+    "raw_range",
+    "processed_range",
+    "dropped_cleaning",
+    "dropped_intersection",
+]
 
 
 def _date_range(dates) -> str:
@@ -11,7 +23,7 @@ def _date_range(dates) -> str:
 
 def process_data():
     stats, dfs = {}, []
-    for ds in get_standard_datasets():
+    for ds in DATASETS:
         raw = pd.read_csv(ds["input"])
         raw.columns = ["Date", *raw.columns[1:]]
         if "columns" in ds:
@@ -39,9 +51,10 @@ def process_data():
             processed_range=_date_range(common_idx),
             dropped_intersection=len(df) - len(df_proc),
         )
-        save_with_markers(df_proc, output)
+        write_marked_csv(df_proc, output)
 
-    export_processing_statistics({"datasets": stats}, PROCESSING_STATS)
+    SAMPLE_TABLE.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(stats.values())[STATS_COLUMNS].to_csv(SAMPLE_TABLE, index=False)
 
 
 if __name__ == "__main__":

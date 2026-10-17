@@ -11,103 +11,70 @@ import sys
 import time
 
 
-def run_data_stage() -> None:
-    """Run data extraction and preprocessing."""
+def _stage(title: str, steps) -> None:
     print("\n" + "=" * 60)
-    print("STAGE 1: DATA EXTRACTION & PREPROCESSING")
+    print(title)
     print("=" * 60)
+    for message, step in steps:
+        print(f"--> {message}...")
+        step()
+        print("    [OK]")
 
-    from asset_pricing.data.data_processing import process_data
 
-    print("--> Aligning sample windows, cleaning, and exporting processed datasets...")
-    process_data()
-    print("    [OK] Data processing completed.")
+def run_data_stage() -> None:
+    from asset_pricing.data import processing
+
+    _stage(
+        "STAGE 1: DATA",
+        [
+            (
+                "Cleaning the raw files and aligning them to a common sample",
+                processing.process_data,
+            )
+        ],
+    )
 
 
 def run_in_sample_stage() -> None:
-    """Run in-sample empirical asset pricing regressions and diagnostic tests."""
-    print("\n" + "=" * 60)
-    print("STAGE 2: IN-SAMPLE ECONOMETRIC ANALYSIS")
-    print("=" * 60)
-
-    from asset_pricing.modeling.in_sample.expl_assumptions import (
-        main as run_assumptions,
-    )
-    from asset_pricing.modeling.in_sample.expl_bydecs import main as run_bydecs
-    from asset_pricing.modeling.in_sample.expl_descript import (
-        run_all_analyses as run_descript,
-    )
-    from asset_pricing.modeling.in_sample.expl_incrwald import main as run_incrwald
-    from asset_pricing.modeling.in_sample.expl_jointwald import main as run_jointwald
-    from asset_pricing.modeling.in_sample.expl_regress import (
-        run_analysis as run_regress,
+    from asset_pricing.modeling.in_sample import (
+        decades,
+        descriptive,
+        diagnostics,
+        regression,
+        wald,
     )
 
-    print("--> Computing descriptive statistics and cumulative return plots...")
-    run_descript(save_plots=True)
-    print("    [OK] Descriptive statistics & plots generated.")
-
-    print("--> Running full-sample time-series regressions (HAC standard errors)...")
-    run_regress(save_outputs=True)
-    print("    [OK] In-sample regressions & R-squared comparison generated.")
-
-    print("--> Performing Joint Wald tests for factor significance...")
-    run_jointwald()
-    print("    [OK] Joint Wald tests completed.")
-
-    print("--> Performing Incremental Wald tests (CAPM vs FF3, FF3 vs FF5)...")
-    run_incrwald()
-    print("    [OK] Incremental Wald tests completed.")
-
-    print("--> Evaluating econometric regression assumptions & diagnostics...")
-    run_assumptions(save_to_csv=True)
-    print("    [OK] Assumption diagnostics completed.")
-
-    print(
-        "--> Evaluating decade-by-decade parameter and explanatory power stability..."
+    _stage(
+        "STAGE 2: IN-SAMPLE ANALYSIS",
+        [
+            ("Descriptive statistics and return plots", descriptive.main),
+            ("Full-sample regressions with HAC standard errors", regression.main),
+            ("Joint and incremental Wald tests", wald.main),
+            ("Assumption diagnostics", diagnostics.main),
+            ("Regressions by decade", decades.main),
+        ],
     )
-    run_bydecs()
-    print("    [OK] Decade-by-decade analysis completed.")
 
 
 def run_out_of_sample_stage() -> None:
-    """Run out-of-sample expanding window predictive modeling and evaluation."""
-    print("\n" + "=" * 60)
-    print("STAGE 3: OUT-OF-SAMPLE PREDICTIVE EVALUATION")
-    print("=" * 60)
-
-    from asset_pricing.modeling.out_of_sample.pred_actpred import main as run_actpred
-    from asset_pricing.modeling.out_of_sample.pred_metrics import main as run_metrics
-    from asset_pricing.modeling.out_of_sample.pred_pairttest import (
-        main as run_pairttest,
+    from asset_pricing.modeling.out_of_sample import (
+        actual_vs_predicted,
+        estimate,
+        forecast_tests,
+        metrics,
+        predict,
     )
-    from asset_pricing.modeling.out_of_sample.pred_test import main as run_test
-    from asset_pricing.modeling.out_of_sample.pred_train import main as run_train
-    from asset_pricing.modeling.out_of_sample.pred_ttest import main as run_ttest
 
-    print("--> Training predictive models via expanding window OLS...")
-    run_train()
-    print("    [OK] Model training completed.")
-
-    print("--> Generating 1-step-ahead out-of-sample predictions...")
-    run_test()
-    print("    [OK] Prediction generation completed.")
-
-    print("--> Calculating prediction accuracy metrics (RMSE, out-of-sample R²)...")
-    run_metrics()
-    print("    [OK] Prediction metrics and comparison plots completed.")
-
-    print("--> Generating actual vs. predicted visualization charts...")
-    run_actpred()
-    print("    [OK] Prediction plots completed.")
-
-    print("--> Running HAC t-tests on forecast errors...")
-    run_ttest()
-    print("    [OK] Forecast error t-tests completed.")
-
-    print("--> Performing paired t-tests comparing predictive performance...")
-    run_pairttest()
-    print("    [OK] Paired t-tests completed.")
+    _stage(
+        "STAGE 3: OUT-OF-SAMPLE EVALUATION",
+        [
+            ("Expanding-window estimation of the factor loadings", estimate.main),
+            ("Predictions for the month after each window", predict.main),
+            ("RMSE and out-of-sample R-squared", metrics.main),
+            ("Actual vs. predicted plots", actual_vs_predicted.main),
+            ("t-tests on the prediction errors", forecast_tests.main),
+        ],
+    )
 
 
 def main() -> None:
