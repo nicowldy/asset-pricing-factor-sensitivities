@@ -11,6 +11,13 @@ def add_average_row(df):
     return pd.concat([df, pd.DataFrame([avg])], ignore_index=True)
 
 
+def add_group_average_rows(df, by):
+    """Append one row per group in `by` with industry "Average" and the column means."""
+    avg = df.groupby(by, sort=False).mean(numeric_only=True).reset_index()
+    avg["industry"] = "Average"
+    return pd.concat([df, avg[df.columns]], ignore_index=True)
+
+
 def write_table(df, path, index=False):
     path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(path, index=index)

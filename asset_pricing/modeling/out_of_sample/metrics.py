@@ -6,7 +6,7 @@ import pandas as pd
 from asset_pricing.config import MODELS, OOS_METRICS_TABLE, PREDICTIONS
 from asset_pricing.data.storage import read_marked_csv
 from asset_pricing.modeling.out_of_sample.plots import plot_r2_bar, plot_rmse_bar
-from asset_pricing.modeling.tables import write_table
+from asset_pricing.modeling.tables import add_group_average_rows, write_table
 
 
 def main():
@@ -32,7 +32,7 @@ def main():
     # Rows are ordered CAPM, FF3, FF5 within each industry: delta to the smaller model.
     deltas = df_metrics.groupby("industry", sort=False)[["r2", "rmse"]].diff()
     df_metrics[["r2_delta", "rmse_delta"]] = deltas.to_numpy()
-    write_table(df_metrics, OOS_METRICS_TABLE)
+    write_table(add_group_average_rows(df_metrics, "model"), OOS_METRICS_TABLE)
 
     plot_r2_bar(df_metrics.rename(columns={"model": "Model", "r2": "R2"}))
     plot_rmse_bar(df_metrics.rename(columns={"model": "Model", "rmse": "RMSE"}))

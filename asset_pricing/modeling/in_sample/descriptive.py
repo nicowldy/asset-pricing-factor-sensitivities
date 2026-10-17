@@ -1,6 +1,7 @@
 """Descriptive statistics, return distributions and cumulative returns."""
 
 from asset_pricing.config import (
+    CORRELATIONS_TABLE,
     DESCRIPTIVE_FACTORS_TABLE,
     DESCRIPTIVE_INDUSTRIES_TABLE,
     FIG_CUMULATIVE_FACTORS,
@@ -33,8 +34,12 @@ def calculate_descriptive_stats(df):
 
 def main():
     for model_name in MODELS:
-        stats = calculate_descriptive_stats(load_factors(model_name))
+        factor_data = load_factors(model_name)
+        stats = calculate_descriptive_stats(factor_data)
         write_table(stats, DESCRIPTIVE_FACTORS_TABLE[model_name], index=True)
+        if model_name in CORRELATIONS_TABLE:
+            corr = factor_data[MODELS[model_name]["factors"]].corr()
+            write_table(corr, CORRELATIONS_TABLE[model_name], index=True)
 
     industry_data = load_industry_data()
     stats = calculate_descriptive_stats(

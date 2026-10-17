@@ -13,7 +13,7 @@ from asset_pricing.config import (
     PREDICTIONS,
 )
 from asset_pricing.data.storage import read_marked_csv
-from asset_pricing.modeling.tables import write_table
+from asset_pricing.modeling.tables import add_group_average_rows, write_table
 
 MODEL_PAIRS = [("capm", "ff3"), ("ff3", "ff5")]
 
@@ -68,8 +68,13 @@ def paired_ttest(predictions: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
 def main() -> None:
     predictions = {m: read_marked_csv(PREDICTIONS[m]) for m in MODELS}
-    write_table(error_ttest(predictions), OOS_ERROR_TTEST_TABLE)
-    write_table(paired_ttest(predictions), OOS_PAIRED_TTEST_TABLE)
+    write_table(
+        add_group_average_rows(error_ttest(predictions), "model"), OOS_ERROR_TTEST_TABLE
+    )
+    write_table(
+        add_group_average_rows(paired_ttest(predictions), ["model_A", "model_B"]),
+        OOS_PAIRED_TTEST_TABLE,
+    )
 
 
 if __name__ == "__main__":

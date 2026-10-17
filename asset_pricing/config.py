@@ -47,6 +47,10 @@ DATASETS = [
 # Stage 2: in-sample
 DESCRIPTIVE_FACTORS_TABLE = {m: TABLES_DIR / f"descriptive_{m}.csv" for m in MODELS}
 DESCRIPTIVE_INDUSTRIES_TABLE = TABLES_DIR / "descriptive_industries.csv"
+# CAPM has a single factor, so there is no correlation table for it.
+CORRELATIONS_TABLE = {
+    m: TABLES_DIR / f"descriptive_correlations_{m}.csv" for m in ("ff3", "ff5")
+}
 FIG_DISTRIBUTION_FACTORS = FIGURES_DIR / "descriptive_distribution_factors.svg"
 FIG_DISTRIBUTION_INDUSTRIES = FIGURES_DIR / "descriptive_distribution_industries.svg"
 FIG_CUMULATIVE_FACTORS = FIGURES_DIR / "descriptive_cumulative_returns_factors.svg"
