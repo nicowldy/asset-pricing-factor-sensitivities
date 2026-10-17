@@ -1,188 +1,182 @@
 # Cross-Sectoral Sensitivities of Asset Pricing Models
-### Empirical Evaluation of CAPM, Fama-French 3-Factor, and 5-Factor Models Across Industry Portfolios (1963–2024)
 
-[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/release/python-3120/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Econometrics: Statsmodels](https://img.shields.io/badge/econometrics-statsmodels-orange.svg)](https://www.statsmodels.org/)
-[![Tests: Pytest](https://img.shields.io/badge/tests-pytest-green.svg)](tests/)
-[![Kenneth French Data](https://img.shields.io/badge/data-Kenneth%20R.%20French-informational.svg)](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html)
+Empirical code for the bachelor thesis *Evaluating Cross-Sectoral Sensitivities of
+Asset Pricing Models* (Nico Walendy, Bonn-Rhein-Sieg University of Applied Sciences, 2025).
 
----
+The thesis compares the CAPM, the Fama-French 3-factor model (FF3) and the
+Fama-French 5-factor model (FF5) on 12 U.S. industry portfolios from July 1963 to
+December 2024. It asks whether the additional factors explain industry returns
+better, both in-sample and out-of-sample.
 
-## 📌 Executive Summary & Abstract
+## Data
 
-This repository contains the complete empirical data science and econometric codebase for the Bachelor Thesis **"Evaluating Cross-Sectoral Sensitivities of Asset Pricing Models"** by **Nico Walendy** at the *Bonn-Rhein-Sieg University of Applied Sciences*.
+Monthly returns in percent from the
+[Kenneth R. French Data Library](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html),
+downloaded on 2025-02-24:
 
-The project investigates whether multi-factor asset pricing extensions—specifically the **Fama-French 3-Factor (FF3)** and **Fama-French 5-Factor (FF5)** models—demonstrate statistically significant advantages over the foundational **Capital Asset Pricing Model (CAPM)** when pricing 12 U.S. industry portfolios over a 60-year horizon (July 1963 – December 2024).
+- Fama-French 3 factors (`MKT`, `SMB`, `HML`, `RF`)
+- Fama-French 5 factors (adds `RMW`, `CMA`)
+- 12 value-weighted industry portfolios
 
-The analysis is conducted through two complementary lenses:
-1. **In-Sample Explanatory Power:** Time-series OLS regressions with Heteroskedasticity and Autocorrelation Consistent (**HAC / Newey-West**) standard errors, joint and incremental Wald tests, diagnostic misspecification tests, and decade-by-decade parameter stability.
-2. **Out-of-Sample Predictive Capability:** Expanding-window 1-month-ahead expected return forecasts, evaluating whether richer factor specifications reduce root-mean-squared error (RMSE) or suffer from parameter estimation noise.
+All files are cut to their common sample of 738 months. The raw files are kept
+unchanged in `data/raw/`; the rights to them remain with their author.
 
----
+## Models
 
-## 🔍 Key Empirical Findings
+Each model is a time-series regression of the monthly excess return of industry
+*i* on the factor returns. $\alpha_i$ is the return the factors do not explain.
 
-* **Strong Cross-Sectoral Heterogeneity:** Market risk exposure ($\beta_{\text{MKT}}$) varies substantially across industries (e.g., defensive Utilities with $\beta < 0.6$ vs. High-Tech and Durables with $\beta > 1.2$).
-* **Incremental Value of Size & Value (FF3 vs. CAPM):** 
-  * The inclusion of Size ($SMB$) and Value ($HML$) factors provides statistically significant incremental explanatory power for most industrial and cyclical sectors (Incremental Wald test $p < 0.001$).
-  * Average in-sample $R^2$ increases considerably when transitioning from CAPM to FF3.
-* **Marginal Value of Profitability & Investment (FF5 vs. FF3):**
-  * The addition of Robust-Minus-Weak Profitability ($RMW$) and Conservative-Minus-Aggressive Investment ($CMA$) factors improves fit primarily in consumer and manufacturing sectors.
-  * In several industries, factor loadings for $RMW$ and $CMA$ are statistically insignificant, indicating model overparameterization for specific sectors.
-* **The In-Sample vs. Out-of-Sample Divergence:**
-  * While FF5 achieves the highest in-sample explanatory power ($R^2$), **it does not consistently outperform FF3 or CAPM out-of-sample**.
-  * Out-of-sample forecast errors (RMSE) and paired $t$-tests reveal that parameter estimation uncertainty in expanding windows dampens the predictive accuracy of higher-dimensional factor models.
+**CAPM** (Sharpe 1964, Lintner 1965)
 
----
+$$R_{i,t} - R_{f,t} = \alpha_i + \beta_{i}^{MKT}\, MKT_t + \varepsilon_{i,t}$$
 
-## 📊 Visual Showcase
+**Fama-French 3-factor model** (Fama and French 1993)
 
-### Cumulative Factor Dynamics (1963–2024)
-![Cumulative Log Factor Returns](reports/figures/expl_cumreturns_fact.svg)
+$$R_{i,t} - R_{f,t} = \alpha_i + \beta_{i}^{MKT}\, MKT_t + \beta_{i}^{SMB}\, SMB_t + \beta_{i}^{HML}\, HML_t + \varepsilon_{i,t}$$
 
-### In-Sample Explanatory Power ($R^2$ Comparison Across Models)
-![Model R-Squared Comparison](reports/figures/expl_rsq.svg)
+**Fama-French 5-factor model** (Fama and French 2015)
 
-### Out-of-Sample Predictive Accuracy (RMSE by Industry)
-![Out of Sample RMSE Comparison](reports/figures/pred_rmse.svg)
+$$R_{i,t} - R_{f,t} = \alpha_i + \beta_{i}^{MKT}\, MKT_t + \beta_{i}^{SMB}\, SMB_t + \beta_{i}^{HML}\, HML_t + \beta_{i}^{RMW}\, RMW_t + \beta_{i}^{CMA}\, CMA_t + \varepsilon_{i,t}$$
 
----
+**Variables**
 
-## 🏗 Repository Structure
+| Symbol | Name | Definition | Captures |
+|--------|------|------------|----------|
+| $R_{i,t}$ | Industry return | Return of industry portfolio *i* in month *t* | – |
+| $R_{f,t}$ (`RF`) | Risk-free rate | One-month U.S. Treasury bill rate | – |
+| `MKT` | Market | Return of the value-weighted U.S. stock market minus $R_f$ | Systematic market risk |
+| `SMB` | Small Minus Big | Return of small-cap minus large-cap stocks | Size premium |
+| `HML` | High Minus Low | Return of stocks with high minus low book-to-market ratio | Value premium |
+| `RMW` | Robust Minus Weak | Return of firms with high minus low operating profitability | Profitability premium |
+| `CMA` | Conservative Minus Aggressive | Return of firms with low minus high asset growth | Investment premium |
 
-```
-.
-├── Makefile                      # Shortcuts: make run, make test, make verify, make lint
-├── pyproject.toml                # Build specification, dependency ranges, tool config
-├── requirements.txt              # Exact versions the committed outputs were produced with
-├── CLAUDE.md                     # Working rules for coding agents
-├── run_pipeline.py               # Unified CLI runner for end-to-end execution
-├── data/
-│   ├── raw/                      # Original Kenneth R. French monthly dataset files (input, never written)
-│   ├── interim/                  # Expanding-window model parameters & forecast outputs
-│   └── processed/                # Date-aligned, clean factor & industry CSV datasets
-├── reports/
-│   ├── figures/                  # Vector graphic visualizations (SVG)
-│   ├── tables/                   # Econometric regression tables, Wald tests, metrics (CSV)
-│   └── other/                    # Full-sample regression summaries per model and industry (TXT)
-├── asset_pricing/                # Modular Python source package
-│   ├── config.py                 # Centralized path and model configuration
-│   ├── plot_style.py             # Shared plot style and deterministic figure export
-│   ├── data/                     # Ingestion, cleaning, date alignment & CAPM derivation
-│   │   ├── data_processing.py
-│   │   ├── data_tables.py
-│   │   └── data_utils.py
-│   └── modeling/
-│       ├── in_sample/            # In-sample regressions, Wald tests & diagnostics
-│       │   ├── expl_assumptions.py
-│       │   ├── expl_bydecs.py
-│       │   ├── expl_descript.py
-│       │   ├── expl_incrwald.py
-│       │   ├── expl_jointwald.py
-│       │   ├── expl_plots.py
-│       │   ├── expl_regress.py
-│       │   ├── expl_tables.py
-│       │   └── expl_utils.py
-│       └── out_of_sample/        # Expanding window training & predictive evaluation
-│           ├── pred_actpred.py
-│           ├── pred_metrics.py
-│           ├── pred_pairttest.py
-│           ├── pred_plots.py
-│           ├── pred_test.py
-│           ├── pred_train.py
-│           └── pred_ttest.py
-└── tests/                        # Automated Pytest suite
-    ├── test_data.py              # Data integrity, date alignment, French 12 sector tests
-    ├── test_models.py            # Econometric OLS fitting, HAC SEs, Wald statistics tests
-    └── test_golden.py            # Full pipeline re-run compared with the committed outputs
-```
+A beta measures how strongly an industry's excess return moves with the factor.
 
----
+## Method
 
-## ⚡ Quickstart & Reproducibility
+All regressions and tests use Newey-West HAC standard errors with 12 lags.
 
-### 1. Environment Setup
+**In-sample (full sample)**
 
-Clone the repository and install the pinned dependencies in a virtual environment:
+- OLS regression per model and industry
+- Joint Wald test: all factor loadings of a model are zero
+- Incremental Wald test: the added factors are zero (CAPM to FF3, FF3 to FF5)
+- Assumption diagnostics: linearity, Durbin-Watson, Breusch-Pagan, VIF, ADF
+- Stability: the regressions repeated for each decade from the 1970s to the 2010s
+
+**Out-of-sample**
+
+- The loadings for month *t* are estimated on an expanding window of all months
+  before *t* (first window 24 months).
+- They are applied to the realised factor returns of month *t*. The test therefore
+  measures how stable the loadings are, not how well future returns can be forecast.
+- Metrics: RMSE and out-of-sample R² (relative to the mean actual excess return)
+- Two-sided HAC t-test of a zero mean error per model
+- One-sided paired HAC t-test on squared errors between nested models
+
+## Results
+
+| | CAPM | FF3 | FF5 |
+|---|---|---|---|
+| Average adjusted R² (in-sample) | 0.655 | 0.691 | 0.710 |
+| Industries with lower RMSE than the smaller model | – | 11 of 12 | 11 of 12 |
+
+- Market betas differ widely across industries, from 0.53 (Utilities) to 1.25
+  (Durables) in the CAPM.
+- SMB and HML are jointly significant at the 1% level in 10 of 12 industries.
+- RMW and CMA are jointly significant at the 5% level in 10 of 12 industries, but
+  raise the average adjusted R² by only 0.02. In some industries, for example
+  Durables, they are individually insignificant.
+- Out-of-sample, the ranking of the models carries over, but most improvements are
+  small. The paired t-test finds a significant gain (5% level) of FF3 over CAPM in
+  5 industries and of FF5 over FF3 in 3 industries.
+
+![In-sample adjusted R²](reports/figures/in_sample_adj_r2.svg)
+
+![Out-of-sample RMSE](reports/figures/out_of_sample_rmse.svg)
+
+## Pipeline
+
+`run_pipeline.py` runs three stages in order. Stages 2 and 3 both read the
+processed data from stage 1. Output files are prefixed with the step that
+produces them (`descriptive_`, `in_sample_`, `out_of_sample_`).
+
+**Stage 1: Data** (`--data`, `asset_pricing/data/`)
+
+| Module | Task | Output |
+|--------|------|--------|
+| `processing.py` | Clean the raw files and cut them to the common sample | `data/processed/*_factors.csv`, `industry_returns.csv`, `reports/tables/data_sample.csv` |
+| `loaders.py` | Load the processed data, compute excess returns | – |
+| `storage.py` | Read and write the CSV format of `data/` | – |
+
+**Stage 2: In-sample** (`--in-sample`, `asset_pricing/modeling/in_sample/`)
+
+| Module | Task | Output |
+|--------|------|--------|
+| `descriptive.py` | Summary statistics, distributions, cumulative returns | `descriptive_*` |
+| `regression.py` | Full-sample OLS per model and industry | `in_sample_regression_*`, `in_sample_adj_r2.svg`, `reports/summaries/` |
+| `wald.py` | Joint and incremental Wald tests | `in_sample_wald_*` |
+| `diagnostics.py` | OLS assumption checks and residual plots | `in_sample_diagnostics.csv`, `in_sample_residuals_*` |
+| `decades.py` | Regressions per decade | `in_sample_*_by_decade*` |
+| `plots.py` | Figures of this stage | – |
+
+**Stage 3: Out-of-sample** (`--out-of-sample`, `asset_pricing/modeling/out_of_sample/`)
+
+| Module | Task | Output |
+|--------|------|--------|
+| `estimate.py` | Expanding-window estimation of the loadings | `data/interim/*_coefficients.csv` |
+| `predict.py` | Prediction for the month after each window | `data/interim/*_predictions.csv` |
+| `metrics.py` | RMSE and out-of-sample R² | `out_of_sample_metrics.csv`, `out_of_sample_r2.svg`, `out_of_sample_rmse.svg` |
+| `actual_vs_predicted.py` | Scatter plots of actual against predicted returns | `out_of_sample_actual_vs_predicted_*` |
+| `forecast_tests.py` | Error t-test and paired t-test | `out_of_sample_error_ttest.csv`, `out_of_sample_paired_ttest.csv` |
+| `plots.py` | Figures of this stage | – |
+
+Shared by both modeling stages: `asset_pricing/config.py` (all paths and the
+model definitions), `asset_pricing/plot_style.py` (plot style and figure export)
+and `asset_pricing/modeling/tables.py` (table export).
+
+All outputs are committed, so the results can be read without running anything.
+
+## Usage
+
+Requires Python 3.12.
 
 ```bash
 python3.12 -m venv .venv && source .venv/bin/activate
-make install
+make install        # pinned versions from requirements.txt
+make run            # all three stages
+make test           # fast tests
+make verify         # re-run the pipeline in a temp directory and compare with the committed outputs
+make lint           # ruff
 ```
 
-### 2. Execute the Full Empirical Pipeline
+Single stages: `python run_pipeline.py --data`, `--in-sample` or `--out-of-sample`.
 
-Execute all three stages (Data Processing $\to$ In-Sample Econometrics $\to$ Out-of-Sample Forecasting) with a single command:
+The pipeline is deterministic. With the versions in `requirements.txt`, `make run`
+reproduces every committed table, data file and summary byte for byte. Figures can
+differ slightly in size depending on the Matplotlib backend.
 
-```bash
-# Using Python CLI
-python run_pipeline.py --all
+## Repository structure
 
-# Or via Makefile
-make run
+```
+.
+├── run_pipeline.py          Entry point
+├── asset_pricing/           Python package (see Pipeline)
+├── data/
+│   ├── raw/                 Input files (never modified)
+│   ├── processed/           Aligned factor and industry returns
+│   └── interim/             Expanding-window coefficients and predictions
+├── reports/
+│   ├── tables/              Results as CSV
+│   ├── figures/             Figures as SVG
+│   └── summaries/           Regression summaries per model and industry
+└── tests/                   Data checks, model checks, full-pipeline comparison
 ```
 
-### 3. Stage-by-Stage Execution
+## Author
 
-You can run individual stages as needed:
+Nico Walendy, Department of Management Sciences, Bonn-Rhein-Sieg University of
+Applied Sciences. Supervisors: Prof. Dr. Ralf Meyer and Prof. Dr. Thomas Deckers.
+Completed June 2025.
 
-```bash
-# Data preprocessing only
-python run_pipeline.py --data
-
-# In-sample regressions and Wald hypothesis tests only
-python run_pipeline.py --in-sample
-
-# Out-of-sample expanding window forecasts and forecast-error tests only
-python run_pipeline.py --out-of-sample
-```
-
-### 4. Running the Test Suite
-
-```bash
-# Fast unit and integration tests
-make test
-
-# Re-run the full pipeline in a temporary directory and compare it with the
-# committed outputs (two to three minutes)
-make verify
-```
-
-### 5. Reproducibility Guarantee
-
-The pipeline is deterministic. With the pinned environment from `requirements.txt`,
-`make run` reproduces every committed table, summary and figure byte-for-byte, so
-`git status` stays clean afterwards. `make verify` checks the same thing without
-touching the working tree and tolerates floating-point noise between platforms.
-
----
-
-## 📐 Econometric Methodology
-
-### Models Evaluated
-
-1. **Capital Asset Pricing Model (CAPM - Sharpe, 1964; Lintner, 1965):**
-   $$R_{i,t} - R_{f,t} = \alpha_i + \beta_{i,\text{MKT}} (R_{m,t} - R_{f,t}) + \varepsilon_{i,t}$$
-
-2. **Fama-French 3-Factor Model (FF3 - Fama & French, 1993):**
-   $$R_{i,t} - R_{f,t} = \alpha_i + \beta_{i,\text{MKT}} \text{MKT}_t + \beta_{i,\text{SMB}} \text{SMB}_t + \beta_{i,\text{HML}} \text{HML}_t + \varepsilon_{i,t}$$
-
-3. **Fama-French 5-Factor Model (FF5 - Fama & French, 2015):**
-   $$R_{i,t} - R_{f,t} = \alpha_i + \beta_{i,\text{MKT}} \text{MKT}_t + \beta_{i,\text{SMB}} \text{SMB}_t + \beta_{i,\text{HML}} \text{HML}_t + \beta_{i,\text{RMW}} \text{RMW}_t + \beta_{i,\text{CMA}} \text{CMA}_t + \varepsilon_{i,t}$$
-
-### Statistical Inference & Diagnostics
-- **Robust Standard Errors:** All in-sample hypothesis tests use Newey-West HAC covariance matrices to safeguard against autocorrelation and conditional heteroskedasticity in financial return time series.
-- **Model Comparison:** Incremental Wald tests evaluate the null hypothesis $H_0: \beta_{\text{additional factors}} = 0$.
-- **Out-of-Sample Forecasting:** Expanding-window OLS avoids look-ahead bias and simulates real-world recursive forecasting.
-- **Forecast Comparison:** One-sided $t$-tests on the difference of squared forecast errors between nested models, with Newey-West HAC standard errors.
-
----
-
-## 👤 Academic Citation & Contact
-
-* **Author:** Nico Walendy
-* **Institution:** Department of Management Sciences, Bonn-Rhein-Sieg University of Applied Sciences (H-BRS)
-* **Supervisors:** Prof. Dr. Ralf Meyer & Prof. Dr. Thomas Deckers
-* **Completion Date:** June 2025
-* **License:** [MIT License](LICENSE)
+Licensed under the [MIT License](LICENSE).

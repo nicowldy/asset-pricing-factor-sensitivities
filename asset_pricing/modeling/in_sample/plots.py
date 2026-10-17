@@ -1,3 +1,5 @@
+"""Figures of the in-sample stage."""
+
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
@@ -5,10 +7,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from asset_pricing.config import get_coeffsbydecs_path
-from asset_pricing.modeling.in_sample.expl_utils import (
+from asset_pricing.config import FIG_BETAS_BY_DECADE, MODELS
+from asset_pricing.data.loaders import (
     get_industry_names,
-    get_models,
     load_factors,
     load_industry_data,
 )
@@ -34,7 +35,7 @@ def _zero_line(ax) -> None:
     ax.axhline(0, color=COLOR_ZERO_LINE, linestyle=":", linewidth=0.9, alpha=0.7)
 
 
-def plot_rsq(model_results: dict, save_path=None) -> None:
+def plot_adj_r2(model_results: dict, save_path=None) -> None:
     df = pd.DataFrame(
         [
             {
@@ -117,7 +118,7 @@ def plot_industry_distributions(save_path=None) -> None:
 
 def plot_factor_distributions(save_path=None) -> None:
     all_factors = {}
-    for model, info in get_models().items():
+    for model, info in MODELS.items():
         data = load_factors(model)
         for factor in info["factors"]:
             label = f"SMB ({model.upper()})" if factor == "SMB" else factor
@@ -216,7 +217,7 @@ def plot_decade_rsquared_grid(
 def plot_decade_model_factor_grids(
     all_decade_results: dict, decades_order: list[str]
 ) -> None:
-    for model in get_models():
+    for model in MODELS:
         df = pd.DataFrame(
             [
                 {
@@ -238,7 +239,7 @@ def plot_decade_model_factor_grids(
             FACTOR_MARKERS,
             FACTOR_PALETTE,
             "Factor Sensitivity (Beta)",
-            get_coeffsbydecs_path(model),
+            FIG_BETAS_BY_DECADE[model],
         )
 
 
